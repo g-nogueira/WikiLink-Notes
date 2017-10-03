@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+
+  "name": "WikiLink Extension",
+  "description": "This extension alows the user to fast search wiki terms.",
+  "version": "1.0",
+  "omnibox": { "keyword": "wl:" },
+  "options_page": "optionsPage/main.html",
+  "background": {
+    "scripts": [ "eventPage.js" ],
+    "persistence": true
+  },
+
+  "browser_action": {
+    "default_locale": "en",
+    "default_icon": "Images/icon.png",
+    "default_popup": "popup.html",
+    "default_title": "WikiLink Settings"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "<all_urls>" ],
+      "js": [ "floatingWL.js" ],
+      "run_at": "document_end"
+    }
+  ],
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
+}

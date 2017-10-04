@@ -5,9 +5,11 @@
   "description": "This extension alows the user to fast search wiki terms.",
   "version": "1.0",
   "omnibox": { "keyword": "wl:" },
-  "options_page": "optionsPage/main.html",
+  // "options_ui": {"page": "optionsPage/main.html", "chrome_style":true},
+  "options_page":"optionsPage/main.html",
   "background": {
-    "scripts": [ "eventPage.js" ],
+    "scripts": [ "eventPage.js", "repository/repo.js", "require.js"],
+    // "css":["css/*"],
     "persistence": true
   },
 
@@ -21,7 +23,7 @@
   "content_scripts": [
     {
       "matches": [ "<all_urls>" ],
-      "js": [ "floatingWL.js" ],
+      "js": [ "floatingWL.js", "repository/repo.js" ],
       "run_at": "document_end"
     }
   ],
@@ -29,5 +31,7 @@
   "permissions": [
     "activeTab",
     "storage"
-  ]
+  ],
+
+  "content_security_policy":"script-src 'self' https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js; object-src 'self'"
 }

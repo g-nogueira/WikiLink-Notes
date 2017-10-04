@@ -1,55 +1,86 @@
+
 (function () {
     'using strict';
 
-    export default repo;
+    // export default repo;
 
-
-    function repo(method) {
+    function repo() {
 
         return {
             searchTerm: httpGet,
-        }
-        
+        };
+
         //// Implementation ////
+
         function httpGet(termString) {
-            return doHTTP();
+            return httpExecute('GET', `https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${termString}`);
         }
-        
-        // 0 (uninitialized) or (request not initialized)
-        // 1 (loading) or (server connection established)
-        // 2 (loaded) or (request received)
-        // 3 (interactive) or (processing request)
-        // 4 (complete) or (request finished and response is ready)
 
-        // document.ajax({
-        //     url: '//www.wikidata.org/w/api.php',
-        //     data: { action: 'wbgetentities', ids: mw.config.get('wgWikibaseItemId'), format: 'json' },
-        //     dataType: 'jsonp',
-        //     success: function (x) {
-        //       console.log('wb label', x.entities.Q39246.labels.en.value);
-        //       console.log('wb description', x.entities.Q39246.descriptions.en.value);
-        //     }
-        //   });
+        function httpExecute(method, url, data) {
+            // 'http://www.w3.org/pub/WWW/TheProject.html'
+            httpCall({
+                url: url,
+                method: method,
+                data: data
+            }).then(successCallback, errorCallback);
 
-        function doHTTP(param) {
-            let httpRequest = new XMLHttpRequest();
+            function successCallback(response) {
+                var json = JSON.parse(response.response);
+                console.log(response);
+
+            }
+
+            function errorCallback(response) {
+                console.log(response);
+            }
+        }
+    }
+
+
+    /**
+     * 
+     * @param {{url: string, method: string, data: string, dataType: string}} config 
+     */
+    function httpCall(config) {
+        let httpRequest = new XMLHttpRequest();
+
+        /**
+         * 
+         * @param {function} successCallback 
+         * @param {function} errorCallback 
+         */
+        function then(successCallback, errorCallback) {
+
+            let concatUrl = config.url + objToQuerystring(config.data);
+            httpRequest.open(config.method, concatUrl, true);
+            httpRequest.setRequestHeader('Content-Type', config.dataType || 'application/json');
+            httpRequest.send();
+
             httpRequest.onreadystatechange = () => {
+
                 if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                    console.log('successful callback on repo.js');
-                    if (httpRequest.status === 200) {
-                        console.log('successful callback status 200 on repo.js');
-                        return httpRequest.response;
+                    switch (httpRequest.status) {
+                        case 200: successCallback(httpRequest);
+                            break;
+                        default: errorCallback(httpRequest)
+                            break;
                     }
-                    else console.log(`failed callback status ${httpRequest.status} on repo.js`);
-                }
-                else if (httpRequest.readyState === 0) {
-                    console.log('failed callback on -REQUEST NOT INITIALIZED- repo.js');
                 }
             };
-            httpRequest.open('GET', 'http://www.w3.org/pub/WWW/TheProject.html ', true);
-            httpRequest.send();
         }
 
 
+        function objToQuerystring(obj) {
+            var str = [];
+            for (var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+
+            return str.join("&");
+        }
+
+        return {
+            then: then
+        }
     }
+
 })();

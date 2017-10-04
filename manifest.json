@@ -16,7 +16,7 @@
   "browser_action": {
     "default_locale": "en",
     "default_icon": "Images/icon.png",
-    "default_popup": "popup.html",
+    "default_popup": "popup/popup.html",
     "default_title": "WikiLink Settings"
   },
   "content_scripts": [

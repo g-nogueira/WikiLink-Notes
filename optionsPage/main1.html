@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>options</title>
+
+    <link rel="stylesheet" href="../node_modules/material-components-web/dist/material-components-web.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- <div class="mdc-card">
+        <section class="mdc-card__primary">
+            <h1 class="mdc-card__title mdc-card__title--large">Title goes here</h1>
+            <h2 class="mdc-card__subtitle">Subtitle here</h2>
+        </section>
+        <section class="mdc-card__supporting-text">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </section>
+        <section class="mdc-card__actions">
+            <button class="mdc-button mdc-button--compact mdc-card__action">Action 1</button>
+            <button class="mdc-button mdc-button--compact mdc-card__action">Action 2</button>
+        </section>
+    </div> -->
+
+    <div class="mdc-card">
+        <section class="mdc-card__primary">
+            <h1 class="mdc-card__title mdc-card__title--large">Title goes here</h1>
+        </section>
+        <form>
+            <div class="mdc-form-field">
+                <div class="mdc-checkbox">
+                    <input type="checkbox" id="my-checkbox" class="mdc-checkbox__native-control" />
+                    <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                    </div>
+                </div>
+                <label for="my-checkbox" id="my-checkbox-label">This is my checkbox</label>
+
+                <div class="mdc-select" role="listbox" tabindex="0">
+                    <span class="mdc-select__selected-text">Pick a food group</span>
+                    <div class="mdc-simple-menu mdc-select__menu">
+                        <ul class="mdc-list mdc-simple-menu__items">
+                            <li class="mdc-list-item" role="option" id="grains" aria-disabled="true">
+                                Pick a food group
+                            </li>
+                            <li class="mdc-list-item" role="option" id="grains" tabindex="0">
+                                Bread, Cereal, Rice, and Pasta
+                            </li>
+                            <li class="mdc-list-item" role="option" id="vegetables" tabindex="0">
+                                Vegetables
+                            </li>
+                            <li class="mdc-list-item" role="option" id="fruit" tabindex="0">
+                                Fruit
+                            </li>
+                            <li class="mdc-list-item" role="option" id="dairy" tabindex="0">
+                                Milk, Yogurt, and Cheese
+                            </li>
+                            <li class="mdc-list-item" role="option" id="meat" tabindex="0">
+                                Meat, Poultry, Fish, Dry Beans, Eggs, and Nuts
+                            </li>
+                            <li class="mdc-list-item" role="option" id="fats" tabindex="0">
+                                Fats, Oils, and Sweets
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="../node_modules/material-components-web/dist/material-components-web.min.js"></script>
+</body>
+
+</html>

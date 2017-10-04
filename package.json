@@ -1,0 +1,24 @@
+{
+  "name": "wikilink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "eventPage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node_modules/.bin/webpack src/app.js -o bundle.js && webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghdrn11/WikiLink.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ghdrn11/WikiLink/issues"
+  },
+  "homepage": "https://github.com/ghdrn11/WikiLink#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "material-components-web": "^0.22.0"
+  }
+}

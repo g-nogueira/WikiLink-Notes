@@ -1,14 +1,35 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <title>popup</title>
-    <link href="css/Inputs.css" rel="stylesheet" />
+    <link href="../css/Inputs.css" rel="stylesheet" />
+    <link href="popup.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../node_modules/material-components-web/dist/material-components-web.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 </head>
-<body>
-    <ul class="list">
-        <li><span><input type="checkbox" value=""/>TurnOnSomething</span></li>
-        <li>Options</li>
-        <li>WikiPage</li>
+
+<body class="mdc-typography">
+
+    <ul class="mdc-list">
+        <!-- <a href="" class="mdc-list-item">
+            <i class="mdc-list-item__start-detail material-icons" aria-hidden="true">flip_to_front</i> Toggle float WikiLink
+        </a> -->
+        <a href="" class="mdc-list-item">
+            <div class="mdc-switch mdc-list-item__start-detail">
+                <input type="checkbox" id="wlWindowIsActive" class="mdc-switch__native-control" />
+                <div class="mdc-switch__background">
+                    <div class="mdc-switch__knob"></div>
+                </div>
+            </div>
+            <label for="basic-switch" class="mdc-switch-label clickable"> Toggle float WikiLink</label>
+        </a>
+        <a href="" data-mdc-auto-init="MDCRipple" class="mdc-list-item"><i class="mdc-list-item__start-detail material-icons" aria-hidden="true">launch</i> Wikipedia</a>
+        <a href="" data-mdc-auto-init="MDCRipple" id="goToOptions" onclick="goToOptions()" class="mdc-list-item"><i class="mdc-list-item__start-detail material-icons" aria-hidden="true">build</i> Options</a>
     </ul>
+
+    <script src="popup.js"></script>
 </body>
+
 </html>

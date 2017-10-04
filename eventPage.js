@@ -1,34 +1,25 @@
 ﻿(function () {
     "use strict";
 
-    var doc = document;
-
     chrome.tabs.onActivated.addListener(activeInfo => {
-        //alert('Tab changed') It works
-        //chrome.tabs.executeScript({code: ''}, function callback);
-        chrome.tabs.get(activeInfo.tabId, function (tab) {
-            var t = tab;
-            chrome.windows.get(tab.windowId, window => {
-                let w = window;
-            });
-        });
-        enableEventListener();
-        doc = document;
-        doc.addEventListener("selectstart", function () {
-            alert("Selection started on -onselectstart-");
-        });
+        let httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = ()=>{
+            if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                console.log('successful callback on repo.js');
+                
+                if (httpRequest.status === 200) {
+                    console.log('successful callback status 200 on repo.js');
+                }
+                else console.log(`failed callback status ${httpRequest.status} on repo.js`);
+            }
+            else if (httpRequest.readyState === 0) {
+                console.log('failed callback on -REQUEST NOT INITIALIZED- repo.js');
+            } 
+        };
+        httpRequest.open('GET', 'http://www.w3.org/pub/WWW/TheProject.html ', true);
+        httpRequest.send();
+        
 
     });
-
-    doc.onselectstart = function () {
-        alert("Selection started on -onselectstart-");
-    };
-
-    function enableEventListener() {
-    }
-
-    function verifySelection() {
-        //document.addEventListener("selectstart", () => { alert('Selection Started') });
-    }
 
 })();

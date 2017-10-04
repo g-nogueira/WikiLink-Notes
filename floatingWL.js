@@ -14,7 +14,7 @@
 
         let div = document.createElement('div');
         div.setAttribute('class', 'modal fade bd-example-modal-sm');
-        var tn = document.createTextNode('div tal tal tal');
+        let tn = document.createTextNode('div tal tal tal');
         div.appendChild(tn);
 
         document.body.appendChild(div);

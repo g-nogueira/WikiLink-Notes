@@ -3,24 +3,13 @@
   "name": "WikiLink Extension",
   "description": "This extension alows the user to fast search wiki terms.",
   "version": "1.0",
-<<<<<<< HEAD
   "omnibox": {
     "keyword": "wl:"
   },
   "options_page": "optionsPage/main.html",
   "background": {
-    "scripts": [
-      "eventPage.js"
-    ],
-=======
-  "omnibox": { "keyword": "wl:" },
-  // "options_ui": {"page": "optionsPage/main.html", "chrome_style":true},
-  "options_page":"optionsPage/main.html",
-  "background": {
-    "scripts": [ "eventPage.js", "repository/repo.js", "require.js"],
-    // "css":["css/*"],
->>>>>>> 7a8e9d6521c2133bc20be6484e80749aee19ced0
-    "persistence": true
+    "scripts": ["eventPage.js"],
+    "persistence": false
   },
   "browser_action": {
     "default_locale": "en",
@@ -30,26 +19,16 @@
   },
   "content_scripts": [
     {
-<<<<<<< HEAD
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "floatingWL.js"
-      ],
-      "css": [
-        "css/popover.css"
-      ],
-=======
-      "matches": [ "<all_urls>" ],
-      "js": [ "floatingWL.js", "repository/repo.js" ],
->>>>>>> 7a8e9d6521c2133bc20be6484e80749aee19ced0
+      "matches": ["<all_urls>"],
+      "js": ["wlPopover.js"],
+      "css": ["css/popover.css"],
       "run_at": "document_end"
     }
   ],
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "contextMenus"
   ],
 
   "content_security_policy":"script-src 'self' https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js; object-src 'self'"

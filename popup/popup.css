@@ -1,0 +1,14 @@
+.clickable{
+    cursor: pointer;
+}
+
+.mdc-list>a:hover,
+.mdc-list>div:hover{
+    background-color: rgba(226, 226, 226, 0.86);    
+    border-radius: 5px;
+}
+
+
+.mdc-list{
+    padding:8px 1px 0 !important;
+}

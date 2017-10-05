@@ -1,3 +1,0 @@
-﻿chrome.
-	contextMenus
-	tabs.executeScripts

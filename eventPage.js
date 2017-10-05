@@ -1,37 +1,72 @@
-﻿//Page used for repository testing
-(function () {
+﻿(function () {
     "use strict";
 
-    // import repo from 'repository/repo';
-
     chrome.tabs.onActivated.addListener(activeInfo => {
+        chrome.runtime.sendMessage({ method: 'repository', key: 'searchTerm' }, response => {
+            console.log(response);
+        });
 
-        httpExecute('GET', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=nepal');
+        // httpExecute('GET', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=nepal')
+    });
 
+    chrome.contextMenus.create({
+        title: 'Search \"%s\" on Wikipedia',
+        contexts: ["selection"],
+        onclick: info => searchTerm(info.selectionText)
     });
 
 
-    function httpExecute(method, url, data) {
-        // 'http://www.w3.org/pub/WWW/TheProject.html'
-        httpCall({
-            url: url,
-            method: method,
-            data: data
-        }).then(successCallback, errorCallback);
+    ///// Testing Area ////
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        try {
+            if (request.method === 'repository') {
+                sendResponse(repo[message.key]);
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    });
 
-        function successCallback(response) {
-            let json = JSON.parse(response.response);
-            var searchResult = JSON.parse(response.response);
-            var text = `Title: ${searchResult[1][0]} \nBody: ${searchResult[2][0]}`;
-            console.log(text);
+    function repo() {
+
+        return {
+            searchTerm: httpGet,
+        };
+
+
+        //// Implementation ////
+
+        function httpGet(termString) {
+            return httpExecute('GET', `https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${termString}`);
         }
 
-        function errorCallback(response) {
-            console.log(response);
+        function httpExecute(method, url, data) {
+            // 'http://www.w3.org/pub/WWW/TheProject.html'
+            httpCall({
+                url: url,
+                method: method,
+                data: data
+            }).then(successCallback, errorCallback);
+
+            function successCallback(response) {
+                var json = JSON.parse(response.response);
+                console.log(response);
+                return responde;
+
+            }
+
+            function errorCallback(response) {
+                console.log(response);
+                return response;
+            }
         }
     }
 
 
+    /**
+     * @description Beautify http calls
+     * @param {{url: string, method: string, data: string, dataType: string}} config 
+     */
     function httpCall(config) {
         let httpRequest = new XMLHttpRequest();
 
@@ -42,8 +77,8 @@
          */
         function then(successCallback, errorCallback) {
 
-            let urlN = config.url + objToQuerystring(config.data)
-            httpRequest.open(config.method, urlN, true);
+            let concatUrl = config.url + objToQuerystring(config.data);
+            httpRequest.open(config.method, concatUrl, true);
             httpRequest.setRequestHeader('Content-Type', config.dataType || 'application/json');
             httpRequest.send();
 
@@ -73,7 +108,4 @@
             then: then
         }
     }
-
-
-
 })();

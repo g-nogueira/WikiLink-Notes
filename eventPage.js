@@ -1,13 +1,13 @@
 ﻿(function () {
     "use strict";
 
-    chrome.tabs.onActivated.addListener(activeInfo => {
-        chrome.runtime.sendMessage({ method: "repository", key: "searchTerm" }, function (response) {
-            console.log(response);
+    ///// Testing Area ////
+    chrome.runtime.onMessage.addListener(
+        function (request, sender, sendResponse) {
+            if (request.searchTerm){
+                sendResponse({ data: "Nenhum resultado encontrado para " + request.searchTerm });
+            }
         });
-
-        // httpExecute('GET', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=nepal')
-    });
 
     chrome.contextMenus.create({
         title: 'Search \"%s\" on Wikipedia',
@@ -16,19 +16,7 @@
     });
 
 
-    ///// Testing Area ////
-    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-        // console.log('on addListenet');
-        // try {
-        //     if (request.method === 'repository') {
-        //         sendResponse(repo[request.key]);
-        //     }
-        // } catch (error) {
-        //     alert(error.message);
-        // }
-        // sendResponse('Response sended');
-        // return true;
-    });
+
 
     //region Functions
     function repo() {

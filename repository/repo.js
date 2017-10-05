@@ -2,13 +2,26 @@
 (function () {
     'using strict';
 
-    // export default repo;
+    console.log('repo running');
+
+    chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
+        try {
+            if (request.method === 'repository') {
+                repo[message.key];
+            }
+            sendResponse(repo[message]);
+        } catch (error) {
+            alert(error.message);
+        }
+    });
+
 
     function repo() {
 
         return {
             searchTerm: httpGet,
         };
+
 
         //// Implementation ////
 
@@ -27,18 +40,20 @@
             function successCallback(response) {
                 var json = JSON.parse(response.response);
                 console.log(response);
+                return responde;
 
             }
 
             function errorCallback(response) {
                 console.log(response);
+                return response;
             }
         }
     }
 
 
     /**
-     * 
+     * @description Beautify http calls
      * @param {{url: string, method: string, data: string, dataType: string}} config 
      */
     function httpCall(config) {

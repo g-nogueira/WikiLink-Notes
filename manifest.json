@@ -8,8 +8,7 @@
   // "options_ui": {"page": "optionsPage/main.html", "chrome_style":true},
   "options_page":"optionsPage/main.html",
   "background": {
-    "scripts": [ "eventPage.js", "repository/repo.js", "require.js"],
-    // "css":["css/*"],
+    "scripts": [ "eventPage.js", "repository/repo.js"],
     "persistence": true
   },
 
@@ -23,14 +22,15 @@
   "content_scripts": [
     {
       "matches": [ "<all_urls>" ],
-      "js": [ "floatingWL.js", "repository/repo.js" ],
+      "js": [ "wlPopover.js"],
       "run_at": "document_end"
     }
   ],
 
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "contextMenus"
   ],
 
   "content_security_policy":"script-src 'self' https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js; object-src 'self'"

@@ -2,7 +2,7 @@
     "use strict";
 
     chrome.tabs.onActivated.addListener(activeInfo => {
-        chrome.runtime.sendMessage({ method: 'repository', key: 'searchTerm' }, response => {
+        chrome.runtime.sendMessage({ method: "repository", key: "searchTerm" }, function (response) {
             console.log(response);
         });
 
@@ -17,16 +17,20 @@
 
 
     ///// Testing Area ////
-    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-        try {
-            if (request.method === 'repository') {
-                sendResponse(repo[message.key]);
-            }
-        } catch (error) {
-            alert(error.message);
-        }
+    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+        // console.log('on addListenet');
+        // try {
+        //     if (request.method === 'repository') {
+        //         sendResponse(repo[request.key]);
+        //     }
+        // } catch (error) {
+        //     alert(error.message);
+        // }
+        // sendResponse('Response sended');
+        // return true;
     });
 
+    //region Functions
     function repo() {
 
         return {
@@ -108,4 +112,5 @@
             then: then
         }
     }
+    //endregion
 })();

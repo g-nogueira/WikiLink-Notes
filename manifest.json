@@ -8,8 +8,8 @@
   },
   "options_page": "optionsPage/main.html",
   "background": {
-    "scripts": ["eventPage.js"],
-    "persistence": false
+    "scripts": ["eventPage.js", "repository/repo.js"],
+    "persistence": true
   },
   "browser_action": {
     "default_locale": "en",

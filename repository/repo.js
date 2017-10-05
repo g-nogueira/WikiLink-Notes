@@ -5,14 +5,18 @@
     console.log('repo running');
 
     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
-        try {
-            if (request.method === 'repository') {
-                repo[message.key];
-            }
-            sendResponse(repo[message]);
-        } catch (error) {
-            alert(error.message);
-        }
+        // try {
+        //     if (request.method === 'repository') {
+        //         repo[message.key];
+        //         return true;
+        //     }
+        //     sendResponse(repo[message]);
+        // } catch (error) {
+        //     alert(error.message);
+        //     return true;
+        // }
+        sendResponse('test');
+        
     });
 
 

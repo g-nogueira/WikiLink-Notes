@@ -1,23 +1,10 @@
 ﻿(function () {
     "use strict";
 
-    chrome.tabs.onActivated.addListener(activeInfo => {
-        chrome.runtime.sendMessage({ method: 'repository', key: 'searchTerm' }, response => {
-            console.log(response);
-        });
-
-        // httpExecute('GET', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=nepal')
-    });
-
-    chrome.contextMenus.create({
-        title: 'Search \"%s\" on Wikipedia',
-        contexts: ["selection"],
-        onclick: info => searchTerm(info.selectionText)
-    });
-
-
     ///// Testing Area ////
+    /*
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        console.log('message');
         try {
             if (request.method === 'repository') {
                 sendResponse(repo[message.key]);
@@ -26,6 +13,32 @@
             alert(error.message);
         }
     });
+*/
+    chrome.tabs.onActivated.addListener(
+        function () {
+            chrome.runtime.sendMessage('testing...', function (response) {
+                // console.log('resp ' + response);
+            });
+            // httpExecute('GET', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=nepal')
+        });
+
+    chrome.runtime.onMessage.addListener(
+        function (request, sender, sendResponse) {
+            console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+            if (request.searchTerm.length > 0){
+                sendResponse({ data: "Nenhum resultado encontrado para " + request.searchTerm });}
+        });
+
+    chrome.contextMenus.create({
+        title: 'Search \"%s\" on Wikipedia',
+        contexts: ["selection"],
+        onclick: info => searchTerm(info.selectionText)
+    });
+
+
+
 
     function repo() {
 

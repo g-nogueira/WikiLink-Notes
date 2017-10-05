@@ -21,7 +21,7 @@
 
 (function () {
     "use strict";
-    
+
     var previous = null;    //The previous selected text will keep stored for 2 seconds;
     var rel1, rel2;         //Range of Cals;
     var div;                //The popover inserted;
@@ -29,7 +29,7 @@
 
     //Immediately insert the cals, the popover div and get their ranges;
     insertCals();
-    getRanges();    
+    getRanges();
     insertDiv();
 
     document.onmouseup = function () {
@@ -65,11 +65,13 @@
 
     //Request API should be here.
     function showData(term) {
-        div.textContent = term;
-        showDiv();
+        chrome.runtime.sendMessage({ searchTerm: term }, function (response) {
+            div.textContent = response.data;
+            showDiv();
+        });
     }
 
-    function insertDiv() {       
+    function insertDiv() {
         div = document.createElement('div');
         div.setAttribute('class', 'wikilink-popover');
         div.setAttribute('id', 'wikilink-popover');

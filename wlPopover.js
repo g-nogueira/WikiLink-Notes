@@ -65,8 +65,8 @@
 
     //Request API should be here.
     function showData(term) {
-        chrome.runtime.sendMessage({ searchTerm: term }, function (response) {
-            div.textContent = response.data;
+        chrome.runtime.sendMessage({module: 'repository', method: 'searchTerm', key: term }, function (response) {
+            div.textContent = response;
             showDiv();
         });
     }

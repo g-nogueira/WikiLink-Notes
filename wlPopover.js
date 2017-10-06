@@ -47,11 +47,11 @@
             repoRequest(selText);
             previous = selText;
             AutoResetPrevious();
-        }
+        }        
     }
 
     function AutoResetPrevious() {
-        setTimeout(function (previous) {
+        setTimeout(function () {
             previous = null;
         }, 2000);
     }

@@ -4,18 +4,16 @@
 
     console.log('repo running');
 
-    chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         try {
             if (message.module === 'repository') {
-                let method = message.method;
-                sendResponse(repo()[method](message.key));
-                return true;
+                sendResponse(repo()[message.method](message.key));
+                console.log(`From repo: ${repo()[method](message.key)}`);
             }
-            sendResponse(repo[message]);
         } catch (error) {
             alert(error.message);
-            return true;
         }
+        return true;
     });
 
 
@@ -42,12 +40,10 @@
 
             function successCallback(response) {
                 var json = JSON.parse(response.response);
-                console.log(`Title: ${json[1][0]} Body: ${json[2]}`);
-                let data;
-                data={
-                    title :json[1][0],
-                    body: json[2][1]
-                }
+                let data = {};
+                data.title = json[1][0];
+                data.body = json[2][0];
+                console.log(data);
                 return data;
 
             }

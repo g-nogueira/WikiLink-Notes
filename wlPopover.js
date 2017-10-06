@@ -65,7 +65,8 @@
 
     //Request API should be here.
     function showData(term) {
-        chrome.runtime.sendMessage({module: 'repository', method: 'searchTerm', key: term }, function (response) {
+        chrome.runtime.sendMessage({module: 'repository', method: 'searchTerm', key: term },function (response) {
+            console.log(`Response from popover: ${JSON.stringify(response)}`);
             div.textContent = response;
             showDiv();
         });

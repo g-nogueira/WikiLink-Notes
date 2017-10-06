@@ -1,64 +1,37 @@
-
 (function () {
     'using strict';
 
-    console.log('repo running');
-
-    chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
-        try {
-            if (message.module === 'repository') {
-                let method = message.method;
-                sendResponse(repo()[method](message.key));
-                return true;
-            }
-            sendResponse(repo[message]);
-        } catch (error) {
-            alert(error.message);
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if (message.module === 'repository') {
+            httpGet(message.key)
+                .then(function (response) {
+                    var json = JSON.parse(response.response);
+                    let data = {
+                        module: 'popover',
+                        title: json[1][0],
+                        body: json[2][0]
+                    };
+                    sendResponse(data);
+                },
+                function (err) {
+                    console.log(err);
+                    sendResponse('Ocorreu algum erro ao pesquisar o termo' + message.key + '.');
+                });
             return true;
-        }
+        };
     });
 
-
-    function repo() {
-
-        return {
-            searchTerm: httpGet,
-        };
-
-
-        //// Implementation ////
-
-        function httpGet(termString) {
-            return httpExecute('GET', `https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${termString}`);
-        }
-
-        function httpExecute(method, url, data) {
-            // 'http://www.w3.org/pub/WWW/TheProject.html'
-            httpCall({
-                url: url,
-                method: method,
-                data: data
-            }).then(successCallback, errorCallback);
-
-            function successCallback(response) {
-                var json = JSON.parse(response.response);
-                console.log(`Title: ${json[1][0]} Body: ${json[2]}`);
-                let data;
-                data={
-                    title :json[1][0],
-                    body: json[2][1]
-                }
-                return data;
-
-            }
-
-            function errorCallback(response) {
-                console.log(response);
-                return response.response;
-            }
-        }
+    function httpGet(termString) {
+        return httpExecute('GET', `https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${termString}`);
     }
 
+    function httpExecute(method, url, data) {
+        return httpCall({
+            url: url,
+            method: method,
+            data: data
+        });
+    }
 
     /**
      * @description Beautify http calls

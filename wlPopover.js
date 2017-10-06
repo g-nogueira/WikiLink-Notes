@@ -69,11 +69,11 @@
             method: 'searchTerm',
             key: term
         };
-        chrome.runtime.sendMessage(msg, showData(term));
+        chrome.runtime.sendMessage(msg, showData);
     }
 
     function showData(data) {
-        div.textContent = 'data';
+        div.textContent = data.body;
         showDiv();
     }
 

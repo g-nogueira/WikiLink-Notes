@@ -63,6 +63,7 @@
         return previous;
     }
 
+<<<<<<< HEAD
     function repoRequest(term) {
         let msg = {
             module: 'repository',
@@ -81,6 +82,15 @@
             div.textContent = 'Ops: nenhum resultado encontrado...';
             showDiv();
         }
+=======
+    //Request API should be here.
+    function showData(term) {
+        chrome.runtime.sendMessage({module: 'repository', method: 'searchTerm', key: term },function (response) {
+            console.log(`Response from popover: ${JSON.stringify(response)}`);
+            div.textContent = response;
+            showDiv();
+        });
+>>>>>>> ce9e1c4cb35af2f54b7fc8f975ef1ce179206617
     }
 
     function insertDiv() {

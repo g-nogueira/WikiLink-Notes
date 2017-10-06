@@ -13,7 +13,6 @@
 | Known issues:                                  |
 | - The popover closes wherever you click,       |
 | trigged by the onMouseDown event; Gonna fix it.|
-| - The popover hasn't a fixed size; Easy fix... |
 |                                                |
 |                       ♥                        |
 @------------------------------------------------@
@@ -32,9 +31,10 @@
     getRanges();
     insertDiv();
 
-    document.onmouseup = function () {
-        if (!sel.isCollapsed)
-            searchSelected();
+    document.onmouseup = function (event) {
+        if (event.which === 1)
+            if (!sel.isCollapsed)
+                searchSelected();
     };
 
     document.onmousedown = function () {
@@ -47,7 +47,7 @@
             repoRequest(selText);
             previous = selText;
             AutoResetPrevious();
-        }        
+        }
     }
 
     function AutoResetPrevious() {

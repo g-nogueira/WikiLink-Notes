@@ -73,8 +73,14 @@
     }
 
     function showData(data) {
-        div.textContent = data.body;
-        showDiv();
+        if (data.body.length > 0) {
+            div.textContent = data.body;
+            showDiv();
+        }
+        else {
+            div.textContent = 'Ops: nenhum resultado encontrado...';
+            showDiv();
+        }
     }
 
     function insertDiv() {

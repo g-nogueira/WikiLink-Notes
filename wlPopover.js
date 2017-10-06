@@ -44,7 +44,7 @@
     function searchSelected() {
         let selText = checkSelection(sel.toString());
         if (selText != previous) {
-            showData(selText);
+            repoRequest(selText);
             previous = selText;
             AutoResetPrevious();
         }
@@ -63,12 +63,18 @@
         return previous;
     }
 
-    //Request API should be here.
-    function showData(term) {
-        chrome.runtime.sendMessage({module: 'repository', method: 'searchTerm', key: term }, function (response) {
-            div.textContent = response;
-            showDiv();
-        });
+    function repoRequest(term) {
+        let msg = {
+            module: 'repository',
+            method: 'searchTerm',
+            key: term
+        };
+        chrome.runtime.sendMessage(msg, showData(term));
+    }
+
+    function showData(data) {
+        div.textContent = 'data';
+        showDiv();
     }
 
     function insertDiv() {
@@ -79,14 +85,18 @@
     }
 
     function insertCals() {
-        let cal1 = document.createElement('div');
-        cal1.setAttribute('id', 'cal1');
-        cal1.textContent = '\xa0';
+        let cal1, cal2;
+        cal1 = createCal('cal1');
+        cal2 = createCal('cal2');
         document.body.appendChild(cal1);
-        let cal2 = document.createElement('div');
-        cal2.setAttribute('id', 'cal2');
-        cal2.textContent = '\xa0';
         document.body.appendChild(cal2);
+    }
+
+    function createCal(name) {
+        let cal = document.createElement('div');
+        cal.setAttribute('id', name);
+        cal.textContent = '\xa0';
+        return cal;
     }
 
     function getRanges() {

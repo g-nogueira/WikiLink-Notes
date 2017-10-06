@@ -42,14 +42,19 @@
 
             function successCallback(response) {
                 var json = JSON.parse(response.response);
-                console.log(response.response);
-                return response;
+                console.log(`Title: ${json[1][0]} Body: ${json[2]}`);
+                let data;
+                data={
+                    title :json[1][0],
+                    body: json[2][1]
+                }
+                return data;
 
             }
 
             function errorCallback(response) {
                 console.log(response);
-                return response;
+                return response.response;
             }
         }
     }

@@ -14,7 +14,6 @@
 | - The popover closes wherever you click,       |
 | trigged by the onMouseDown event; Gonna fix it.|
 |                                                |
-|                       ♥                        |
 @------------------------------------------------@
 */
 
@@ -31,23 +30,32 @@
     getRanges();
     insertDiv();
 
-    document.onmouseup = function (event) {
+    document.onmouseup = async function (event) {
         if (event.which === 1)
             if (!sel.isCollapsed)
-                searchSelected();
+                searchSelectedAsync();
     };
 
     document.onmousedown = function () {
         hideDiv();
     }
 
-    function searchSelected() {
-        let selText = checkSelection(sel.toString());
-        if (selText != previous) {
+    async function searchSelectedAsync() {
+        const enabled = await isEnabledAsync();
+        const selText = checkSelection(sel.toString());
+        if (selText != previous && enabled === true) {
             repoRequest(selText);
             previous = selText;
             AutoResetPrevious();
         }
+    }
+
+    async function isEnabledAsync() {
+        return new Promise(resolve => {
+            chrome.storage.sync.get('popoverIsEnabled',
+                obj => resolve(obj.popoverIsEnabled)
+            );
+        });
     }
 
     function AutoResetPrevious() {
@@ -99,7 +107,7 @@
     }
 
     function createCal(name) {
-        let cal = document.createElement('div');
+        const cal = document.createElement('div');
         cal.setAttribute('id', name);
         cal.textContent = '\xa0';
         return cal;
@@ -113,9 +121,9 @@
     }
 
     function showDiv() {
-        let r = sel.getRangeAt(0).getBoundingClientRect();
-        let rb1 = rel1.getBoundingClientRect();
-        let rb2 = rel2.getBoundingClientRect();
+        const r = sel.getRangeAt(0).getBoundingClientRect();
+        const rb1 = rel1.getBoundingClientRect();
+        const rb2 = rel2.getBoundingClientRect();
         div.style.top = (r.bottom - rb2.top) * 100 / (rb1.top - rb2.top) + 'px';
         div.style.left = (r.left - rb2.left) * 100 / (rb1.left - rb2.left) + 'px';
         div.style.display = 'block';

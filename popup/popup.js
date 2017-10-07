@@ -1,7 +1,6 @@
 ﻿(function () {
     "use strict";
     
-<<<<<<< HEAD
     chrome.storage.sync.get('popoverIsEnabled', obj => {
         switch_WLWindow.checked = obj.popoverIsEnabled;
         if (obj.popoverIsEnabled === {}) {
@@ -9,9 +8,6 @@
         }
         console.log(switch_WLWindow.checked);
     });
-=======
-    chrome.storage.sync.get('popoverIsEnabled', obj => {switch_WLWindow.checked = obj.popoverIsEnabled; console.log(switch_WLWindow.checked);})
->>>>>>> 2d28e76a69398e06873e9d7c592fddf6cfb33158
 
     
     var switch_WLWindow = document.querySelector('#wlWindowIsActive');

@@ -7,6 +7,7 @@
     "keyword": "wl:"
   },
   "options_page": "optionsPage/main.html",
+  // "options_ui": {"page":"optionsPage/main.html"},
   "background": {
     "scripts": ["eventPage.js", "repository/repo.js"],
     "persistence": true

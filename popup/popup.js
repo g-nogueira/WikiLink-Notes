@@ -1,7 +1,13 @@
 ﻿(function () {
     "use strict";
     
-    chrome.storage.sync.get('wlWindowIsToggleble', obj => {switch_WLWindow.checked = obj.wlWindowIsToggleble; console.log(switch_WLWindow.checked);})
+    chrome.storage.sync.get('popoverIsEnabled', obj => {
+        switch_WLWindow.checked = obj.popoverIsEnabled;
+        if (obj.popoverIsEnabled === {}) {
+            chrome.storage.sync.set({ 'popoverIsEnabled': true }, () => {});
+        }
+        console.log(switch_WLWindow.checked);
+    });
 
     
     var switch_WLWindow = document.querySelector('#wlWindowIsActive');
@@ -15,7 +21,7 @@
     
     //// EVENTS FUNCTIONS ////
     function setWLWindowActiveState(isActive = true) {
-        chrome.storage.sync.set({ 'wlWindowIsToggleble': isActive }, () => {
+        chrome.storage.sync.set({ 'popoverIsEnabled': isActive }, () => {
             console.log(`Settings to WikiLinkPanel toggleble is saved to: ${isActive}`);
         });
     }

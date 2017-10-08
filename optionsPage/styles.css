@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
  *
@@ -70,7 +71,7 @@ html, body {
   height: auto;
 }
 .mdl-demo .mdl-card .mdl-card__supporting-text {
-  margin: 40px;
+  margin: 0 40px 10px 40px;
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;

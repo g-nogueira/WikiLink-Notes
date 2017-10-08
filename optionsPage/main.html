@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-pink.min.css">
+  <link rel="stylesheet" href="../shared/material-components-web.min.css">
   <link rel="stylesheet" href="styles.css">
   <style>
     #view-source {
@@ -32,17 +33,33 @@
     <main class="mdl-layout__content">
       <div class="mdl-layout__tab-panel is-active" id="overview">
 
-
+        <!-- Main Card -->
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
           <div class="mdl-card mdl-cell mdl-cell--12-col">
             <div class="mdl-card__title">
               <h2 class="mdl-card__title-text">Main</h2>
             </div>
             <div class="mdl-card__supporting-text">
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
-                <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" checked>
-                <span class="mdl-checkbox__label">Checkbox</span>
-              </label>
+              <ul class="mdc-list">
+                <li class="mdc-list-item">
+                  Language
+                  <select name="" id="mainLanguage">
+                    <option value="pt">Português</option>
+                    <option value="en">English</option>
+                  </select>
+                </li>
+                Main Info Source
+                <select name="" id="mainInfoSource">
+                  <option value="wp">Wikipedia</option>
+                  <option value="wt">Wiktionary</option>
+                </select>
+                </li>
+                <li class="mdc-list-item">Search on...
+                  <input type="checkbox" id="searchOn_wp"> Wikipedia
+                  <input type="checkbox" id="searchOn_wt"> Wiktionary
+                  <input type="checkbox" id="searchOn_yt"> Youtube
+                </li>
+              </ul>
             </div>
             <div class="mdl-card__actions">
               <a href="#" class="mdl-button">Read our features</a>
@@ -57,7 +74,79 @@
             <li class="mdl-menu__item">Dolor</li>
           </ul>
         </section>
+        <!-- ENDMain Card -->
 
+        <!-- Wikipedia Card -->
+        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Wikipedia</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              <input type="checkbox" name="" id="wikipedia-showThumbnail"> Show Image
+            </div>
+            <div class="mdl-card__actions">
+              <a href="#" class="mdl-button">Read our features</a>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Lorem</li>
+            <li class="mdl-menu__item" disabled>Ipsum</li>
+            <li class="mdl-menu__item">Dolor</li>
+          </ul>
+        </section>
+        <!-- ENDWikipedia Card -->
+
+        <!-- Wiktionary Card -->
+        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Wiktionary</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              Configs
+            </div>
+            <div class="mdl-card__actions">
+              <a href="#" class="mdl-button">Read our features</a>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Lorem</li>
+            <li class="mdl-menu__item" disabled>Ipsum</li>
+            <li class="mdl-menu__item">Dolor</li>
+          </ul>
+        </section>
+        <!-- ENDWikipedia Card -->
+
+        <!-- Youtube Card -->
+        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">YouTube</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Configs
+            </div>
+            <div class="mdl-card__actions">
+              <a href="#" class="mdl-button">Read our features</a>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Lorem</li>
+            <li class="mdl-menu__item" disabled>Ipsum</li>
+            <li class="mdl-menu__item">Dolor</li>
+          </ul>
+        </section>
+        <!-- ENDYoutube Card -->
 
         <!-- Section 1 -->
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
@@ -183,6 +272,8 @@
     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a>
 
   <script src="../shared/material.min.js"></script>
+  <script src="../shared/material-components-web.min.js"></script>
+  <script src="main.js"></script>
 </body>
 
 </html>

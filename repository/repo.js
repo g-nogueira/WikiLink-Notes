@@ -1,6 +1,12 @@
 (function () {
     'using strict';
 
+    const url = {
+        image: (term) =>`https://en.wikipedia.org/w/api.php?action=query&titles=${term}&prop=pageimages&format=json&pithumbsize=100`,
+        article: (term) => `https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${term}`
+    };
+
+
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         if (message.module === 'repository') {
             // repo().searchTerm(message.key)
@@ -16,28 +22,24 @@
 
     function repo() {
         return {
-            searchTerm: httpGet
+            searchTerm: httpGet,
+            searchImage: httpGet
         };
     }
-
 
 
     ////IMPLEMENTATIONS////
 
     function httpGet(termString) {
-        return httpCall('GET', `https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${termString}`);
+        return httpCall('GET', url.article(termString));
     }
 
     function formatReponse(response) {
         let json = JSON.parse(response.response);
-        console.log(json[2]);
-        
-        if (json[2][0].length <= 80) {
-            json[2][0] = json[2][1];    
-        }
+
         return data = {
             title: json[1][0],
-            body: json[2][0]
+            body: json[2][0].length <= 80?json[2][1]:json[2][0]
         };
     }
 

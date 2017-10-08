@@ -4,16 +4,23 @@
 <head>
     <title>popup</title>
     <link href="popup.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="../css/material-components-web.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 </head>
 
 <body class="mdc-typography">
+    <!-- <ul class="mdc-list">
+        <a href="" data-mdc-auto-init="MDCRipple" class="mdc-list-item">
+            <i class="mdc-list-item__start-detail material-icons" aria-hidden="true">launch</i> Wikipedia</a>
 
-    <ul class="mdc-list">
-        <a href="" data-mdc-auto-init="MDCRipple" class="mdc-list-item"><i class="mdc-list-item__start-detail material-icons" aria-hidden="true">launch</i> Wikipedia</a>
-        <a href="" data-mdc-auto-init="MDCRipple" id="goToOptions" onclick="goToOptions()" class="mdc-list-item"><i class="mdc-list-item__start-detail material-icons" aria-hidden="true">build</i> Options</a>
+        <a href="" data-mdc-auto-init="MDCRipple" id="goToOptions" onclick="goToOptions()" class="mdc-list-item">
+            <i class="mdc-list-item__start-detail material-icons" aria-hidden="true">build</i> Options</a>
+
         <a href="" class="mdc-list-item">
             <i class="mdc-list-item__start-detail material-icons" aria-hidden="true">flip_to_front</i>
             <label for="basic-switch" class="mdc-switch-label clickable"> Toggle WikiLink Def </label>
@@ -23,10 +30,36 @@
                     <div class="mdc-switch__knob"></div>
                 </div>
             </div>
-        </a>
+        </a> 
+    </ul>-->
+    <ul class="mdl-list">
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content clickable">
+                <i class="material-icons mdl-list__item-icon">launch</i>
+                Wikipedia
+            </span>
+        </li>
+        <li class="mdl-list__item" id="goToOptions">
+            <span class="mdl-list__item-primary-content clickable">
+                <i class="material-icons mdl-list__item-icon">build</i>
+                Options
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content clickable">
+                <i class="material-icons mdl-list__item-icon">flip_to_front</i>
+                WikiLink Popover
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="wlWindowIsActive">
+                    <input type="checkbox" id="wlWindowIsActive" class="mdl-switch__input" checked />
+                </label>
+            </span>
+        </li>
     </ul>
 
     <script src="popup.js"></script>
+    <script src="../shared/material.min.js"></script>
 </body>
 
 </html>

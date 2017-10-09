@@ -9,7 +9,7 @@
   "options_page": "optionsPage/main.html",
   // "options_ui": {"page":"optionsPage/main.html"},
   "background": {
-    "scripts": ["eventPage.js", "repository/repo.js"],
+    "scripts": ["eventPage.js", "repository/http.js", "repository/wikiRepo.js"],
     "persistence": true
   },
   "browser_action": {

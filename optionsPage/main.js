@@ -1,21 +1,26 @@
 (function () {
     'using strict';
 
-    const CHKBX_WPTHUMBNAIL = getElement('#wikipedia-showThumbnail');
-    const SELECT_MAINLANGUAGE = getElement('#mainLanguage');
-    const SELECT_MAININFOSOURCE = getElement('#mainInfoSource');
-    const CHKBXGROUP_SEARCHON = {};
+    const CHKBXGROUP_SEARCHON = {
+        wikipedia: {},
+        wiktionary: {},
+        youtube: {}
+    };
+    const HTML = {
+        select_MainInfosource: {},
+        select_mainLanguage: {},
+        chkbx_wpThumbnail: {}
+    };
 
-    //#region var Initialization
-    CHKBXGROUP_SEARCHON.wikipedia = getElement('#searchOn_wp');
-    CHKBXGROUP_SEARCHON.wiktionary = getElement('#searchOn_wt');
-    CHKBXGROUP_SEARCHON.youtube = getElement('#searchOn_yt');
-    //#endregion
+    getElements([
+        [['#mainInfoSource', '#mainLanguage','#wikipedia-showThumbnail'], HTML],
+        [['#searchOn_wp','#searchOn_wt', '#searchOn_yt'], CHKBXGROUP_SEARCHON]
+    ]);
 
     //#region onClick Events
-    SELECT_MAINLANGUAGE.onchange = (event) => storage().set({ 'mainLanguage': event.srcElement.value }, () => console.log('mainLanguage Chaged'));
-    SELECT_MAININFOSOURCE.onchange = (event) => storage().set({ 'mainInfoSource': event.srcElement.value }, () => console.log('mainInfoSource Chaged'));
-    CHKBX_WPTHUMBNAIL.onclick = (event) => storage().set({ 'wikipedia-showThumbnail': event.srcElement.checked }, () => console.log('Wikipedia Thumbnail Chaged'));
+    HTML.select_mainLanguage.onchange = (event) => storage().set({ 'mainLanguage': event.srcElement.value }, () => console.log('mainLanguage Chaged'));
+    HTML.select_MainInfosource.onchange = (event) => storage().set({ 'mainInfoSource': event.srcElement.value }, () => console.log('mainInfoSource Chaged'));
+    HTML.chkbx_wpThumbnail.onclick = (event) => storage().set({ 'wikipedia-showThumbnail': event.srcElement.checked }, () => console.log('Wikipedia Thumbnail Chaged'));
 
     //#region SearchOn Option
     CHKBXGROUP_SEARCHON.wikipedia.onclick = (event) => storage().set({
@@ -63,6 +68,19 @@
         function set(keyValueObj, callback) {
             strg.set(keyValueObj, () => callback());
         }
+    }
+
+    function getElements(...vars) {
+        vars.forEach(groupsVars => {
+            groupsVars.forEach(element => {
+                let i= 0;
+                for (var key in element[1]) {
+                    element[1][key] = getElement(element[0][i]);
+                    i++;
+                }
+                i = 0;
+            });
+        });
     }
 
     function getElement(identifier) {

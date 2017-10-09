@@ -1,6 +1,8 @@
 (function () {
     'using strict';
 
+    var lang = {};
+    chrome.storage.sync.get('mainLanguage', obj =>{console.log(obj); lang = obj.mainLanguage;})
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         if (message.module === 'wikiRepo') {
             wR[message.method](message.key) //wR.searchImage('term')
@@ -14,8 +16,8 @@
     class wikiRepo {
         constructor() {
             this._wikiApi = {
-                image: (term) => `https://en.wikipedia.org/w/api.php?action=query&titles=${term}&prop=pageimages&format=json&pithumbsize=100`,
-                article: (term) => `https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=${term}`
+                image: (term) => `https://${lang}.wikipedia.org/w/api.php?action=query&titles=${term}&prop=pageimages&format=json&pithumbsize=100`,
+                article: (term) => `https://${lang}.wikipedia.org/w/api.php?action=opensearch&format=json&search=${term}`
             };
         }
 

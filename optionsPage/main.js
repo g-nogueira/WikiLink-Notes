@@ -12,10 +12,10 @@
         chkbx_wpThumbnail: {}
     };
 
-    getElements([
-        [['#mainInfoSource', '#mainLanguage','#wikipedia-showThumbnail'], HTML],
-        [['#searchOn_wp','#searchOn_wt', '#searchOn_yt'], CHKBXGROUP_SEARCHON]
-    ]);
+    getElements(
+        [['#mainInfoSource', '#mainLanguage', '#wikipedia-showThumbnail'], HTML],
+        [['#searchOn_wp', '#searchOn_wt', '#searchOn_yt'], CHKBXGROUP_SEARCHON]
+    );
 
     //#region onClick Events
     HTML.select_mainLanguage.onchange = (event) => storage().set({ 'mainLanguage': event.srcElement.value }, () => console.log('mainLanguage Chaged'));
@@ -70,16 +70,18 @@
         }
     }
 
+    /**
+     * @description It assigns html elements (array) to object children;
+     * @param {[[],{}]} vars
+     */
     function getElements(...vars) {
-        vars.forEach(groupsVars => {
-            groupsVars.forEach(element => {
-                let i= 0;
-                for (var key in element[1]) {
-                    element[1][key] = getElement(element[0][i]);
-                    i++;
-                }
-                i = 0;
-            });
+        vars.forEach(element => {
+            let i = 0;
+            for (var key in element[1]) {
+                element[1][key] = getElement(element[0][i]);
+                i++;
+            }
+            i = 0;
         });
     }
 

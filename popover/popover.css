@@ -9,6 +9,7 @@
     max-height: 500px;
     box-shadow:0 0 10px rgba(0, 0, 0, .5);
     text-align: left;
+    z-index: 10;
 }
 
 #cal1{

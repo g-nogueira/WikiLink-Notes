@@ -7,8 +7,9 @@
     "keyword": "wl:"
   },
   "options_page": "optionsPage/main.html",
+  // "options_ui": {"page":"optionsPage/main.html"},
   "background": {
-    "scripts": ["eventPage.js", "repository/repo.js"],
+    "scripts": ["eventPage.js", "repository/http.js", "repository/wikiRepo.js"],
     "persistence": true
   },
   "browser_action": {
@@ -20,8 +21,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["wlPopover.js"],
-      "css": ["css/popover.css"],
+      "js": ["popover/wlPopover.js"],
+      "css": ["popover/popover.css"],
       "run_at": "document_end"
     }
   ],

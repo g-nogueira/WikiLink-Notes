@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-pink.min.css">
+  <link rel="stylesheet" href="../shared/material-components-web.min.css">
   <link rel="stylesheet" href="styles.css">
   <style>
     #view-source {
@@ -31,6 +32,122 @@
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <main class="mdl-layout__content">
       <div class="mdl-layout__tab-panel is-active" id="overview">
+
+        <!-- Main Card -->
+        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Main</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              <ul class="mdc-list">
+                <li class="mdc-list-item">
+                  Language
+                  <select name="" id="mainLanguage">
+                    <option value="pt">Português</option>
+                    <option value="en">English</option>
+                  </select>
+                </li>
+                Main Info Source
+                <select name="" id="mainInfoSource">
+                  <option value="wp">Wikipedia</option>
+                  <option value="wt">Wiktionary</option>
+                </select>
+                </li>
+                <li class="mdc-list-item">Search on...
+                  <input type="checkbox" id="searchOn_wp"> Wikipedia
+                  <input type="checkbox" id="searchOn_wt"> Wiktionary
+                  <input type="checkbox" id="searchOn_yt"> Youtube
+                </li>
+              </ul>
+            </div>
+            <div class="mdl-card__actions">
+              <a href="#" class="mdl-button">Read our features</a>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Lorem</li>
+            <li class="mdl-menu__item" disabled>Ipsum</li>
+            <li class="mdl-menu__item">Dolor</li>
+          </ul>
+        </section>
+        <!-- ENDMain Card -->
+
+        <!-- Wikipedia Card -->
+        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Wikipedia</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              <input type="checkbox" name="" id="wikipedia-showThumbnail"> Show Image
+            </div>
+            <div class="mdl-card__actions">
+              <a href="#" class="mdl-button">Read our features</a>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Lorem</li>
+            <li class="mdl-menu__item" disabled>Ipsum</li>
+            <li class="mdl-menu__item">Dolor</li>
+          </ul>
+        </section>
+        <!-- ENDWikipedia Card -->
+
+        <!-- Wiktionary Card -->
+        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">Wiktionary</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              Configs
+            </div>
+            <div class="mdl-card__actions">
+              <a href="#" class="mdl-button">Read our features</a>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Lorem</li>
+            <li class="mdl-menu__item" disabled>Ipsum</li>
+            <li class="mdl-menu__item">Dolor</li>
+          </ul>
+        </section>
+        <!-- ENDWikipedia Card -->
+
+        <!-- Youtube Card -->
+        <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">YouTube</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Configs
+            </div>
+            <div class="mdl-card__actions">
+              <a href="#" class="mdl-button">Read our features</a>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Lorem</li>
+            <li class="mdl-menu__item" disabled>Ipsum</li>
+            <li class="mdl-menu__item">Dolor</li>
+          </ul>
+        </section>
+        <!-- ENDYoutube Card -->
+
         <!-- Section 1 -->
         <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
           <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
@@ -68,7 +185,8 @@
               <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                 <h5>Lorem ipsum dolor sit amet</h5>
                 Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Duis nulla tempor do aute et eiusmod velit exercitation
-                nostrud quis <a href="#">proident minim</a>.
+                nostrud quis
+                <a href="#">proident minim</a>.
               </div>
               <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
                 <div class="section__circle-container__circle mdl-color--primary"></div>
@@ -76,7 +194,8 @@
               <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                 <h5>Lorem ipsum dolor sit amet</h5>
                 Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Duis nulla tempor do aute et eiusmod velit exercitation
-                nostrud quis <a href="#">proident minim</a>.
+                nostrud quis
+                <a href="#">proident minim</a>.
               </div>
               <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
                 <div class="section__circle-container__circle mdl-color--primary"></div>
@@ -84,7 +203,8 @@
               <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                 <h5>Lorem ipsum dolor sit amet</h5>
                 Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Duis nulla tempor do aute et eiusmod velit exercitation
-                nostrud quis <a href="#">proident minim</a>.
+                nostrud quis
+                <a href="#">proident minim</a>.
               </div>
             </div>
             <div class="mdl-card__actions">
@@ -116,8 +236,8 @@
             </div>
           </div>
           <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
-              <i class="material-icons">more_vert</i>
-            </button>
+            <i class="material-icons">more_vert</i>
+          </button>
           <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
             <li class="mdl-menu__item">Lorem</li>
             <li class="mdl-menu__item" disabled>Ipsum</li>
@@ -125,7 +245,7 @@
           </ul>
         </section>
         <!-- ENDSection 3 -->
-        
+
         <!-- Section 4 -->
         <section class="section--footer mdl-color--white mdl-grid">
           <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
@@ -150,7 +270,10 @@
   </div>
   <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/text-only/" target="_blank" id="view-source"
     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a>
-  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+  <script src="../shared/material.min.js"></script>
+  <script src="../shared/material-components-web.min.js"></script>
+  <script src="main.js"></script>
 </body>
 
 </html>

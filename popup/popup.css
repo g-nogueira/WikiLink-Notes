@@ -1,27 +1,32 @@
-ul{
-    min-width: 275px;
-    border: 0;
+body{
+    min-width: 330px;
 }
 .clickable{
     cursor: pointer;
 }
+.navMenu{
+    height: 40px;
+    padding:10px 10px 0 10px;
+    background-color: rgb(209, 209, 209);
+    border-radius: 2px;
+}
 
-.mdc-list>a:hover,
-.mdc-list>div:hover{
-    background-color: rgba(226, 226, 226, 0.86);    
-    border-radius: 5px;
+.btnArea{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.noteTitle{
+    margin: 5px 0 5px 0;
+}
+
+.content .notesArea{
+    display: flex;
+    flex-flow: column;
 }
 
 
-.mdc-list{
-    padding:8px 1px 0 !important;
-}
-
-div.mdc-switch{
-    margin-right:0; 
-    margin-left:32px; 
-}
-
-i.mdc-list-item__start-detail{
-    margin-right: 20px;
+.margin-5{
+    margin:0 5px 0 5px;
 }

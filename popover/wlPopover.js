@@ -73,7 +73,7 @@
 
     function repoRequest(term) {
         let msg = {
-            module: 'repository',
+            module: 'wikiRepo',
             method: 'searchTerm',
             key: term
         };

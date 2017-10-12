@@ -30,7 +30,7 @@
     getRanges();
     insertDiv();
 
-    document.onmouseup = async function (event) {
+    document.onmouseup = function (event) {
         if (event.which === 1)
             if (!sel.isCollapsed)
                 searchSelectedAsync();

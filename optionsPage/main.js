@@ -1,7 +1,7 @@
 (function () {
     'using strict';
 
-    const CHKBXGROUP_SEARCHON = {
+    const CONFIG_SEARCHON = {
         wikipedia: {},
         wiktionary: {},
         youtube: {}
@@ -14,7 +14,7 @@
 
     getElements(
         [['#mainInfoSource', '#mainLanguage', '#wikipedia-showThumbnail'], HTML],
-        [['#searchOn_wp', '#searchOn_wt', '#searchOn_yt'], CHKBXGROUP_SEARCHON]
+        [['#searchOn_wp', '#searchOn_wt', '#searchOn_yt'], CONFIG_SEARCHON]
     );
 
     //#region onClick Events
@@ -23,29 +23,29 @@
     HTML.chkbx_wpThumbnail.onclick = (event) => storage().set({ 'wikipedia-showThumbnail': event.srcElement.checked }, () => console.log('Wikipedia Thumbnail Chaged'));
 
     //#region SearchOn Option
-    CHKBXGROUP_SEARCHON.wikipedia.onclick = (event) => storage().set({
+    CONFIG_SEARCHON.wikipedia.onclick = (event) => storage().set({
         'actionMenu-searchOn':
         {
             wikipedia: event.srcElement.checked,
-            wiktionary: CHKBXGROUP_SEARCHON.wiktionary.checked,
-            youtube: CHKBXGROUP_SEARCHON.youtube.checked
+            wiktionary: CONFIG_SEARCHON.wiktionary.checked,
+            youtube: CONFIG_SEARCHON.youtube.checked
         }
     }, () => console.log(`actionMenu-search -Wikipedia- Saved`));
 
-    CHKBXGROUP_SEARCHON.wiktionary.onclick = (event) => storage().set({
+    CONFIG_SEARCHON.wiktionary.onclick = (event) => storage().set({
         'actionMenu-searchOn':
         {
-            wikipedia: CHKBXGROUP_SEARCHON.wiktionary.checked,
+            wikipedia: CONFIG_SEARCHON.wiktionary.checked,
             wiktionary: event.srcElement.checked,
-            youtube: CHKBXGROUP_SEARCHON.youtube.checked
+            youtube: CONFIG_SEARCHON.youtube.checked
         }
     }, () => console.log(`actionMenu-search -Wiktionary- Saved`));
 
-    CHKBXGROUP_SEARCHON.youtube.onclick = (event) => storage().set({
+    CONFIG_SEARCHON.youtube.onclick = (event) => storage().set({
         'actionMenu-searchOn':
         {
-            wikipedia: CHKBXGROUP_SEARCHON.wikipedia.checked,
-            wiktionary: CHKBXGROUP_SEARCHON.wiktionary.checked,
+            wikipedia: CONFIG_SEARCHON.wikipedia.checked,
+            wiktionary: CONFIG_SEARCHON.wiktionary.checked,
             youtube: event.srcElement.checked
         }
     }, () => console.log(`actionMenu-search -Youtube- Saved`));

@@ -2,7 +2,7 @@
     'using strict';
 
     var lang = {};
-    chrome.storage.sync.get('mainLanguage', obj =>{console.log(obj); lang = obj.mainLanguage;})
+    chrome.storage.sync.get('mainLanguage', obj => lang = obj.mainLanguage)
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         if (message.module === 'wikiRepo') {
             wR[message.method](message.key) //wR.searchImage('term')

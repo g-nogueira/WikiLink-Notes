@@ -1,9 +1,20 @@
 ﻿(function () {
     "use strict";
 
-    var opts = {};
+    chrome.storage.sync.get('mainLanguage', obj => {
+        if (!obj.mainLanguage)
+            chrome.storage.sync.set({ 'mainLanguage': 'us' });
+    });
 
+    chrome.storage.sync.get('mainInfoSource', obj => {
+        if (!obj.mainInfoSource)
+            chrome.storage.sync.set({ 'mainInfoSource': 'wp' });
+    });
 
+    chrome.storage.sync.get('wikipedia-showThumbnail', obj => {
+        if (typeof obj['wikipedia-showThumbnail'] !== 'boolean')
+            chrome.storage.sync.set({ 'wikipedia-showThumbnail': true });
+    });
 
     chrome.runtime.onMessage.addListener(
         function (request, sender, sendResponse) {

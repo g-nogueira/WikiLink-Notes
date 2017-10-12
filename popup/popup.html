@@ -13,23 +13,46 @@
 
 <body class="mdc-typography">
 
-    <header class="navMenu">
-        <section class="btnArea">
-            <div>
-                <input type="checkbox" name="" id="wlWindowIsActive">WikiLink Popover</div>
-            <div>
-                <input class="margin-5" id="saveNotes" type="button" value="SAVE">
-                <a class="margin-5" href="" id="goToOptions">Options</a>
-            </div>
-        </section>
-    </header>
 
-    <div class="content">
-        <section class="notesArea">
-            <input class="noteTitle" type="text" id="notesTitle" placeholder="Title">
-            <textarea id="notesBody" cols="30" rows="10" placeholder="Your notes goes in here!" style="resize:none;"></textarea>
-        </section>
+    <div class="" id="notesListPage">
+        <header class="navMenu">
+            <section class="btnArea">
+                <div>
+                    <input type="checkbox" id="wlWindowIsActive">WikiLink Popover</div>
+                <div>
+                    <input class="margin-5" id="toNewNotePage" type="button" value="NEW">
+                    <a class="margin-5" href="" id="goToOptions">Options</a>
+                </div>
+            </section>
+        </header>
+
+        <div class="content">
+            <section class="notesArea" id="notesArea">
+            </section>
+        </div>
     </div>
+
+    <div class="hidden" id="newNotePage">
+        <header class="navMenu">
+            <section class="btnArea">
+                <div>
+                    <Button id="toNotesListPage">Back</Button>
+                </div>
+                <div>
+                    <input class="margin-5" id="saveNotes" type="button" value="SAVE">
+                    <a class="margin-5" href="" id="goToOptions">Options</a>
+                </div>
+            </section>
+        </header>
+
+        <div class="content">
+            <section class="notesArea">
+                <input class="noteTitle" type="text" id="notesTitle" placeholder="Title">
+                <textarea id="notesBody" cols="30" rows="10" placeholder="Your notes goes in here!" style="resize:none;"></textarea>
+            </section>
+        </div>
+    </div>
+
 
     <script src="popup.js"></script>
     <script src="../shared/material.min.js"></script>

@@ -8,10 +8,103 @@
             chrome.storage.sync.set({ 'popoverIsEnabled': true }, () => { });
         }
     });
+    class Note {
+        constructor(config) {
+            this.title = config.title;
+            this.body = config.body;
+            this.id = config.id || (new Date()).getTime();
+            this.createdOn = (new Date(this.id)).toLocaleDateString();
+        }
 
-    showNotes();
+        get htmlElement() {
+            let noteItem = document.createElement('div');
+            let section = document.createElement('section');
+            let dateSpan = document.createElement('span');
+            let titleSpan = document.createElement('span');
+            let btnSpan = document.createElement('span');
+            let delBtn = document.createElement('button');
+            let delIcon = document.createElement('i');
 
-    var notes = [];
+            noteItem.classList.add('noteItem');
+            noteItem.setAttribute('id', this.id);
+
+            dateSpan.classList.add('noteDate');
+            dateSpan.appendChild(document.createTextNode(this.createdOn));
+
+            titleSpan.classList.add('noteTitle');
+            titleSpan.appendChild(document.createTextNode(this.title));
+
+            
+            section.appendChild(dateSpan);
+            section.appendChild(titleSpan);
+            
+            delIcon.classList.add('material-icons', 'deleteIcon');
+            delIcon.appendChild(document.createTextNode('clear'));
+            delBtn.classList.add('mdc-button', 'mdc-button--dense');
+            delBtn.appendChild(delIcon);
+            delBtn.onclick = () => {
+                removeNoteElement(this);
+                removeNoteFromStorage(this);
+            };
+            btnSpan.classList.add('delBtn');
+            btnSpan.appendChild(delBtn);
+
+            noteItem.appendChild(section);
+            noteItem.appendChild(btnSpan);
+
+
+
+            return noteItem;
+
+            function removeNoteElement(self) {
+                let div = document.getElementById(`${self.id}`)
+                div.parentNode.removeChild(div);
+            }
+            function removeNoteFromStorage(self) {
+                chrome.storage.sync.get('notes', keyValueArray => {
+                    let notes = keyValueArray.notes;
+                    let newNotes = [];
+                    let i;
+                    for (i = 0; i < notes.length; i++) {
+                        if (notes[i].id == self.id) {
+                            newNotes = notes.slice(0, i);
+                            console.log(notes.slice(i + 1));
+                            newNotes = newNotes.concat(notes.slice(i + 1));
+                        }
+                    }
+                    chrome.storage.sync.set({ 'notes': newNotes });
+                });
+            }
+        }
+        storeNote() {
+            let storage = [];
+            chrome.storage.sync.get('notes', (keyValueObj) => {
+                storage = keyValueObj.notes;
+                storage.push(this);
+                console.log(JSON.stringify(storage));
+
+                chrome.storage.sync.set({ 'notes': storage }, () => {
+                    console.log(`Notes saved!`);
+                });
+            });
+        }
+    }
+    class Pages {
+        toNoteCreation() {
+            document.getElementById('newNotePage')
+                .classList.remove('hidden');
+            document.getElementById('notesListPage')
+                .classList.add('hidden');
+        }
+        toNotesList() {
+            document.getElementById('notesListPage')
+                .classList.remove('hidden');
+            document.getElementById('newNotePage')
+                .classList.add('hidden');
+        }
+    }
+
+    displayNotes();
 
     var optElements = {
         wLPopup: {},
@@ -25,63 +118,37 @@
         newNoteBtn: {}
     };
 
+
+
     getElements(
         [['#wlWindowIsActive', '#goToOptions', '#toNotesListPage'], optElements],
         [['#notesTitle', '#notesBody', '#saveNotes', '#toNewNotePage',], newNote]
     );
 
     //// onClick EVENTS ////
+    var pages = new Pages();
+
     optElements.wLPopup.onclick =
-        (event) => setPopoverState(event.srcElement.checked);
+        event => isPopoverActive(event.srcElement.checked);
     optElements.optLink.onclick =
-        (event) => redirectToOptions();
+        () => redirectToOptions();
     newNote.saveBtn.onclick =
-        (event) => saveNote(
-            {
-                title: newNote.titleElem.value,
-                body: newNote.bodyElem.value,
-                id: (new Date()).getTime()
-            }
-        );
-
+        () => {
+            (new Note({ title: newNote.titleElem.value, body: newNote.bodyElem.value })).storeNote()
+            newNote.titleElem.value = '';
+            newNote.bodyElem.value = '';
+        };
     newNote.newNoteBtn.onclick =
-        event => {
-            document.getElementById('notesListPage')
-                .classList.add('hidden');
-
-            document.getElementById('newNotePage')
-                .classList.remove('hidden');
-        }
+        () => pages.toNoteCreation();
     optElements.toNotesListPage.onclick =
-        event => {
-            document.getElementById('notesListPage')
-                .classList.remove('hidden');
+        () => {
+            pages.toNotesList();
+            displayNotes();
+        };
 
-            document.getElementById('newNotePage')
-                .classList.add('hidden');
-        }
 
-    //// EVENTS FUNCTIONS ////
-    function setPopoverState(isActive = true) {
-        chrome.storage.sync.set({ 'popoverIsEnabled': isActive }, () => {
-            console.log(`Settings to WikiLinkPanelPopover toggleable is saved to: ${isActive}`);
-        });
-    }
-    function saveNote(noteContent) {
-        // let storage = [noteContent];
-        let storage = [];
-        chrome.storage.sync.get('notes', (obj) => {
-            storage = obj.notes;
-            storage.push(noteContent);
-            console.log(JSON.stringify(storage));
 
-            chrome.storage.sync.set({ 'notes': storage }, () => {
-                console.log(`Notes saved!`);
-            });
-        });
-
-    }
-
+    //#region Implementation
     /**
      * @description It assigns html elements (array) to object children;
      * @param {[[],{}]} vars
@@ -99,6 +166,11 @@
     function getElement(identifier) {
         return document.querySelector(identifier);
     }
+    function isPopoverActive(isActive = true) {
+        chrome.storage.sync.set({ 'popoverIsEnabled': isActive }, () => {
+            console.log(`Settings to WikiLinkPanelPopover toggleable is saved to: ${isActive}`);
+        });
+    }
     function redirectToOptions() {
         if (chrome.runtime.openOptionsPage) {
             // New way to open options pages, if supported (Chrome 42+).
@@ -108,73 +180,32 @@
             window.open(chrome.runtime.getURL('../optionsPage/main.html'));
         }
     }
-
-    function showNotes() {
+    function displayNotes() {
         chrome.storage.sync.get('notes', obj => {
-            // let notesArea = getElement('.notesArea');
-
+            while (notesArea.hasChildNodes()) {
+                notesArea.removeChild(notesArea.lastChild);
+            }
             obj.notes.forEach(function (element) {
-                let noteItem = newNoteItem({ date: (new Date(element.id)).toLocaleDateString(), title: element.title, id: element.id });
-                document.getElementById('notesArea').appendChild(noteItem);
+                let notesArea = document.getElementById('notesArea');
+                let note = new Note({
+                    title: element.title,
+                    body: element.body,
+                    id: element.id
+                });
+                notesArea.appendChild(note.htmlElement);
             }, this);
         });
 
     }
-
-    /**
-     * 
-     * @param {{date: '', title: '', id: number}} config
-     */
-    function newNoteItem(config) {
-        let divNoteItem = document.createElement('div');
-        let section = document.createElement('section');
-        let spanDate = document.createElement('span');
-        let spanTitle = document.createElement('span');
-        let spanBtn = document.createElement('span');
-        let delBtn = document.createElement('button');
-
-        divNoteItem.setAttribute('class', 'noteItem');
-        divNoteItem.setAttribute('id', config.id);
-
-        spanDate.setAttribute('class', 'noteDate');
-        spanDate.appendChild(document.createTextNode(config.date));
-        // spanDate.setAttribute('value', config.date);
-
-        spanTitle.setAttribute('class', 'noteTitle');
-        spanTitle.appendChild(document.createTextNode(config.title));
-        // spanTitle.setAttribute('value', config.title);
-
-        spanBtn.setAttribute('class', 'delBtn');
-
-        section.appendChild(spanDate);
-        section.appendChild(spanTitle);
-
-        delBtn.appendChild(document.createTextNode('Del'));
-        delBtn.onclick = () => {
-            let div = getElement(`#${config.id}`);
-            div.parentNode.removeChild(div);            
-            deleteNote(config.id);
-        };
-        spanBtn.appendChild(delBtn);
-
-        divNoteItem.appendChild(section);
-        divNoteItem.appendChild(spanBtn);
-
-        return divNoteItem;
-    }
-
-    function deleteNote(id) {
-        chrome.storage.sync.get('notes', obj => {
-            let i = 0;
-            let newNotes = [];
-            newNotes = obj.notes;
-            for (i = 0; i < obj.notes.length; i++) {
-                if (obj.notes[i].id == id) {
-                    newNotes.slice(i, i+1);
-                }
+    function initializeElemValues() {
+        chrome.storage.sync.get('popoverIsEnabled', obj => {
+            optElements.
+                wLPopup.checked = obj.popoverIsEnabled;
+            if (obj.popoverIsEnabled === {}) {
+                chrome.storage.sync.set({ 'popoverIsEnabled': true }, () => { });
             }
-            console.log(`New notes to be stored: ${JSON.stringify(newNotes)}`);
-            chrome.storage.sync.set({'notes': newNotes});
         });
     }
+    //#endregion
+
 })();

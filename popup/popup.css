@@ -1,5 +1,5 @@
 body{
-    min-width: 330px;
+    min-width: 380px;
     margin: 5px;
 }
 .clickable{
@@ -10,6 +10,7 @@ body{
     padding:10px 10px 0 10px;
     background-color: rgb(209, 209, 209);
     border-radius: 2px;
+    margin-bottom: 5px;
 }
 
 .btnArea{
@@ -34,8 +35,21 @@ body{
 .noteItem{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 4px 0 4px 0;
+}
+.noteItem:not(:last-child){
+    border-bottom: 1px solid rgb(201, 201, 201);
+}
+
+.noteDate{
+    margin-right: 10px;
 }
 
 .hidden{
     display: none;
+}
+
+.deleteIcon{
+    color: #F44336;
 }

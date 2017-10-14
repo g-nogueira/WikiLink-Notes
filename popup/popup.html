@@ -14,33 +14,37 @@
 <body class="mdc-typography">
 
 
-    <div class="" id="notesListPage">
-        <header class="navMenu">
+    <div id="notesListPage">
+        <header class="navMenu mdc-elevation--z2">
             <section class="btnArea">
-                <div>
+                <div class="mdc-form-field">
                     <input type="checkbox" id="wlWindowIsActive">WikiLink Popover</div>
                 <div>
-                    <input class="margin-5" id="toNewNotePage" type="button" value="NEW">
-                    <a class="margin-5" href="" id="goToOptions">Options</a>
+                    <button class="mdc-button" id="toNewNotePage">NEW</button>
+                    <button class="mdc-button" id="goToOptions">
+                        <i class="material-icons">settings</i>
+                    </button>
                 </div>
             </section>
         </header>
 
         <div class="content">
-            <section class="notesArea" id="notesArea">
-            </section>
+            <section class="notesArea" id="notesArea"></section>
         </div>
     </div>
 
     <div class="hidden" id="newNotePage">
-        <header class="navMenu">
+        <header class="navMenu mdc-elevation--z2">
             <section class="btnArea">
                 <div>
-                    <Button id="toNotesListPage">Back</Button>
+                    <Button id="toNotesListPage" class="mdc-button">Back</Button>
                 </div>
                 <div>
-                    <input class="margin-5" id="saveNotes" type="button" value="SAVE">
-                    <a class="margin-5" href="" id="goToOptions">Options</a>
+                    <button class="mdc-button" id="saveNotes">SAVE</button>
+                    <button class="mdc-button" id="goToOptions">
+                        <i class="material-icons">settings</i>
+                    </button>
+
                 </div>
             </section>
         </header>

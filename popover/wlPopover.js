@@ -23,6 +23,7 @@
     var previous = null;    //The previous selected text will keep stored for 2 seconds;
     var rel1, rel2;         //Range of Cals;
     var div;                //The popover inserted;
+    var imageTag;
     var sel = window.getSelection();
 
     //Immediately insert the cals, the popover div and get their ranges;
@@ -93,6 +94,8 @@
 
     function insertDiv() {
         div = document.createElement('div');
+        imageTag = document.createElement('img');
+
         div.setAttribute('class', 'wikilink-popover');
         div.setAttribute('id', 'wikilink-popover');
         document.body.appendChild(div);

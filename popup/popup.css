@@ -21,6 +21,11 @@ body{
 
 .noteTitle{
     margin: 5px 0 5px 0;
+    cursor: pointer;
+}
+
+.noteTitleArea{
+    margin: 5px 0 5px 0;
 }
 
 .content .notesArea{
@@ -37,6 +42,11 @@ body{
     justify-content: space-between;
     align-items: center;
     padding: 4px 0 4px 0;
+}
+
+
+.noteItem:hover{
+    background-color: #f8f8f8;
 }
 .noteItem:not(:last-child){
     border-bottom: 1px solid rgb(201, 201, 201);

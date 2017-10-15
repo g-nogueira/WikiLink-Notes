@@ -106,8 +106,8 @@
         pTag.textContent = (txtData.body.length > 0 ? txtData.body : notFound);
         imageTag.src = imgData.url;
         showDiv();
-        imageTag.style.width = imgData.width;
-        imageTag.style.height = imgData.height;
+        // imageTag.style.width = imgData.width;
+        // imageTag.style.height = imgData.height;
         // div.textContent = (txtData.body.length > 0 ? txtData.body : notFound);
     }
 

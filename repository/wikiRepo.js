@@ -16,7 +16,7 @@
     class wikiRepo {
         constructor() {
             this._wikiApi = {
-                image: (term) => `https://${lang}.wikipedia.org/w/api.php?action=query&titles=${term}&prop=pageimages&format=json&pithumbsize=100`,
+                image: term => `https://www.googleapis.com/customsearch/v1?cx=016244970766248583918:9b3frzu6es8&key=AIzaSyCN-omPs_tf0fYlIo-PwVvW0HbC6lS35e4&q=${term}&searchType=image&num=1`,
                 article: (term) => `https://${lang}.wikipedia.org/w/api.php?action=opensearch&format=json&search=${term}`
             };
         }
@@ -79,11 +79,10 @@
         function image() {
             let i = flatten(json);
             return {
-                url: i.source,
-                width: i.width,
-                height: i.height
-            };
-
+                url: json.items[0].link,
+                width: json.items[0].image.width,
+                height: json.items[0].image.height
+            }
         }
         function article() {
             return {

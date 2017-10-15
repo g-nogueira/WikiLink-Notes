@@ -4,7 +4,7 @@
 | It creates a div element at the displayed page |
 | DOM, as well as two cals, for padding sakes.   |
 | Gets the ranges of these elements and listen to|
-| the onMouseUp event, that gets to selected     |
+| the onMouseUp event, that gets the selected     |
 | text, parses it and request data to the API.   |
 | The response will be displayed into a popover. |
 |                                                |
@@ -12,7 +12,7 @@
 |                                                |
 | Known issues:                                  |
 | - The popover closes wherever you click,       |
-| trigged by the onMouseDown event; Gonna fix it.|
+| trigged by the onMouseDown event; toDo.        |
 |                                                |
 @------------------------------------------------@
 */
@@ -58,6 +58,14 @@
         });
     }
 
+    async function ImageIsEnabledAsync() {
+        return new Promise(resolve => {
+            chrome.storage.sync.get('wikipedia-showThumbnail',
+                obj => resolve(obj.popoverIsEnabled)
+            );
+        });
+    }
+
     function AutoResetPrevious() {
         setTimeout(function () {
             previous = null;
@@ -81,14 +89,9 @@
     }
 
     function showData(data) {
-        if (data.body.length > 0) {
-            div.textContent = data.body;
-            showDiv();
-        }
-        else {
-            div.textContent = 'Ops: nenhum resultado encontrado...';
-            showDiv();
-        }
+        const notFound = 'Ops: nenhum resultado encontrado...';
+        div.textContent = (data.body.length > 0 ? data.body : notFound);
+        showDiv();
     }
 
     function insertDiv() {

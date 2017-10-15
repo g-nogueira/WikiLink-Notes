@@ -24,6 +24,7 @@
     var rel1, rel2;         //Range of Cals;
     var div;                //The popover inserted;
     var imageTag;
+    var pTag;
     var sel = window.getSelection();
 
     //Immediately insert the cals, the popover div and get their ranges;
@@ -86,21 +87,45 @@
             method: 'searchTerm',
             key: term
         };
-        chrome.runtime.sendMessage(msg, showData);
+        chrome.runtime.sendMessage(msg, (data) => {
+            imgRequest(term, data);
+        });
+    }
+    function imgRequest(term, txtData) {
+        let msg = {
+            module: 'wikiRepo',
+            method: 'searchImage',
+            key: term
+        };
+        chrome.runtime.sendMessage(msg, (imgData) => showData(txtData, imgData));
     }
 
-    function showData(data) {
+    function showData(txtData, imgData) {
+        debugger
         const notFound = 'Ops: nenhum resultado encontrado...';
-        div.textContent = (data.body.length > 0 ? data.body : notFound);
+        pTag.textContent = (txtData.body.length > 0 ? txtData.body : notFound);
+        imageTag.src = imgData.url;
         showDiv();
+        imageTag.style.width = imgData.width;
+        imageTag.style.height = imgData.height;
+        // div.textContent = (txtData.body.length > 0 ? txtData.body : notFound);
     }
 
     function insertDiv() {
         div = document.createElement('div');
         imageTag = document.createElement('img');
+        pTag = document.createElement('p');
+        let contentGroup = document.createElement('div');
 
-        div.setAttribute('class', 'wikilink-popover');
+        imageTag.classList.add('popoverImage');
+        pTag.classList.add('popoverText');
+        div.classList.add('popover');
         div.setAttribute('id', 'wikilink-popover');
+        contentGroup.classList.add('contentGroup');
+        contentGroup.appendChild(imageTag);
+        contentGroup.appendChild(pTag);
+        div.appendChild(contentGroup);
+
         document.body.appendChild(div);
     }
 

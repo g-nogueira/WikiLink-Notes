@@ -16,7 +16,7 @@
     class wikiRepo {
         constructor() {
             this._wikiApi = {
-                image: term => `https://www.googleapis.com/customsearch/v1?cx=016244970766248583918:9b3frzu6es8&key=AIzaSyCN-omPs_tf0fYlIo-PwVvW0HbC6lS35e4&q=${term}&searchType=image&num=1`,
+                image: term => `https://www.googleapis.com/customsearch/v1?cx=016244970766248583918:9b3frzu6es8&key=AIzaSyCANbzYzOf_Bkm2KLw5di6tR30aNC6mOCU&q=${term}&searchType=image&num=1`,
                 article: (term) => `https://${lang}.wikipedia.org/w/api.php?action=opensearch&format=json&search=${term}`
             };
         }
@@ -32,7 +32,8 @@
             return new Promise((resolve, reject) => {
                 http
                     .get(this._wikiApi.image(term))
-                    .then(response => resolve(formatResponse(response, 'image')));
+                    .then(response => resolve(formatResponse(response, 'image')))
+                    .catch(response => resolve(response));
             });
         }
     }
@@ -77,7 +78,6 @@
             image: image
         };
         function image() {
-            let i = flatten(json);
             return {
                 url: json.items[0].link,
                 width: json.items[0].image.width,
@@ -92,29 +92,5 @@
         }
 
         return tp[type]();
-
-        function flatten(object) {
-            return Object.assign({}, ...function _flatten(objectBit, path = '') {  //spread the result into our return object
-                return [].concat(                                                       //concat everything into one level
-                    ...Object.keys(objectBit).map(                                      //iterate over object
-                        key => typeof objectBit[key] === 'object' ?                       //check if there is a nested object
-                            _flatten(objectBit[key], `${key}`) :              //call itself if there is
-                            ({ [`${key}`]: objectBit[key] })                //append object with it’s path as key
-                    )
-                )
-            }(object));
-        };
-
-        // function flatten1(object) {
-        //     return Object.assign({}, ...function _flatten(objectBit, path = '') {  //spread the result into our return object
-        //         return [].concat(                                                       //concat everything into one level
-        //             ...Object.keys(objectBit).map(                                      //iterate over object
-        //                 key => typeof objectBit[key] === 'object' ?                       //check if there is a nested object
-        //                     _flatten(objectBit[key], `${path}.${key}`) :              //call itself if there is
-        //                     ({ [`${path}.${key}`]: objectBit[key] })                //append object with it’s path as key
-        //             )
-        //         )
-        //     }(object));
-        // };
     }
 })();

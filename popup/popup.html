@@ -5,14 +5,13 @@
     <title>popup</title>
     <link href="popup.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="../shared/material-components-web.min.css">
+    <link rel="stylesheet" href="material-components-web.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body class="mdc-typography">
-
+    
 
     <div id="notesListPage">
         <header class="navMenu mdc-elevation--z2">
@@ -29,7 +28,7 @@
         </header>
 
         <div class="content">
-            <section class="notesArea" id="notesArea"></section>
+            <section class="notesArea mdc-typography--body1" id="notesArea"></section>
         </div>
     </div>
 
@@ -50,16 +49,18 @@
         </header>
 
         <div class="content">
-            <section class="notesArea">
-                <input class="noteTitleArea" type="text" id="noteTitleArea" placeholder="Title">
-                <textarea id="noteBodyArea" cols="30" rows="10" placeholder="Your notes goes in here!" style="resize:none;"></textarea>
+            <section class="notesArea mdc-typography--body1">
+                <!-- <input class="noteTitleArea" type="text" id="noteTitleArea" placeholder="Title"> -->
+                  <div class="mdc-textfield">
+                    <input type="text" class="mdc-textfield__input" id="noteTitleArea" placeholder="Title">
+                  </div>
+                <!-- <textarea id="noteBodyArea" cols="30" rows="10" placeholder="Your notes goes in here!" style="resize:none;"></textarea> -->
+                <textarea id="noteBodyArea" class="mdc-textfield__input" cols="30" rows="10" placeholder="Your notes goes in here!"></textarea>
             </section>
         </div>
     </div>
 
-
     <script src="popup.js"></script>
-    <script src="../shared/material.min.js"></script>
 </body>
 
 </html>

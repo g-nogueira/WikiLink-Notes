@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-
+    
     /*******************************************************
      * on class Note.htmlElement
      *      >titleSpan.onclick needs to be implemented correctly;

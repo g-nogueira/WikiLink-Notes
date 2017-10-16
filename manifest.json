@@ -6,6 +6,8 @@
   "omnibox": {
     "keyword": "wl:"
   },
+  "icons": {
+   "128": "Images/icon7.png" },
   "options_page": "optionsPage/main.html",
   // "options_ui": {"page":"optionsPage/main.html"},
   "background": {
@@ -14,7 +16,7 @@
   },
   "browser_action": {
     "default_locale": "en",
-    "default_icon": "Images/icon.png",
+    "default_icon": "Images/icon7.png",
     "default_popup": "popup/popup.html",
     "default_title": "WikiLink Settings"
   },

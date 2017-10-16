@@ -1,5 +1,5 @@
 body{
-    min-width: 380px;
+    min-width: 450px;
     margin: 5px;
 }
 .clickable{
@@ -8,7 +8,7 @@ body{
 .navMenu{
     height: 40px;
     padding:10px 10px 0 10px;
-    background-color: rgb(209, 209, 209);
+    background-color: #00897B;
     border-radius: 2px;
     margin-bottom: 5px;
 }
@@ -17,6 +17,9 @@ body{
     display: flex;
     flex-flow: row;
     justify-content: space-between;
+}
+.btnArea *{
+    color: #fff !important;
 }
 
 .noteTitle{
@@ -31,6 +34,7 @@ body{
 .content .notesArea{
     display: flex;
     flex-flow: column;
+    /* font-family: robotoMaterial; */
 }
 
 .margin-5{
@@ -62,4 +66,9 @@ body{
 
 .deleteIcon{
     color: #F44336;
+}
+
+textarea.mdc-textfield__input{
+    border: 1px solid rgba(0,0,0,.2);
+    resize:none;
 }

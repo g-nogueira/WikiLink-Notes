@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    
+
     /*******************************************************
      * on class Note.htmlElement
      *      >titleSpan.onclick needs to be implemented correctly;
@@ -60,20 +60,19 @@
             while (notesArea.hasChildNodes()) {
                 notesArea.removeChild(notesArea.lastChild);
             }
-            obj.notes||[].forEach(function (element) {
+            let note;
+            obj.notes.forEach(function (element) {
                 let notesArea = document.getElementById('notesArea');
-                let note = new Note({
+                note = new Note({
                     title: element.title,
                     body: element.body,
                     id: element.id
                 });
+                notesArea.appendChild(note.htmlElement);
             }, this);
-            if (!obj.note) {
+            if (!obj.notes) {
                 let textNode = document.createTextNode('There is not notes to show...');
                 notesArea.appendChild(textNode);
-            }
-            else{
-                notesArea.appendChild(note.htmlElement);
             }
         });
 

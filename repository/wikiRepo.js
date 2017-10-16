@@ -17,7 +17,7 @@
         constructor() {
             this._wikiApi = {
                 image: term => `https://www.googleapis.com/customsearch/v1?cx=016244970766248583918:9b3frzu6es8&key=AIzaSyCANbzYzOf_Bkm2KLw5di6tR30aNC6mOCU&q=${term}&searchType=image&num=1`,
-                article: (term) => `https://${lang}.wikipedia.org/w/api.php?action=opensearch&format=json&search=${term}`
+                article: (term) => `https://${lang || 'en'}.wikipedia.org/w/api.php?action=opensearch&format=json&search=${term}`
             };
         }
 

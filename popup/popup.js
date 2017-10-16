@@ -60,15 +60,21 @@
             while (notesArea.hasChildNodes()) {
                 notesArea.removeChild(notesArea.lastChild);
             }
-            obj.notes.forEach(function (element) {
+            obj.notes||[].forEach(function (element) {
                 let notesArea = document.getElementById('notesArea');
                 let note = new Note({
                     title: element.title,
                     body: element.body,
                     id: element.id
                 });
-                notesArea.appendChild(note.htmlElement);
             }, this);
+            if (!obj.note) {
+                let textNode = document.createTextNode('There is not notes to show...');
+                notesArea.appendChild(textNode);
+            }
+            else{
+                notesArea.appendChild(note.htmlElement);
+            }
         });
 
     }
@@ -140,7 +146,7 @@
             }
             function removeNoteFromStorage(self) {
                 chrome.storage.sync.get('notes', keyValueArray => {
-                    let notes = keyValueArray.notes;
+                    let notes = keyValueArray.notes || [];
                     let newNotes = [];
                     let i;
                     for (i = 0; i < notes.length; i++) {
@@ -157,7 +163,7 @@
         storeNote() {
             let storage = [];
             chrome.storage.sync.get('notes', (keyValueObj) => {
-                storage = keyValueObj.notes;
+                storage = keyValueObj.notes || [];
                 storage.push(this);
                 console.log(JSON.stringify(storage));
 

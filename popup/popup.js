@@ -61,7 +61,8 @@
                 notesArea.removeChild(notesArea.lastChild);
             }
             let note;
-            obj.notes.forEach(function (element) {
+            let notes = obj.notes||[];
+            notes.forEach(function (element) {
                 let notesArea = document.getElementById('notesArea');
                 note = new Note({
                     title: element.title,

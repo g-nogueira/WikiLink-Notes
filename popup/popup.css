@@ -1,4 +1,4 @@
-@root{
+:root{
     --main-header-color: #00897B;
 }
 
@@ -15,7 +15,7 @@ body{
 }
 .navMenu{
     padding:5px 10px 5px 10px;
-    background-color: #00897B;
+    background-color: var(--main-header-color);
     border-radius: 2px;
     margin-bottom: 5px;
     display: flex;
@@ -125,7 +125,11 @@ textarea.mdc-textfield__input:focus{
 }
 
 .mdc-checkbox__checkmark__path{
-    stroke: rgb(0, 137, 123) !important;
+    stroke: var(--main-header-color) !important;
+}
+
+.btn{
+    cursor: pointer;
 }
 
 /*
@@ -134,8 +138,8 @@ Modify to fit your designs requirements.
 */
 .app-fab--absolute.app-fab--absolute {
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    bottom: .5rem;
+    right: .5rem;
 }
 
 @media(min-width: 1024px) {
@@ -146,5 +150,9 @@ Modify to fit your designs requirements.
 }
 
 .mdc-fab{
-    background-color: 
+    background-color: var(--main-header-color) !important;
+}
+
+.mdc-simple-menu.options{
+    right: 10px;
 }

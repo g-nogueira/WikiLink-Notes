@@ -1,6 +1,13 @@
 ﻿(function () {
     "use strict";
 
+    const MDCComponent = mdc.base.MDCComponent;
+    const MDCFoundation = mdc.base.MDCFoundation;
+
+    let menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
+    // Add event listener to some button to toggle the menu on and off.
+    document.querySelector('#goToOptions').addEventListener('click', () => menu.open = !menu.open)
+
     /*******************************************************
      * on class Note.htmlElement
      *      >titleSpan.onclick needs to be implemented correctly;
@@ -61,7 +68,9 @@
                 notesArea.removeChild(notesArea.lastChild);
             }
             let note;
-            obj.notes.forEach(function (element) {
+            let notes = obj.notes||[];
+            
+            notes.forEach(function (element) {
                 let notesArea = document.getElementById('notesArea');
                 note = new Note({
                     title: element.title,
@@ -70,7 +79,7 @@
                 });
                 notesArea.appendChild(note.htmlElement);
             }, this);
-            if (obj.notes.length === 0) {
+            if (notes.length === 0) {
                 let textNode = document.createTextNode('There aren\'t any notes to show here...');
                 notesArea.appendChild(textNode);
             }
@@ -127,7 +136,7 @@
             dateSpan.classList.add('noteDate');
             dateSpan.appendChild(document.createTextNode(this.createdOn));
 
-            delIcon.classList.add('material-icons', 'deleteIcon');
+            delIcon.classList.add('material-icons', 'deleteIcon', 'btn');
             delIcon.appendChild(document.createTextNode('clear'));
             delIcon.onclick = () => {
                 removeNoteElement(this);
@@ -190,16 +199,11 @@
         get header() {
             return {
                 popoverCheckBox: getElement('#wlWindowIsActive'),
-                optionsButton: getElement('#goToOptions'),
+                optionsButton: getElement('#goToOptPage'),
                 gobackButton: getElement('#toNotesListPage'),
                 saveNoteButton: getElement('#saveNotes'),
                 noteCreationButton: getElement('#toNewNotePage')
             };
-            // let popoverCheckBox = getElement('#wlWindowIsActive');
-            // let optionsButton = getElement('#goToOptions');
-            // let gobackButton = getElement('#toNotesListPage');
-            // let saveNoteButton = getElement('#saveNotes');
-            // let noteCreationButton = getElement('#toNewNotePage');
 
         }
         toNoteCreation() {

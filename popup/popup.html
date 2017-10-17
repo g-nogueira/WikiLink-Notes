@@ -28,13 +28,24 @@
                 </div>
                 <label for="wlWindowIsActive" class="roboto-thin negative-margin">Popover</label>
             </div>
-            <!-- <span class="" id="toNewNotePage">NEW</span> -->
             <div>
-                <i class="material-icons">search</i>
-                <span class="" id="goToOptions">
-                    <i class="material-icons">more_vert</i>
+                <i class="material-icons btn">search</i>
+                <span class="toolbar" id="goToOptions">
+                    <i class="material-icons btn">more_vert</i>
+                    <div class="mdc-simple-menu mdc-simple-menu--open options" tabindex="-1">
+                        <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                          <li class="mdc-list-item" id="goToOptPage" role="menuitem" tabindex="0">
+                            Options
+                          </li>
+                          <li class="mdc-list-item" role="menuitem" tabindex="0">
+                            Another Menu Item
+                          </li>
+                        </ul>
+                      </div>
                 </span>
             </div>
+            
+            
         </header>
 
         <div class="content">
@@ -54,7 +65,7 @@
             <div>
                 <button class="mdc-button" id="saveNotes">SAVE</button>
                 <button class="mdc-button" id="goToOptions">
-                    <i class="material-icons">settings</i>
+                    <i class="material-icons btn">settings</i>
                 </button>
 
             </div>
@@ -72,6 +83,7 @@
         </div>
     </div>
 
+    <script src="material-components-web.js"></script>
     <script src="popup.js"></script>
 </body>
 

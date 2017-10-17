@@ -1,25 +1,27 @@
-body{
-    min-width: 450px;
-    margin: 5px;
+.roboto-thin{
+    font-family: 'Open Sans', sans-serif;
+    color: #003F38;
+    font-size: 11pt;
+    font-weight: 300;
 }
-.clickable{
-    cursor: pointer;
+
+body{
+    min-width: 460px;
+    margin: 0;
 }
 .navMenu{
-    height: 40px;
-    padding:10px 10px 0 10px;
+    padding:5px 10px 5px 10px;
     background-color: #00897B;
     border-radius: 2px;
     margin-bottom: 5px;
-}
-
-.btnArea{
     display: flex;
+    align-items: center;
     flex-flow: row;
     justify-content: space-between;
 }
-.btnArea *{
-    color: #fff !important;
+
+.navMenu .material-icons{
+    color: #003F38 !important;
 }
 
 .noteTitle{
@@ -34,7 +36,40 @@ body{
 .content .notesArea{
     display: flex;
     flex-flow: column;
+    margin: 12px 10px 5px 10px;
     /* font-family: robotoMaterial; */
+}
+
+.noteItemSection{
+    display: flex;
+    align-items: center;
+}
+
+.noteDate,
+.noteTitle{
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 10.3pt;
+    letter-spacing: normal;
+}
+
+.noteTitle{
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.noteDate{
+    color: rgba(0, 0, 0, 0.5);
+    margin-right: 5px;
+}
+
+.deleteIcon{
+    color: rgba(244, 67, 55, 0.8);
+    margin-left: 5px;
+    
+}
+
+.material-icons{
+    font-size: 17pt !important;
 }
 
 .margin-5{
@@ -45,30 +80,43 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 0 4px 0;
+    padding: 6px 0 6px 2px;
 }
 
 
 .noteItem:hover{
     background-color: #f8f8f8;
+    border-radius: 2px;
 }
 .noteItem:not(:last-child){
     border-bottom: 1px solid rgb(201, 201, 201);
 }
 
-.noteDate{
-    margin-right: 10px;
-}
 
+.negative-margin{
+    margin-left: -7px;
+}
 .hidden{
     display: none;
 }
 
-.deleteIcon{
-    color: #F44336;
-}
 
-textarea.mdc-textfield__input{
+textarea.mdc-textfield__input,
+textarea.mdc-textfield__input:hover{
     border: 1px solid rgba(0,0,0,.2);
     resize:none;
+    border-radius: 2px;
+}
+
+textarea.mdc-textfield__input:focus{
+    border: 1px solid #3f51b5 !important;
+}
+
+.mdc-checkbox__native-control:checked~.mdc-checkbox__background{
+    background-color: #80CBC4 !important;
+    border-color: #80CBC4 !important;
+}
+
+.mdc-checkbox__checkmark__path{
+    stroke: rgb(0, 137, 123) !important;
 }

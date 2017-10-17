@@ -61,8 +61,7 @@
                 notesArea.removeChild(notesArea.lastChild);
             }
             let note;
-            let notes = obj.notes||[];
-            notes.forEach(function (element) {
+            obj.notes.forEach(function (element) {
                 let notesArea = document.getElementById('notesArea');
                 note = new Note({
                     title: element.title,
@@ -71,8 +70,8 @@
                 });
                 notesArea.appendChild(note.htmlElement);
             }, this);
-            if (!obj.notes) {
-                let textNode = document.createTextNode('There is not notes to show...');
+            if (obj.notes.length === 0) {
+                let textNode = document.createTextNode('There aren\'t any notes to show here...');
                 notesArea.appendChild(textNode);
             }
         });
@@ -108,33 +107,41 @@
             noteItem.classList.add('noteItem');
             noteItem.setAttribute('id', this.id);
 
-            dateSpan.classList.add('noteDate');
-            dateSpan.appendChild(document.createTextNode(this.createdOn));
-
             titleSpan.classList.add('noteTitle');
             titleSpan.appendChild(document.createTextNode(this.title));
             titleSpan.onclick = () => {
                 pages.toNoteCreation();
                 getElement('#noteTitleArea').value = this.title;
-                getElement('#noteBodyArea').appendChild(document.createTextNode(this.body));
+                newNote.bodyElem.value = this.body;
+
+                let span = document.createElement('span');
+                span.setAttribute('id', 'tempNote');
+                span.value = this.id;
+                document.body.appendChild(span);
             };
 
+            section.classList.add('noteItemSection');
             section.appendChild(dateSpan);
-            section.appendChild(titleSpan);
+            section.appendChild(delIcon);
+
+            dateSpan.classList.add('noteDate');
+            dateSpan.appendChild(document.createTextNode(this.createdOn));
 
             delIcon.classList.add('material-icons', 'deleteIcon');
             delIcon.appendChild(document.createTextNode('clear'));
-            delBtn.classList.add('mdc-button', 'mdc-button--dense');
-            delBtn.appendChild(delIcon);
-            delBtn.onclick = () => {
+            delIcon.onclick = () => {
                 removeNoteElement(this);
-                removeNoteFromStorage(this);
+                this.removeNoteFromStorage(this.id);
             };
-            btnSpan.classList.add('delBtn');
-            btnSpan.appendChild(delBtn);
 
+            // delBtn.classList.add('mdc-button', 'mdc-button--dense');
+            // delBtn.appendChild(delIcon);
+
+            // btnSpan.classList.add('delBtn');
+            // btnSpan.appendChild(delBtn);
+
+            noteItem.appendChild(titleSpan);
             noteItem.appendChild(section);
-            noteItem.appendChild(btnSpan);
 
 
 
@@ -144,31 +151,34 @@
                 let div = document.getElementById(`${self.id}`)
                 div.parentNode.removeChild(div);
             }
-            function removeNoteFromStorage(self) {
-                chrome.storage.sync.get('notes', keyValueArray => {
-                    let notes = keyValueArray.notes || [];
-                    let newNotes = [];
-                    let i;
-                    for (i = 0; i < notes.length; i++) {
-                        if (notes[i].id == self.id) {
-                            newNotes = notes.slice(0, i);
-                            console.log(notes.slice(i + 1));
-                            newNotes = newNotes.concat(notes.slice(i + 1));
-                        }
+        }
+        removeNoteFromStorage(id) {
+            chrome.storage.sync.get('notes', keyValueArray => {
+                let notes = keyValueArray.notes || [];
+                let newNotes = [];
+                let i;
+                let notesDeleted = 0;
+                for (i = 0; i < notes.length; i++) {
+                    if (notes[i].id == id) {
+                        newNotes = notes.slice(0, i);
+                        console.log(`Note deleted: ${notes.slice(i + 1)}`);
+                        newNotes = newNotes.concat(notes.slice(i + 1));
+                        notesDeleted++;
                     }
-                    chrome.storage.sync.set({ 'notes': newNotes });
-                });
-            }
+                }
+                newNotes = notesDeleted !== 0 ? newNotes : notes;
+                console.log(`Notes after deleted note: ${JSON.stringify(newNotes)}`)
+                chrome.storage.sync.set({ 'notes': newNotes });
+            });
         }
         storeNote() {
             let storage = [];
             chrome.storage.sync.get('notes', (keyValueObj) => {
                 storage = keyValueObj.notes || [];
                 storage.push(this);
-                console.log(JSON.stringify(storage));
 
-                chrome.storage.sync.set({ 'notes': storage }, () => {
-                    console.log(`Notes saved!`);
+                chrome.storage.sync.set({ 'notes': storage }, (obj) => {
+                    console.log(`Notes saved! ${JSON.stringify(storage)}`);
                 });
             });
         }
@@ -225,7 +235,11 @@
         () => pages.toOptions();
     pages.header.saveNoteButton.onclick =
         () => {
-            (new Note({ title: newNote.titleElem.value, body: newNote.bodyElem.value })).storeNote()
+            let tempNote = document.getElementById('tempNote');
+            let note = new Note({ title: newNote.titleElem.value, body: newNote.bodyElem.value });
+            if (tempNote)
+                note.removeNoteFromStorage(tempNote.value);
+            setTimeout(() => note.storeNote(), 500);
             newNote.titleElem.value = '';
             newNote.bodyElem.value = '';
         };
@@ -237,6 +251,8 @@
         };
     pages.header.gobackButton.onclick =
         () => {
+            newNote.titleElem.value = '';
+            newNote.bodyElem.value = '';
             pages.toNotesList();
             displayNotes();
         };

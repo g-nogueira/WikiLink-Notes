@@ -7,11 +7,14 @@
     "keyword": "wl:"
   },
   "icons": {
-   "128": "Images/icon7.png" },
+    "128": "Images/icon7.png"
+  },
   "options_page": "optionsPage/main.html",
   // "options_ui": {"page":"optionsPage/main.html"},
-  "background": {
-    "scripts": ["eventPage.js", "repository/http.js", "repository/wikiRepo.js"],
+  "background": { "scripts": [
+      "eventPage.js",
+      "repository/wikiRepo.js"
+    ],
     "persistence": true
   },
   "browser_action": {
@@ -22,9 +25,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["popover/wlPopover.js"],
-      "css": ["popover/popover.css"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "popover/wlPopover.js"
+      ],
+      "css": [
+        "popover/popover.css"
+      ],
       "run_at": "document_end"
     }
   ],
@@ -35,6 +44,5 @@
     "contextMenus",
     "<all_urls>"
   ],
-
-  "content_security_policy":"script-src 'self' https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js; object-src 'self'"
 }

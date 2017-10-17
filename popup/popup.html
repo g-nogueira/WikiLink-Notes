@@ -7,24 +7,40 @@
 
     <link rel="stylesheet" href="material-components-web.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 </head>
 
-<body class="mdc-typography">
-    
+<body class="">
+
 
     <div id="notesListPage">
         <header class="navMenu mdc-elevation--z2">
-            <section class="btnArea">
-                <div class="mdc-form-field">
-                    <input type="checkbox" id="wlWindowIsActive">Popover</div>
-                <div>
-                    <button class="mdc-button" id="toNewNotePage">NEW</button>
-                    <button class="mdc-button" id="goToOptions">
-                        <i class="material-icons">settings</i>
-                    </button>
+            <!-- <div class="mdc-form-field mdc-form-field--theme-dark">
+                <input type="checkbox" id="wlWindowIsActive">
+                <span class="roboto-thin">Popover</span>
+            </div> -->
+            <div class="mdc-form-field">
+                <div class="mdc-checkbox">
+                    <input type="checkbox" id="wlWindowIsActive" class="mdc-checkbox__native-control" />
+                    <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                    </div>
                 </div>
-            </section>
+                <label for="wlWindowIsActive" class="roboto-thin negative-margin">Popover</label>
+            </div>
+
+
+            <span class="" id="toNewNotePage">NEW</span>
+            <div>
+                <i class="material-icons">search</i>
+                <span class="" id="goToOptions">
+                    <i class="material-icons">more_vert</i>
+                </span>
+            </div>
         </header>
 
         <div class="content">
@@ -34,26 +50,24 @@
 
     <div class="hidden" id="newNotePage">
         <header class="navMenu mdc-elevation--z2">
-            <section class="btnArea">
-                <div>
-                    <Button id="toNotesListPage" class="mdc-button">Back</Button>
-                </div>
-                <div>
-                    <button class="mdc-button" id="saveNotes">SAVE</button>
-                    <button class="mdc-button" id="goToOptions">
-                        <i class="material-icons">settings</i>
-                    </button>
+            <div>
+                <Button id="toNotesListPage" class="mdc-button">Back</Button>
+            </div>
+            <div>
+                <button class="mdc-button" id="saveNotes">SAVE</button>
+                <button class="mdc-button" id="goToOptions">
+                    <i class="material-icons">settings</i>
+                </button>
 
-                </div>
-            </section>
+            </div>
         </header>
 
         <div class="content">
             <section class="notesArea mdc-typography--body1">
                 <!-- <input class="noteTitleArea" type="text" id="noteTitleArea" placeholder="Title"> -->
-                  <div class="mdc-textfield">
+                <div class="mdc-textfield">
                     <input type="text" class="mdc-textfield__input" id="noteTitleArea" placeholder="Title">
-                  </div>
+                </div>
                 <!-- <textarea id="noteBodyArea" cols="30" rows="10" placeholder="Your notes goes in here!" style="resize:none;"></textarea> -->
                 <textarea id="noteBodyArea" class="mdc-textfield__input" cols="30" rows="10" placeholder="Your notes goes in here!"></textarea>
             </section>

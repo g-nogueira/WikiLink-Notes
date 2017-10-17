@@ -16,10 +16,6 @@
 
     <div id="notesListPage">
         <header class="navMenu mdc-elevation--z2">
-            <!-- <div class="mdc-form-field mdc-form-field--theme-dark">
-                <input type="checkbox" id="wlWindowIsActive">
-                <span class="roboto-thin">Popover</span>
-            </div> -->
             <div class="mdc-form-field">
                 <div class="mdc-checkbox">
                     <input type="checkbox" id="wlWindowIsActive" class="mdc-checkbox__native-control" />
@@ -32,9 +28,7 @@
                 </div>
                 <label for="wlWindowIsActive" class="roboto-thin negative-margin">Popover</label>
             </div>
-
-
-            <span class="" id="toNewNotePage">NEW</span>
+            <!-- <span class="" id="toNewNotePage">NEW</span> -->
             <div>
                 <i class="material-icons">search</i>
                 <span class="" id="goToOptions">
@@ -45,6 +39,10 @@
 
         <div class="content">
             <section class="notesArea mdc-typography--body1" id="notesArea"></section>
+
+            <button class="mdc-fab mdc-fab--mini app-fab--absolute" id="toNewNotePage" aria-label="New">
+                <span class="mdc-fab__icon"><i class="material-icons">add</i></span>
+            </button>
         </div>
     </div>
 

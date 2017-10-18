@@ -1,21 +1,28 @@
 :root{
-    --main-header-color: #00897B;
+    --header-main-color: #00897B;
+    --header-main-letter-collor:#003F38;
+    --header-secondary-color: rgba(21, 145, 245, 0.88);
+    --header-secondary-letter-collor:rgba(0, 48, 86, 0.77);
+    
 }
 
 .roboto-thin{
     font-family: 'Open Sans', sans-serif;
-    color: #003F38;
+    color: var(--header-main-letter-collor);
     font-size: 11pt;
     font-weight: 300;
 }
 
 body{
+    max-height: 300px;
     min-width: 460px;
     margin: 0;
 }
+
+
 .navMenu{
     padding:5px 10px 5px 10px;
-    background-color: var(--main-header-color);
+    background-color: var(--header-main-color);
     border-radius: 2px;
     margin-bottom: 5px;
     display: flex;
@@ -25,7 +32,7 @@ body{
 }
 
 .navMenu .material-icons{
-    color: #003F38 !important;
+    color: var(--header-main-letter-collor) !important;
 }
 
 .noteTitle{
@@ -37,12 +44,38 @@ body{
     margin: 5px 0 5px 0;
 }
 
+.content{
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* background-color: rgba(0, 0, 0, 0.01); */
+}
+
+.content::-webkit-scrollbar {
+    width: .2em;
+}
+ 
+.content::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
 .content .notesArea{
     display: flex;
     flex-flow: column;
-    margin: 12px 10px 5px 10px;
-    /* font-family: robotoMaterial; */
+    background-color:rgb(255, 255, 255);
+    box-shadow:  0 3px 1px -2px rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, 0), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    padding: 5px 0 5px 5px;
+    margin: 0 10px 5px 10px;
 }
+
+.content .notesListArea{
+    padding: 5px 0 5px 5px;
+    margin: 0 10px 5px 10px;
+}
+/* .notesArea::-webkit-scrollbar {
+    width: 1em;
+} */
 
 .noteItemSection{
     display: flex;
@@ -64,6 +97,23 @@ body{
 .noteDate{
     color: rgba(0, 0, 0, 0.5);
     margin-right: 5px;
+}
+
+.noteTitleArea{
+    margin: 0 0 20px 0 !important;
+    width: 50%;
+}
+
+
+.noteTitleArea>.mdc-textfield__input{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.noteTitleArea>.mdc-textfield__input:hover{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.noteBodyArea{
+    border: none !important;
 }
 
 .deleteIcon{
@@ -105,6 +155,7 @@ body{
 }
 
 
+/* Material Design modifications */
 textarea.mdc-textfield__input,
 textarea.mdc-textfield__input:hover{
     border: 1px solid rgba(0,0,0,.2);
@@ -112,20 +163,23 @@ textarea.mdc-textfield__input:hover{
     border-radius: 2px;
 }
 
-textarea.mdc-textfield__input:focus{
+/* textarea.mdc-textfield__input:focus{
     border: 1px solid #3f51b5 !important;
+    border: 1px solid rgba(0,0,0,.2);
+    
+} */
+
+.mdc-textfield>.mdc-textfield__input{
+    border-bottom: 1px solid rgba(0,0,0,.2);
 }
 
-
-
-/* Material Design modifications */
 .mdc-checkbox__native-control:checked~.mdc-checkbox__background{
     background-color: #80CBC4 !important;
     border-color: #80CBC4 !important;
 }
 
 .mdc-checkbox__checkmark__path{
-    stroke: var(--main-header-color) !important;
+    stroke: var(--header-main-color) !important;
 }
 
 .btn{
@@ -150,9 +204,11 @@ Modify to fit your designs requirements.
 }
 
 .mdc-fab{
-    background-color: var(--main-header-color) !important;
+    background-color: var(--header-main-color)!important;
+    opacity: 0.85;
 }
 
 .mdc-simple-menu.options{
     right: 10px;
+    overflow: initial;
 }

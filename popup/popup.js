@@ -3,10 +3,15 @@
 
     const MDCComponent = mdc.base.MDCComponent;
     const MDCFoundation = mdc.base.MDCFoundation;
+    const MDCTextfield = mdc.textfield.MDCTextfield;
+    const MDCTextfieldFoundation = mdc.textfield.MDCTextfieldFoundation;
 
     let menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
     // Add event listener to some button to toggle the menu on and off.
     document.querySelector('#goToOptions').addEventListener('click', () => menu.open = !menu.open)
+
+
+    const textfield = new MDCTextfield(document.querySelector('.mdc-textfield'));
 
     /*******************************************************
      * on class Note.htmlElement
@@ -22,13 +27,9 @@
     displayNotes();
 
     var newNote = {
-        titleElem: {},
-        bodyElem: {},
+        titleElem: document.getElementById('noteTitleArea'),
+        bodyElem: document.getElementById('noteBodyArea')
     };
-
-    getElements(
-        [['#noteTitleArea', '#noteBodyArea'], newNote]
-    );
 
     //#region Implementation
     /**

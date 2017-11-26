@@ -1,32 +1,16 @@
 ﻿(function () {
     "use strict";
 
-    const MDCComponent = mdc.base.MDCComponent;
-    const MDCFoundation = mdc.base.MDCFoundation;
-    const MDCTextfield = mdc.textfield.MDCTextfield;
-    const MDCTextfieldFoundation = mdc.textfield.MDCTextfieldFoundation;
-
-    let menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
-    // Add event listener to some button to toggle the menu on and off.
-    document.querySelector('#goToOptions').addEventListener('click', () => menu.open = !menu.open)
-
-
-    const textfield = new MDCTextfield(document.querySelector('.mdc-textfield'));
-
     /*******************************************************
      * on class Note.htmlElement
      *      >titleSpan.onclick needs to be implemented correctly;
      * 
-     * 
-     * 
-     * 
-     * 
      *******************************************************/
 
-    initializeElemValues();
-    displayNotes();
+    initializeLayout();
+    loadNotes();
 
-    var newNote = {
+    const newNote = {
         titleElem: document.getElementById('noteTitleArea'),
         bodyElem: document.getElementById('noteBodyArea')
     };
@@ -63,14 +47,14 @@
             window.open(chrome.runtime.getURL('../optionsPage/main.html'));
         }
     }
-    function displayNotes() {
+    function loadNotes() {
         chrome.storage.sync.get('notes', obj => {
             while (notesArea.hasChildNodes()) {
                 notesArea.removeChild(notesArea.lastChild);
             }
             let note;
-            let notes = obj.notes||[];
-            
+            let notes = obj.notes || [];
+
             notes.forEach(function (element) {
                 let notesArea = document.getElementById('notesArea');
                 note = new Note({
@@ -87,13 +71,22 @@
         });
 
     }
-    function initializeElemValues() {
+    function initializeLayout() {
+        const MDCComponent = mdc.base.MDCComponent;
+        const MDCFoundation = mdc.base.MDCFoundation;
+        const MDCTextfield = mdc.textfield.MDCTextfield;
+        const MDCTextfieldFoundation = mdc.textfield.MDCTextfieldFoundation;
+        const menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
+
         chrome.storage.sync.get('popoverIsEnabled', obj => {
             pages.header.popoverCheckBox.checked = obj.popoverIsEnabled;
             if (obj.popoverIsEnabled === {}) {
                 chrome.storage.sync.set({ 'popoverIsEnabled': true }, () => { });
             }
         });
+
+        // Add event listener to some button to toggle the menu on and off.
+        document.querySelector('#goToOptions').addEventListener('click', () => menu.open = !menu.open)
     }
     //#endregion
     //#region Classes
@@ -138,22 +131,15 @@
             dateSpan.appendChild(document.createTextNode(this.createdOn));
 
             delIcon.classList.add('material-icons', 'deleteIcon', 'btn');
+            delIcon.setAttribute('title', 'Delete');
             delIcon.appendChild(document.createTextNode('clear'));
             delIcon.onclick = () => {
                 removeNoteElement(this);
                 this.removeNoteFromStorage(this.id);
             };
 
-            // delBtn.classList.add('mdc-button', 'mdc-button--dense');
-            // delBtn.appendChild(delIcon);
-
-            // btnSpan.classList.add('delBtn');
-            // btnSpan.appendChild(delBtn);
-
             noteItem.appendChild(titleSpan);
             noteItem.appendChild(section);
-
-
 
             return noteItem;
 
@@ -230,7 +216,7 @@
             }
         }
     }
-    var pages = new Pages();
+    const pages = new Pages();
     //#endregion
 
     //// onClick EVENTS ////
@@ -259,7 +245,7 @@
             newNote.titleElem.value = '';
             newNote.bodyElem.value = '';
             pages.toNotesList();
-            displayNotes();
+            loadNotes();
         };
 
 })();

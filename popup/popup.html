@@ -16,7 +16,7 @@
 
     <div id="notesListPage">
         <header class="navMenu mdc-elevation--z2">
-            <div class="mdc-form-field">
+            <div title="Enable popover" class="mdc-form-field">
                 <div class="mdc-checkbox">
                     <input type="checkbox" id="wlWindowIsActive" class="mdc-checkbox__native-control" />
                     <div class="mdc-checkbox__background">
@@ -29,8 +29,8 @@
                 <label for="wlWindowIsActive" class="roboto-thin negative-margin">Popover</label>
             </div>
             <div>
-                <i class="material-icons btn">search</i>
-                <span class="toolbar" id="goToOptions">
+                <i title="Search" class="material-icons btn">search</i>
+                <span title="Options" class="toolbar" id="goToOptions">
                     <i class="material-icons btn">more_vert</i>
                     <div class="mdc-simple-menu options" tabindex="-1">
                         <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
@@ -52,10 +52,13 @@
             <section class="notesListArea mdc-typography--body1" id="notesArea"></section>
 
             <button class="mdc-fab mdc-fab--mini app-fab--absolute" id="toNewNotePage" aria-label="New">
-                <span class="mdc-fab__icon">
-                    <i class="material-icons">add</i>
+                <span id="test" class="mdc-fab__icon">
+                    <i class="material-icons">create</i>
                 </span>
             </button>
+            <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="test">
+                Write
+            </div>
         </div>
     </div>
 
@@ -75,21 +78,15 @@
 
         <div class="content">
             <section class="notesArea mdc-typography--body1">
-                <!-- <input class="noteTitleArea" type="text" id="noteTitleArea" placeholder="Title"> -->
-                <!-- <div class="mdc-textfield">
-                    <input type="text" class="mdc-textfield__input" id="noteTitleArea" placeholder="Title">
-                </div> -->
-                <div class="mdc-textfield noteTitleArea">
-                    <input type="text" id="noteTitleArea" class="mdc-textfield__input">
-                    <label class="mdc-textfield__label" for="noteTitleArea">Title</label>
-                </div>
-                <textarea id="noteBodyArea" class="mdc-textfield__input noteBodyArea" cols="30" rows="10" placeholder="Your notes goes in here!"></textarea>
+                <input type="text" id="noteTitleArea" class="noteTitleInput" placeholder="Title">
+                <textarea id="noteBodyArea" class="mdc-textfield__input noteBodyArea" cols="30" rows="10" placeholder="What are you thinking about?"></textarea>
             </section>
         </div>
     </div>
 
     <script src="material-components-web.js"></script>
     <script src="popup.js"></script>
+    <script src="tooltip.js"></script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 
     /*******************************************************
      * on class Note.htmlElement
-     *      >titleSpan.onclick needs to be implemented correctly;
+     *      >titleSpan.onclick needs to be implemented correctly; SOLVED (I guess...)
      * 
      *******************************************************/
 
@@ -16,20 +16,6 @@
     };
 
     //#region Implementation
-    /**
-     * @description It assigns html elements (array) to object children;
-     * @param {[[],{}]} vars
-     */
-    function getElements(...vars) {
-        vars.forEach(element => {
-            let i = 0;
-            for (var key in element[1]) {
-                element[1][key] = getElement(element[0][i]);
-                i++;
-            }
-            i = 0;
-        });
-    }
     function getElement(identifier) {
         return document.querySelector(identifier);
     }
@@ -47,28 +33,45 @@
             window.open(chrome.runtime.getURL('../optionsPage/main.html'));
         }
     }
-    function loadNotes() {
-        chrome.storage.sync.get('notes', obj => {
+    /**
+     * 
+     * @param {Array} notes - A list of Note object
+     */
+    function loadNotes(notesList = []) {
+
+        if (notesList.length !== 0) {
             while (notesArea.hasChildNodes()) {
                 notesArea.removeChild(notesArea.lastChild);
             }
-            let note;
-            let notes = obj.notes || [];
 
-            notes.forEach(function (element) {
+            notesList.forEach(function (el) {
                 let notesArea = document.getElementById('notesArea');
-                note = new Note({
-                    title: element.title,
-                    body: element.body,
-                    id: element.id
-                });
-                notesArea.appendChild(note.htmlElement);
+                notesArea.appendChild(el.htmlElement);
             }, this);
-            if (notes.length === 0) {
-                let textNode = document.createTextNode('There aren\'t any notes to show here...');
-                notesArea.appendChild(textNode);
-            }
-        });
+        }
+        else {
+            chrome.storage.sync.get('notes', obj => {
+                while (notesArea.hasChildNodes()) {
+                    notesArea.removeChild(notesArea.lastChild);
+                }
+                let note;
+                let notes = obj.notes || [];
+
+                notes.forEach(function (element) {
+                    let notesArea = document.getElementById('notesArea');
+                    note = new Note({
+                        title: element.title,
+                        body: element.body,
+                        id: element.id
+                    });
+                    notesArea.appendChild(note.htmlElement);
+                }, this);
+                if (notes.length === 0) {
+                    let textNode = document.createTextNode('There aren\'t any notes to show here...');
+                    notesArea.appendChild(textNode);
+                }
+            });
+        }
 
     }
     function initializeLayout() {
@@ -89,8 +92,16 @@
         document.querySelector('#goToOptions').addEventListener('click', () => menu.open = !menu.open)
     }
     //#endregion
+
     //#region Classes
     class Note {
+        /**
+         * 
+         * @param {Object} config - new note details
+         * @param {String} config.title - new note title
+         * @param {String} config.body - new note text body
+         * @param {Date} config.id - new note text body
+         */
         constructor(config) {
             this.title = config.title;
             this.body = config.body;
@@ -169,7 +180,7 @@
         }
         storeNote() {
             let storage = [];
-            chrome.storage.sync.get('notes', (keyValueObj) => {
+            chrome.storage.sync.get('notes', keyValueObj => {
                 storage = keyValueObj.notes || [];
                 storage.push(this);
 
@@ -189,9 +200,17 @@
                 optionsButton: getElement('#goToOptPage'),
                 gobackButton: getElement('#toNotesListPage'),
                 saveNoteButton: getElement('#saveNotes'),
-                noteCreationButton: getElement('#toNewNotePage')
+                noteCreationButton: getElement('#toNewNotePage'),
+                searchNoteButton: getElement("#searchNoteBtn"),
+                searchNoteInput: getElement("#searchNoteInput")
             };
-
+        }
+        getNotes() {
+            return new Promise((resolve, reject) => {
+                chrome.storage.sync.get('notes', keyValueObj => {
+                    resolve(keyValueObj.notes);
+                });
+            });
         }
         toNoteCreation() {
             document.getElementById('newNotePage')
@@ -205,7 +224,6 @@
             document.getElementById('newNotePage')
                 .classList.add('hidden');
         }
-
         toOptions() {
             if (chrome.runtime.openOptionsPage) {
                 // New way to open options pages, if supported (Chrome 42+).
@@ -216,16 +234,17 @@
             }
         }
     }
-    const pages = new Pages();
     //#endregion
 
     //// onClick EVENTS ////
+    const pages = new Pages();
+
     pages.header.popoverCheckBox.onclick =
         event => isPopoverActive(event.srcElement.checked);
     pages.header.optionsButton.onclick =
-        () => pages.toOptions();
+        event => pages.toOptions();
     pages.header.saveNoteButton.onclick =
-        () => {
+        event => {
             let tempNote = document.getElementById('tempNote');
             let note = new Note({ title: newNote.titleElem.value, body: newNote.bodyElem.value });
             if (tempNote)
@@ -235,17 +254,57 @@
             newNote.bodyElem.value = '';
         };
     pages.header.noteCreationButton.onclick =
-        () => {
+        event => {
             pages.toNoteCreation();
             newNote.bodyElem.value = '';
             newNote.titleElem.value = '';
         };
     pages.header.gobackButton.onclick =
-        () => {
+        event => {
             newNote.titleElem.value = '';
             newNote.bodyElem.value = '';
             pages.toNotesList();
             loadNotes();
         };
+
+    getElement("#toNotesListPage2").onclick =
+        event => {
+            newNote.titleElem.value = '';
+            newNote.bodyElem.value = '';
+            pages.toNotesList();
+            loadNotes();
+        };
+
+    let notes = [];
+    pages.header.searchNoteButton.onclick =
+        event => {
+            event.target.classList.add('hidden');
+            getElement('#closeSearchInput').classList.remove('hidden');
+            pages.getNotes()
+                .then(response => {
+                    pages.header.searchNoteInput.classList.remove('hidden');
+                    notes = response;
+                    pages.header.searchNoteInput.focus();
+                });
+
+        };
+    pages.header.searchNoteInput.onkeyup =
+        event => {
+            let searchResult = [];
+
+            searchResult = notes
+                .filter(note => note.title.toLowerCase().includes(event.target.value.toLowerCase()))
+                .map(note => new Note({ title: note.title, body: note.body, id: note.id }));
+                
+            loadNotes(searchResult);
+
+        };
+    getElement('#closeSearchInput').onclick =
+        event => {
+            pages.header.searchNoteInput.classList.add('hidden');
+            event.target.classList.add('hidden');
+            pages.header.searchNoteButton.classList.remove('hidden');
+        };
+
 
 })();

@@ -101,7 +101,6 @@
     }
 
     function showData(txtData, imgData) {
-        debugger
         const notFound = 'Ops: nenhum resultado encontrado...';
         pTag.textContent = (txtData.body.length > 0 ? txtData.body : notFound);
         imageTag.src = imgData.url;

@@ -19,6 +19,7 @@ body {
 }
 
 .navMenu {
+    min-height: 40px;
     padding: 5px 10px 5px 10px;
     background-color: var(--header-main-color);
     border-radius: 2px;
@@ -29,8 +30,31 @@ body {
     justify-content: space-between;
 }
 
-.navMenu .material-icons {
+.notesListPage{
+    min-height: 355px;
+}
+
+.toolsBar {
+    padding: 5px 10px 5px 10px;
+    background-color: rgba(red, green, blue, 0);
+    border-radius: 2px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.color-green-1 {
     color: var(--header-main-letter-collor) !important;
+}
+
+.bgcolor-blue-1 {
+    background-color: #3B7DF2 !important;
+}
+
+.bgcolor-green-1{
+    background-color: var(--header-main-color) !important;
 }
 
 .noteTitle {
@@ -40,6 +64,19 @@ body {
 
 .noteTitleArea {
     margin: 5px 0 5px 0;
+}
+
+.myInput{
+    padding: 5px;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border-bottom: 1px solid var(--header-main-letter-collor);
+    color: #fff;
+    animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+.myInput:focus{
+    border-bottom: 2px solid var(--header-main-letter-collor);
 }
 
 .content {
@@ -71,7 +108,6 @@ body {
     margin: 0 10px 5px 10px;
 }
 
-
 .noteItemSection {
     display: flex;
     align-items: center;
@@ -87,6 +123,10 @@ body {
 
 .noteTitle {
     color: rgba(0, 0, 0, 0.7);
+}
+
+.toolIcon{
+    color: rgba(0, 0, 0, 0.65);
 }
 
 .noteDate {
@@ -145,31 +185,33 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .btn {
     cursor: pointer;
 }
 
-.noteTitleInput{
-    border:none;
+.noteTitleInput {
+    border: none;
     /* color: #757575; */
     font-weight: bold;
     font-size: 120%;
     height: 20px;
     /* width: 100%; */
-    padding: 20px 20px 22px 0; 
+    padding: 20px 20px 22px 0;
 }
 
-.noteTitleInput:focus{
-    outline: none;   
+.noteTitleInput:focus {
+    outline: none;
 }
+
 
 /* 
 * Material Design modifications
 * TextArea, TextField, Checkbox
 */
+
 textarea.mdc-textfield__input,
 textarea.mdc-textfield__input:hover {
     border: 1px solid rgba(0, 0, 0, .2);
@@ -195,6 +237,7 @@ textarea.mdc-textfield__input:hover {
 * This will position the FAB in the bottom-right corner.
 * Modify to fit your designs requirements.
 */
+
 .app-fab--absolute.app-fab--absolute {
     position: fixed;
     bottom: .5rem;
@@ -207,6 +250,8 @@ textarea.mdc-textfield__input:hover {
         right: 1.5rem;
     }
 }
+
+
 
 .mdc-fab {
     background-color: var(--header-main-color)!important;
@@ -223,6 +268,7 @@ textarea.mdc-textfield__input:hover {
 * Tooltip style and animation from Material Design Lite
 *
 */
+
 .mdl-tooltip {
     -webkit-transform: scale(0);
     transform: scale(0);

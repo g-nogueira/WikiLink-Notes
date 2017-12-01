@@ -12,9 +12,7 @@
 </head>
 
 <body class="">
-
-
-    <div id="notesListPage">
+    <div id="notesListPage" class="notesListPage">
         <header class="navMenu mdc-elevation--z2">
             <div title="Enable popover" class="mdc-form-field">
                 <div class="mdc-checkbox">
@@ -28,21 +26,25 @@
                 </div>
                 <label for="wlWindowIsActive" class="roboto-thin negative-margin">Popover</label>
             </div>
-            <div>
-                <i title="Search" class="material-icons btn">search</i>
-                <span title="Options" class="toolbar" id="goToOptions">
-                    <i class="material-icons btn">more_vert</i>
-                    <div class="mdc-simple-menu options" tabindex="-1">
-                        <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
-                            <li class="mdc-list-item" id="goToOptPage" role="menuitem" tabindex="0">
-                                Options
-                            </li>
-                            <li class="mdc-list-item" role="menuitem" tabindex="0">
-                                Another Menu Item
-                            </li>
-                        </ul>
-                    </div>
-                </span>
+            <div style="display:inline-flex;">
+                <input id="searchNoteInput" class="hidden myInput" type="text">
+                <div>
+                    <i id="closeSearchInput" title="Search" class="hidden material-icons color-green-1 btn">close</i>
+                    <i id="searchNoteBtn" title="Search" class="material-icons color-green-1 btn">search</i>
+                    <span title="Options" class="toolbar" id="goToOptions">
+                        <i class="material-icons color-green-1 btn">more_vert</i>
+                        <div class="mdc-simple-menu options" tabindex="-1">
+                            <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                                <li class="mdc-list-item" id="goToOptPage" role="menuitem" tabindex="0">
+                                    Options
+                                </li>
+                                <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                    Another Menu Item
+                                </li>
+                            </ul>
+                        </div>
+                    </span>
+                </div>
             </div>
 
 
@@ -63,16 +65,13 @@
     </div>
 
     <div class="hidden" id="newNotePage">
+
         <header class="navMenu mdc-elevation--z2">
-            <div>
-                <Button id="toNotesListPage" class="mdc-button">Back</Button>
+            <div title="Enable popover" class="mdc-form-field">
+                <i id="toNotesListPage" class="material-icons btn color-green-1">arrow_back</i>
             </div>
             <div>
-                <button class="mdc-button" id="saveNotes">SAVE</button>
-                <button class="mdc-button" id="goToOptions">
-                    <i class="material-icons btn">settings</i>
-                </button>
-
+                <i class="material-icons btn color-green-1">zoom_out_map</i>
             </div>
         </header>
 
@@ -82,6 +81,16 @@
                 <textarea id="noteBodyArea" class="mdc-textfield__input noteBodyArea" cols="30" rows="10" placeholder="What are you thinking about?"></textarea>
             </section>
         </div>
+
+        <!-- Text edition tools bar-->
+        <section class="toolsBar">
+            <div title="Enable popover" class="mdc-form-field">
+                <Button class="mdc-button mdc-button--raised mdc-button--compact bgcolor-green-1" id="saveNotes">SAVE</Button>
+            </div>
+            <div>
+                <i id="toNotesListPage2" class="material-icons toolIcon btn">delete</i>
+            </div>
+        </section>
     </div>
 
     <script src="material-components-web.js"></script>

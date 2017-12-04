@@ -1,0 +1,17 @@
+body{
+    margin: 0;
+    height: -webkit-fill-available;
+    display: grid;
+    grid-template-columns: 25% auto;
+    grid-template-rows: 100%;
+    grid-template-areas: "notesSection writingSection";
+}
+
+.noteSection{
+    grid-area: notesSection;
+}
+
+.noteEdition{
+    grid-area: writingSection;
+}
+

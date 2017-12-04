@@ -163,7 +163,7 @@ getElement('#closeSearchInput').onclick =
     };
 getElement('#expandWindowsButton').onclick =
     event => {
-        let popoutUrl = chrome.runtime.getURL("popup/popout.html");
+        let popoutUrl = chrome.runtime.getURL("popout/popout.html");
         chrome.tabs.query({ url: popoutUrl }, tabs => {
             if (tabs.length > 0) {
                 chrome.windows.update(tabs[0].windowId, { 'focused': true },
@@ -173,9 +173,9 @@ getElement('#expandWindowsButton').onclick =
             } else {
                 chrome.windows.create({
                     'url': popoutUrl,
-                    'type': 'popup',
-                    'width': 640,
-                    'height': 456
+                    // 'width': 640,
+                    // 'height': 456,
+                    'type': 'popup'
                 })
             }
             pages.toNoteCreation();

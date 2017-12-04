@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>popup</title>
+    <link rel="stylesheet" href="layout.css" />
+    <link rel="stylesheet" href="text-edition-bar.css" />
+    <link rel="stylesheet" href="writing-section.css" />
+    <link rel="stylesheet" href="notes-section.css" />
+
+    <link rel="stylesheet" href="../popup/material-components-web.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+</head>
+
+<body>
+    <section id="notesSection" class="notesSection">
+        <div class="content">
+            <input id="searchInput" type="text">
+            <section class="notesListArea mdc-typography--body1" id="notesArea"></section>
+        </div>
+    </section>
+
+    <section class="noteEdition">
+        <section id="textEditionBar" class="textEditionBar">
+            <div id="fontFamilyInput">
+                <input type="text" />
+            </div>
+            <div id="fontSizeInput">
+                <input type="text" />
+            </div>
+            <i class="material-icons">format_bold</i>
+            <i class="material-icons">format_italic</i>
+            <i class="material-icons">format_underlined</i>
+            <div id="optionsMenu">
+                <span title="Options" class="toolbar" id="goToOptions">
+                    <i class="material-icons color-green-1 btn">more_vert</i>
+                    <div class="mdc-simple-menu options" tabindex="-1">
+                        <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                            <li class="mdc-list-item" id="goToOptPage" role="menuitem" tabindex="0">
+                                Options
+                            </li>
+                            <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                Another Menu Item
+                            </li>
+                        </ul>
+                    </div>
+                </span>
+            </div>
+        </section>
+
+        <section id="writingSection" class="writingSection">
+            <section class="writingArea mdc-typography--body1">
+                <input type="text" id="noteTitleArea" class="noteTitleInput" placeholder="Title">
+                <textarea id="noteBodyArea" class="mdc-textfield__input noteBodyArea" cols="30" rows="10" placeholder="What are you thinking about?"></textarea>
+            </section>
+        </section>
+    </section>
+
+    <script src="../popup/material-components-web.js"></script>
+    <script src="../popup/Pages.js"></script>
+    <script src="../popup/Note.js"></script>
+    <script src="../popup/popup.js"></script>
+    <script src="../popup/tooltip.js"></script>
+</body>
+
+</html>

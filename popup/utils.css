@@ -1,0 +1,36 @@
+.scrollable {
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.scrollable::-webkit-scrollbar {
+    width: .2em;
+}
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.margin-5 {
+    margin: 0 5px 0 5px;
+}
+
+.color-green-1 {
+    color: var(--header-main-letter-collor) !important;
+}
+
+.bgcolor-blue-1 {
+    background-color: #3B7DF2 !important;
+}
+
+.bgcolor-green-1{
+    background-color: var(--header-main-color) !important;
+}

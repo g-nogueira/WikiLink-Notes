@@ -1,0 +1,64 @@
+
+.scrollable .notesListArea {
+    padding: 5px 0 5px 5px;
+    margin: 0 10px 5px 10px;
+}
+
+.notesListPage{
+    min-height: 355px;
+}
+
+.noteItemSection {
+    display: flex;
+    align-items: center;
+}
+
+.noteDate {
+    color: rgba(0, 0, 0, 0.5);
+    margin-right: 5px;
+}
+
+.noteTitleArea>.mdc-textfield__input {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.noteTitleArea>.mdc-textfield__input:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.deleteIcon {
+    color: rgba(244, 67, 55, 0.8);
+    margin-left: 5px;
+}
+
+.noteItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0 6px 2px;
+}
+
+.noteItem:hover {
+    background-color: #f8f8f8;
+    border-radius: 2px;
+}
+
+.noteItem:not(:last-child) {
+    border-bottom: 1px solid rgb(201, 201, 201);
+}
+
+.negative-margin {
+    margin-left: -7px;
+}
+
+.noteDate,
+.noteTitle {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 10.3pt;
+    letter-spacing: normal;
+}
+
+.noteTitle {
+    color: rgba(0, 0, 0, 0.7);
+}

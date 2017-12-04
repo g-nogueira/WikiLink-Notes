@@ -1,0 +1,47 @@
+.noteTitle {
+    margin: 5px 0 5px 0;
+    cursor: pointer;
+}
+
+.toolIcon{
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.scrollable .noteArea {
+    display: flex;
+    flex-flow: column;
+    background-color: rgb(255, 255, 255);
+    padding: 5px 0 5px 5px;
+    margin: 0 10px 5px 10px;
+}
+
+.noteTitleInput {
+    border: none;
+    font-weight: bold;
+    font-size: 120%;
+    height: 20px;
+    padding: 20px 20px 22px 0;
+}
+
+.noteBodySection {
+    border: none !important;
+}
+
+.noteTitleSection {
+    margin: 0 0 20px 0 !important;
+    width: 50%;
+}
+.noteTitleInput:focus {
+    outline: none;
+}
+
+.toolsBar {
+    padding: 5px 10px 5px 10px;
+    background-color: rgba(red, green, blue, 0);
+    border-radius: 2px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+    justify-content: space-between;
+}

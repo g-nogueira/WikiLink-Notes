@@ -1,0 +1,56 @@
+.noteBodyArea{
+    height: -webkit-fill-available;
+}
+
+.writingSection{
+    margin: 1em 0 0 20px;
+}
+
+.textEditionBar{
+    height: 3em;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .2);
+}
+.toolsGroup{
+    display: inline-flex;
+    align-items: center;
+}
+.toolsGroup i{
+    display: inline-flex;
+    align-items: center;
+    margin: 0 .3em 0 .3em;
+}
+.toolsGroup:not(:nth-last-child(2)){
+    padding-right: 5px;
+    border-right: 1px solid rgba(0, 0, 0, .2);
+    margin-right: 5px;
+}
+
+.noteTitle {
+    margin: 5px 0 5px 0;
+    cursor: pointer;
+}
+.noteTitleInput {
+    border: none;
+    font-weight: bold;
+    font-size: 120%;
+    height: 20px;
+    padding: 20px 20px 22px 0;
+}
+
+.noteTitleInput:focus {
+    outline: none;
+}
+
+.fontSizeInput>input{
+    width: 100%;
+    text-align: center;
+}
+.fontSizeInput{
+    width: 4em;
+}
+
+
+

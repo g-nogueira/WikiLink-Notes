@@ -16,13 +16,13 @@ class Note {
     }
 
     get htmlElement() {
-        let noteItem = document.createElement('div');
-        let section = document.createElement('section');
-        let dateSpan = document.createElement('span');
-        let titleSpan = document.createElement('span');
-        let btnSpan = document.createElement('span');
-        let delBtn = document.createElement('button');
-        let delIcon = document.createElement('i');
+        const noteItem = document.createElement('div');
+        const section = document.createElement('section');
+        const dateSpan = document.createElement('span');
+        const titleSpan = document.createElement('span');
+        // const btnSpan = document.createElement('span');
+        // const delBtn = document.createElement('button');
+        const delIcon = document.createElement('i');
 
         noteItem.classList.add('noteItem');
         noteItem.setAttribute('id', this.id);
@@ -31,7 +31,7 @@ class Note {
         titleSpan.appendChild(document.createTextNode(this.title));
         titleSpan.onclick = () => {
             pages.toNoteCreation();
-            getElement('#noteBodySection').value = this.title;
+            utils.getElement('#noteTitleSection').value = this.title;
             newNote.bodyElem.value = this.body;
 
             let span = document.createElement('span');
@@ -61,8 +61,7 @@ class Note {
         return noteItem;
 
         function removeNoteElement(self) {
-            let div = document.getElementById(`${self.id}`)
-            div.parentNode.removeChild(div);
+            
         }
     }
     removeNoteFromStorage(id) {

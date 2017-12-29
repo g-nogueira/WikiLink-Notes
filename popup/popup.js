@@ -2,7 +2,7 @@
 
 /*******************************************************
  * on class Note.htmlElement
- *      >titleSpan.onclick needs to be implemented correctly; SOLVED (I guess...)
+ *      >titleSpan.onclick needs to be implemented correctly;
  * 
  *******************************************************/
 
@@ -11,13 +11,10 @@ loadNotes();
 
 const pages = new Pages();
 const newNote = {
-    titleElem: document.getElementById('noteTitleSection'),
-    bodyElem: document.getElementById('noteBodySection')
+    titleElem: utils.getElement('#noteTitleSection'),
+    bodyElem: utils.getElement('#noteBodySection')
 };
 
-function getElement(identifier) {
-    return document.querySelector(identifier);
-}
 function isPopoverActive(isActive = true) {
     chrome.storage.sync.set({ 'popoverIsEnabled': isActive }, () => {
         console.log(`Settings to WikiLinkPanelPopover toggleable is saved to: ${isActive}`);
@@ -36,32 +33,29 @@ function redirectToOptions() {
  * 
  * @param {Array} notes - A list of Note object
  */
-function loadNotes(notesList = []) {
+function loadNotes(notesList = []) { //⚠ Changed to "displayNotes"
+    const notesArea = utils.getElement("#notesArea");
 
+    //If it is already loaded, reload the UI
     if (notesList.length !== 0) {
-        while (getElement("#notesArea").hasChildNodes()) {
-            notesArea.removeChild(notesArea.lastChild);
-        }
+        utils.removeChildNodes(notesArea);
 
         notesList.forEach(function (el) {
-            let notesArea = document.getElementById('notesArea');
             notesArea.appendChild(el.htmlElement);
         }, this);
     }
+    //else, get notes from cloud
     else {
-        chrome.storage.sync.get('notes', obj => {
-            while (notesArea.hasChildNodes()) {
-                notesArea.removeChild(notesArea.lastChild);
-            }
+        utils.getNotes(obj => {
+            utils.removeChildNodes(notesArea);
             let note;
             let notes = obj.notes || [];
 
-            notes.forEach(function (element) {
-                let notesArea = document.getElementById('notesArea');
+            notes.forEach(function (note) {
                 note = new Note({
-                    title: element.title,
-                    body: element.body,
-                    id: element.id
+                    title: note.title,
+                    body: note.body,
+                    id: note.id
                 });
                 notesArea.appendChild(note.htmlElement);
             }, this);
@@ -91,6 +85,14 @@ function initializeLayout() {
     document.querySelector('#goToOptions').addEventListener('click', () => menu.open = !menu.open)
 }
 
+/*************************************************
+ *              IMPLEMENTATION
+ * ✔ 1.
+ * ✖ 2.
+ * 
+ * 
+ *************************************************/
+
 
 //// onClick EVENTS ////
 
@@ -100,7 +102,7 @@ pages.header.optionsButton.onclick =
     event => pages.toOptions();
 pages.header.saveNoteButton.onclick =
     event => {
-        let tempNote = document.getElementById('tempNote');
+        let tempNote = utils.getElement('#tempNote');
         let note = new Note({ title: newNote.titleElem.value, body: newNote.bodyElem.value });
         if (tempNote)
             note.removeNoteFromStorage(tempNote.value);
@@ -122,7 +124,7 @@ pages.header.gobackButton.onclick =
         loadNotes();
     };
 
-getElement("#toNotesListPage2").onclick =
+utils.getElement("#toNotesListPage2").onclick =
     event => {
         newNote.titleElem.value = '';
         newNote.bodyElem.value = '';
@@ -134,7 +136,7 @@ let notes = [];
 pages.header.searchNoteButton.onclick =
     event => {
         event.target.classList.add('hidden');
-        getElement('#closeSearchInput').classList.remove('hidden');
+        utils.getElement('#closeSearchInput').classList.remove('hidden');
         pages.getNotes()
             .then(response => {
                 pages.header.searchNoteInput.classList.remove('hidden');
@@ -154,14 +156,14 @@ pages.header.searchNoteInput.onkeyup =
         loadNotes(searchResult);
 
     };
-getElement('#closeSearchInput').onclick =
+utils.getElement('#closeSearchInput').onclick =
     event => {
         pages.header.searchNoteInput.classList.add('hidden');
         event.target.classList.add('hidden');
         pages.header.searchNoteButton.classList.remove('hidden');
 
     };
-getElement('#expandWindowsButton').onclick =
+utils.getElement('#expandWindowsButton').onclick =
     event => {
         let popoutUrl = chrome.runtime.getURL("popout/popout.html");
         chrome.tabs.query({ url: popoutUrl }, tabs => {

@@ -6,13 +6,13 @@ class Pages {
 
     get header() {
         return {
-            popoverCheckBox: getElement('#wlWindowIsActive'),
-            optionsButton: getElement('#goToOptPage'),
-            gobackButton: getElement('#toNotesListPage'),
-            saveNoteButton: getElement('#saveNotes'),
-            noteCreationButton: getElement('#toNewNotePage'),
-            searchNoteButton: getElement("#searchNoteBtn"),
-            searchNoteInput: getElement("#searchNoteInput")
+            popoverCheckBox: utils.getElement('#wlWindowIsActive'),
+            optionsButton: utils.getElement('#goToOptPage'),
+            gobackButton: utils.getElement('#toNotesListPage'),
+            saveNoteButton: utils.getElement('#saveNotes'),
+            noteCreationButton: utils.getElement('#toNewNotePage'),
+            searchNoteButton: utils.getElement("#searchNoteBtn"),
+            searchNoteInput: utils.getElement("#searchNoteInput")
         };
     }
     getNotes() {

@@ -17,11 +17,11 @@
 </head>
 
 <body class="">
-    <div id="notesListPage" class="notesListPage">
+    <div id="page-notesList" class="notesListPage">
         <header class="navMenu mdc-elevation--z2">
             <div title="Enable popover" class="mdc-form-field">
                 <div class="mdc-checkbox">
-                    <input type="checkbox" id="wlWindowIsActive" class="mdc-checkbox__native-control" />
+                    <input type="checkbox" id="popoverChkbx" class="mdc-checkbox__native-control" />
                     <div class="mdc-checkbox__background">
                         <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
                             <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
@@ -29,7 +29,7 @@
                         <div class="mdc-checkbox__mixedmark"></div>
                     </div>
                 </div>
-                <label for="wlWindowIsActive" class="roboto-thin negative-margin">Popover</label>
+                <label for="popoverChkbx" class="roboto-thin negative-margin">Popover</label>
             </div>
             <div style="display:inline-flex;">
                 <input id="searchNoteInput" class="hidden myInput" type="text">
@@ -58,7 +58,7 @@
         <div class="scrollable">
             <section class="notesListArea mdc-typography--body1" id="notesArea"></section>
 
-            <button class="mdc-fab mdc-fab--mini app-fab--absolute" id="toNewNotePage" aria-label="New">
+            <button class="mdc-fab mdc-fab--mini app-fab--absolute" id="createNoteBtn" aria-label="New">
                 <span id="test" class="mdc-fab__icon">
                     <i class="material-icons">create</i>
                 </span>
@@ -69,11 +69,11 @@
         </div>
     </div>
 
-    <div class="hidden" id="newNotePage">
+    <div class="hidden" id="page-noteCreation">
 
         <header class="navMenu mdc-elevation--z2">
             <div title="Enable popover" class="mdc-form-field">
-                <i id="toNotesListPage" class="material-icons pointer color-green-1">arrow_back</i>
+                <i id="noteCreationbtn-back" class="material-icons pointer color-green-1">arrow_back</i>
             </div>
             <div>
                 <i id="expandWindowsButton" class="material-icons pointer color-green-1">zoom_out_map</i>
@@ -90,7 +90,7 @@
         <!-- Text edition tools bar-->
         <section class="toolsBar">
             <div title="Enable popover" class="mdc-form-field">
-                <Button class="mdc-button mdc-button--raised mdc-button--compact bgcolor-green-1" id="saveNotes">SAVE</Button>
+                <Button class="mdc-button mdc-button--raised mdc-button--compact bgcolor-green-1" id="saveNote">SAVE</Button>
             </div>
             <div>
                 <i id="toNotesListPage2" class="material-icons toolIcon pointer">delete</i>
@@ -100,9 +100,14 @@
 
     <script src="../shared/material-components-web.js"></script>
     <script src="../shared/utils.js"></script>
-    <script src="Pages.js"></script>
-    <script src="Note.js"></script>
-    <script src="popup.js"></script>
+    <script src="UI.Utils.js"></script>
+    <script src="UI.NoteEdition.js"></script>
+    <script src="UI.NotesList.js"></script>
+    <script src="Manager.js"></script>
+    <script src="index.js"></script>
+    <!-- <script src="Pages.js"></script> -->
+    <!-- <script src="Note.js"></script> -->
+    <!-- <script src="popup.js"></script> -->
     <script src="tooltip.js"></script>
 </body>
 

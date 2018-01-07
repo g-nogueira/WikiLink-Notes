@@ -54,8 +54,8 @@
 
     async function isEnabledAsync() {
         return new Promise(resolve => {
-            chrome.storage.sync.get('popoverIsEnabled',
-                obj => resolve(obj.popoverIsEnabled)
+            chrome.storage.sync.get('popover',
+                obj => resolve(obj.popover)
             );
         });
     }
@@ -63,7 +63,7 @@
     async function ImageIsEnabledAsync() {
         return new Promise(resolve => {
             chrome.storage.sync.get('wikipedia-showThumbnail',
-                obj => resolve(obj.popoverIsEnabled)
+                obj => resolve(obj.popover)
             );
         });
     }

@@ -1,8 +1,5 @@
 'using strict';
 
-
-
-
 /************************************************************
  *                       NOTES
  * ✖✔⚠
@@ -13,46 +10,44 @@
 
 class UINotesList {
     constructor() {
-        const notesSection = utils.getElement("#notesArea");
-        const bodyElem = utils.getElement('#noteBodySection');
-        const saveBtn = utils.getElement('#saveNotes');
+        this.notesSection = document.getElementById('notesArea');
+        this.createNoteBtn = document.getElementById('createNoteBtn');
+        this.popoverChkbx = document.getElementById('popoverChkbx');
     }
 
     /**
      * @summary Reload the list of notes.
      */
     reloadPage() {
-        manager.retrieveAll('notes', notes => {
-            utils.removeChildNodes(notesSection);
-        });
+        uiUtils.removeChildNodes(this.notesSection);
+        this.appendNotes();
     }
 
 
     /**
      * @summary
-     * @param {Array} notes The notes array to load in the page
+     * @param {Object[]} notes The notes array to load in the page
      */
     setProperties(notes) {
         //It will save the current noteId in cache
-
     }
 
     /**
      * 
      * @param {Object} params 
-     * @param {String} params.type The element to be generated
-     * @param {number} params.id The element to be generated
-     * @param {String} params.title The title of a noteLabel
-     * @param {Date} params.date The date of a noteLabel
+     * @param {String} type The element to be generated.
+     * @param {number} params.id The id of the item.
+     * @param {String} params.title The title of a noteLabel.
+     * @param {String} params.date The date of a noteLabel.
      * @param {function} params.deleteEvent The function expression to be executed on delete button click.
      * @param {function} params.onclick The function expression to be executed on click.
      */
-    generateHtml(params) {
-        f[params.type]();
-
+    htmlGenerator(type, params) {
         const f = {
             noteLabel: noteLabel
         };
+
+        return f[type]();
 
         function noteLabel(title = params.title, date = params.date, onclick = params.onclick, deleteEvent = params.deleteEvent) {
             const noteLabel = document.createElement('div');
@@ -92,6 +87,40 @@ class UINotesList {
 
             return noteLabel;
         }
+    }
+
+    appendNotes() {
+        manager.retrieve('notes')
+            .then(notes => {
+                notes.forEach(note => {
+                    const html = this.htmlGenerator('noteLabel', {
+                        id: note.id,
+                        title: note.title,
+                        date: note.createdOn,
+                        onclick: () => {
+                            uiUtils.redirectToPage('noteEdition');
+                            uiNoteEdition.setProperties({ id: note.id, title: note.title, body: note.body });
+
+                            const span = document.createElement('span');
+                            uiNoteEdition.tempNote('set', note);
+                            // span.setAttribute('id', 'tempNote');
+                            // span.value = note.id;
+                            span.setAttribute('id', note.id);
+                            document.body.appendChild(span);
+                        },
+                        deleteEvent: () => {
+                            const div = document.getElementById(note.id)
+                            div.parentNode.removeChild(div);
+                            manager
+                                .delete('notes', note.id)
+                                .then(() => window.alert("Deleted"));
+                        }
+
+                    });
+                    this.notesSection.appendChild(html);
+                });
+            });
+
     }
 }
 

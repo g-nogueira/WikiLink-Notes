@@ -64,6 +64,7 @@ class Note {
             
         }
     }
+    
     removeNoteFromStorage(id) {
         chrome.storage.sync.get('notes', keyValueArray => {
             let notes = keyValueArray.notes || [];

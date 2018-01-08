@@ -10,7 +10,7 @@
 
 class UINotesList {
     constructor() {
-        this.notesSection = document.getElementById('notesArea');
+        this.mainSection = document.getElementById('notesArea');
         this.createNoteBtn = document.getElementById('createNoteBtn');
         this.popoverChkbx = document.getElementById('popoverChkbx');
     }
@@ -18,9 +18,8 @@ class UINotesList {
     /**
      * @summary Reload the list of notes.
      */
-    reloadPage() {
-        uiUtils.removeChildNodes(this.notesSection);
-        this.appendNotes();
+    clearMainSection() {
+        uiUtils.removeChildNodes(this.mainSection);
     }
 
 
@@ -42,7 +41,7 @@ class UINotesList {
      * @param {function} params.deleteEvent The function expression to be executed on delete button click.
      * @param {function} params.onclick The function expression to be executed on click.
      */
-    htmlGenerator(type, params) {
+    elementGenerator(type, params) {
         const f = {
             noteLabel: noteLabel
         };
@@ -89,38 +88,45 @@ class UINotesList {
         }
     }
 
-    appendNotes() {
-        manager.retrieve('notes')
-            .then(notes => {
-                notes.forEach(note => {
-                    const html = this.htmlGenerator('noteLabel', {
-                        id: note.id,
-                        title: note.title,
-                        date: note.createdOn,
-                        onclick: () => {
-                            uiUtils.redirectToPage('noteEdition');
-                            uiNoteEdition.setProperties({ id: note.id, title: note.title, body: note.body });
+    /**
+     * 
+     * @param {object[]} notes 
+     * @param {string} notes[].title
+     * @param {string} notes[].body
+     * @param {string} notes[].createdOn
+     * @param {string} notes[].id
+     */
+    appendNotes(notes) {
 
-                            const span = document.createElement('span');
-                            uiNoteEdition.tempNote('set', note);
-                            // span.setAttribute('id', 'tempNote');
-                            // span.value = note.id;
-                            span.setAttribute('id', note.id);
-                            document.body.appendChild(span);
-                        },
-                        deleteEvent: () => {
-                            const div = document.getElementById(note.id)
-                            div.parentNode.removeChild(div);
-                            manager
-                                .delete('notes', note.id)
-                                .then(() => window.alert("Deleted"));
-                        }
-
-                    });
-                    this.notesSection.appendChild(html);
-                });
+        notes.forEach(note => {
+            const html = this.elementGenerator('noteLabel', {
+                id: note.id,
+                title: note.title,
+                date: note.createdOn,
+                onclick: () => {
+                    uiUtils.redirectToPage('noteEdition');
+                    uiNoteEdition.setProperties({ id: note.id, title: note.title, body: note.body });
+                    uiNoteEdition.tempNote('set', note);
+                },
+                deleteEvent: () => {
+                    const div = document.getElementById(note.id)
+                    div.parentNode.removeChild(div);
+                    manager
+                        .delete('notes', note.id)
+                        .then(() => window.alert("Deleted"));
+                }
             });
+            this.mainSection.appendChild(html);
+        });
 
+    }
+
+    /**
+     * @summary Appends a html element on the main section of the page.
+     * @param {*} element 
+     */
+    appendChild(element){
+        this.mainSection.appendChild(element);
     }
 }
 

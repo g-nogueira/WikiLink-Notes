@@ -2,7 +2,9 @@
 
 class Manager {
     constructor() {
-
+        this._errorCode= {
+            1: 'Object not found on DB'
+        }
     }
 
     /**
@@ -48,7 +50,7 @@ class Manager {
 
         //⚠ It has to be of type "notes"
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.get(key, obj => resolve(obj[key]));
+            chrome.storage.sync.get(key, obj => (obj)?resolve(obj[key]):reject(this._errorCode[1]));
         });
     }
 

@@ -22,8 +22,14 @@
 
 
     function displayNotes() {
-        const notesArea = utils.getElement("#notesArea");
-        uiNotesList.reloadPage();
+        uiNotesList.clearMainSection();
+
+        manager
+            .retrieve('notes')
+            .then(notes => {
+                uiNotesList.appendNotes(notes);
+            })
+            .catch(reason => uiNotesList.appendChild(document.createTextNode('It looks like you do not have written notes. 😕')));
     }
 
     function writeNote() {
@@ -36,7 +42,11 @@
             event => {
                 uiNoteEdition.tempNote('get')
                     .then(note => {
-                        uiNoteEdition.setProperties({ title: note.title || '', body: note.body || '' });
+                        uiNoteEdition.setProperties({ title: note.title, body: note.body });
+                        uiUtils.redirectToPage('noteEdition');
+                    })
+                    .catch(reason => {
+                        uiNoteEdition.setProperties({ title: '', body: '' });
                         uiUtils.redirectToPage('noteEdition');
                     });
             };
@@ -52,6 +62,61 @@
                 });
                 uiNoteEdition.tempNote('delete');
             }
+
+
+        //#region Not refactored yet
+        document.getElementById('searchNoteBtn').onclick =
+            event => {
+                event.target.classList.add('hidden');
+                document.getElementById('closeSearchInput').classList.remove('hidden');
+                manager.retrieve('notes').then(list => {
+                    document.getElementById('searchNoteInput').classList.remove('hidden');
+                    notes = list.slice();
+                    document.getElementById('searchNoteInput').focus();
+                });
+
+            };
+        document.getElementById('searchNoteInput').onkeyup =
+            event => {
+                let searchResult = [];
+
+                manager.retrieve('notes').then(list => {
+                    const notes = list.slice();
+                    searchResult = notes.filter(note => note.title.toLowerCase().includes(event.target.value.toLowerCase()));
+                    uiNotesList.clearMainSection();
+                    uiNotesList.appendNotes(searchResult);
+                });
+
+            };
+
+        document.getElementById('closeSearchInput').onclick =
+            event => {
+                document.getElementById('searchNoteInput').classList.add('hidden');
+                event.target.classList.add('hidden');
+                document.getElementById('searchNoteBtn').classList.remove('hidden');
+
+            };
+
+        document.getElementById('expandWindowsButton').onclick =
+            event => {
+                const popoutUrl = chrome.runtime.getURL("popout/popout.html");
+                chrome.tabs.query({ url: popoutUrl }, tabs => {
+                    if (tabs.length > 0) {
+                        chrome.windows.update(tabs[0].windowId, { 'focused': true },
+                            () => {
+                                chrome.tabs.update(tabs[0].id, { 'active': true })
+                            })
+                    } else {
+                        chrome.windows.create({
+                            'url': popoutUrl,
+                            // 'width': 640,
+                            // 'height': 456,
+                            'type': 'popup'
+                        })
+                    };
+                });
+            };
+        //#endregion
 
     }
 

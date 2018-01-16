@@ -32,6 +32,10 @@
     getRanges();
     insertDiv();
 
+ 
+    document.addEventListener('keypress', ev => {
+        const key = ev.key;
+    })
     document.onmouseup = function (event) {
         if (event.which === 1 && !sel.isCollapsed)
             searchSelectedAsync();

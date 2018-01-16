@@ -2,18 +2,21 @@
 
 class Manager {
     constructor() {
-        this._errorCode= {
-            1: 'Object not found on DB'
+        this._errorCode = {
+            1: 'Object key not found on DB',
+            2: 'Object key found, but the id was not'
         }
     }
 
     /**
      * 
-     * @param {Object} KeyValue pair object.
+     * @param {object} object pair object.
+     * @param {String} object.key the key of the object.
+     * @param {String} object.value the value of the object.
      * object = {key: value}
      * @returns {Promise}
      */
-    create(object) {
+    async create(object) {
 
         return new Promise((resolve, reject) => {
             chrome.storage.sync.set(object, () => resolve());
@@ -26,7 +29,7 @@ class Manager {
      * @param {*} value The value to be pushed to the list.
      * @returns {Promise}
      */
-    push(key, value) {
+    async push(key, value) {
         return new Promise((resolve, reject) => {
 
             chrome.storage.sync.get(key, list => {
@@ -46,11 +49,11 @@ class Manager {
      * @param {function} onSuccess The function to execute on success.
      * @returns {Promise}
      */
-    retrieve(key) {
+    async retrieve(key) {
 
         //⚠ It has to be of type "notes"
         return new Promise((resolve, reject) => {
-            chrome.storage.sync.get(key, obj => (obj)?resolve(obj[key]):reject(this._errorCode[1]));
+            chrome.storage.sync.get(key, obj => (obj) ? resolve(obj[key]) : reject(this._errorCode[1]));
         });
     }
 
@@ -62,13 +65,13 @@ class Manager {
      * @param {String} [obj.id] The id of the object to update. If none provided, it will update the whole object.
      * @returns {Promise}
      */
-    update(obj) {
+    async update(obj) {
         return new Promise((resolve, reject) => {
 
             //If id is provided, update the specified element of the array.
             if (obj.id) {
                 chrome.storage.sync.get(obj.key, list => {
-                    const arrayCopy = list[key].slice();
+                    const arrayCopy = list[obj.key].slice();
                     const index = arrayCopy.findIndex(el => el.id == obj.id);
                     if (index === -1) {
                         reject(`Object of id ${obj.id} not found`);
@@ -95,7 +98,7 @@ class Manager {
      * @param {*} [id] The id of the element inside the object to be deleted. If none provided, it will delete the whole object.
      * @returns {Promise}
      */
-    delete(key, id) {
+    async delete(key, id) {
 
         return new Promise((resolve, reject) => {
 

@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "WikiLink Extension",
+  "name": "WikiLink",
   "description": "This extension alows the user to fast search wiki terms.",
   "version": "1.0",
   "omnibox": {
@@ -11,7 +11,10 @@
   },
   "options_page": "optionsPage/main.html",
   // "options_ui": {"page":"optionsPage/main.html"},
-  "background": { "scripts": [
+  "background": {
+    "scripts": [
+      "repository/Http.js",
+      "repository/Manager.js",
       "eventPage.js",
       "repository/wikiRepo.js"
     ],
@@ -29,10 +32,13 @@
         "<all_urls>"
       ],
       "js": [
-        "popover/wlPopover.js"
+        "popover/wlPopover.js",
+        "popover/testButton.js"
       ],
       "css": [
-        "popover/popover.css"
+        "popover/testBtn.css",
+        "popover/popover.css",
+        "shared/material-components-web.min.css"
       ],
       "run_at": "document_end"
     }

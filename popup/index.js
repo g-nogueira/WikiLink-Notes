@@ -20,102 +20,106 @@
      *************************************************************************************/
 
 
-
-    function displayNotes() {
+    async function displayNotes() {
         uiNotesList.clearMainSection();
-
-        manager
-            .retrieve('notes')
-            .then(notes => {
-                uiNotesList.appendNotes(notes);
-            })
+        const notes = await manager.retrieve('notes')
             .catch(reason => uiNotesList.appendChild(document.createTextNode('It looks like you do not have written notes. 😕')));
+        uiNotesList.appendNotes(notes);
     }
 
     function writeNote() {
-        uiNoteEdition.setProperties({ title: '', body: '' });
+        uiNoteEdition.setValues({ title: '', body: '' });
         uiUtils.redirectToPage('noteEdition');
     }
 
-    function initializeEvents() {
-        uiNotesList.createNoteBtn.onclick =
-            event => {
-                uiNoteEdition.tempNote('get')
-                    .then(note => {
-                        uiNoteEdition.setProperties({ title: note.title, body: note.body });
-                        uiUtils.redirectToPage('noteEdition');
-                    })
-                    .catch(reason => {
-                        uiNoteEdition.setProperties({ title: '', body: '' });
-                        uiUtils.redirectToPage('noteEdition');
-                    });
-            };
+    async function initializeEvents() {
+        uiNotesList.createNoteBtn.onclick = event => {
+            uiNoteEdition.setValues({ title: '', body: '' });
+            uiUtils.redirectToPage('noteEdition');
+        }
 
-        uiNoteEdition.backBtn.onclick =
-            event => uiUtils.redirectToPage('notesList');
+        uiNoteEdition.backBtn.onclick = async event => {
+            const tempNote = await uiNoteEdition.tempNote('get');
 
-        uiNoteEdition.saveNoteBtn.onclick =
-            event => {
-                uiNoteEdition.saveNote({
+            if (tempNote.id) {
+                const note = {
+                    id: tempNote.id,
                     title: uiNoteEdition.titleElem.value,
                     body: uiNoteEdition.bodyElem.value,
-                });
-                uiNoteEdition.tempNote('delete');
+                    createdOn: tempNote.createdOn
+                };
+
+                await manager.update({ key: 'notes', value: note, id: tempNote.id });
+            } else {
+                const note = {
+                    title: uiNoteEdition.titleElem.value,
+                    body: uiNoteEdition.bodyElem.value,
+                };
+                uiNoteEdition.saveNote(note, true);
             }
+
+            uiNoteEdition.tempNote('delete');
+            displayNotes();
+            uiUtils.redirectToPage('notesList');
+        };
+
+        uiNoteEdition.saveNoteBtn.onclick = event => {
+            const note = {
+                title: uiNoteEdition.titleElem.value,
+                body: uiNoteEdition.bodyElem.value,
+            };
+            uiNoteEdition.saveNote(note);
+            uiNoteEdition.tempNote('delete');
+        };
+
+        uiNotesList.showNotesBtn.onclick = () => uiUtils.redirectToPage('notesArea');
+        uiNotesList.showTempsBtn.onclick = () => uiUtils.redirectToPage('tempNotes');
 
 
         //#region Not refactored yet
-        document.getElementById('searchNoteBtn').onclick =
-            event => {
-                event.target.classList.add('hidden');
-                document.getElementById('closeSearchInput').classList.remove('hidden');
-                manager.retrieve('notes').then(list => {
-                    document.getElementById('searchNoteInput').classList.remove('hidden');
-                    notes = list.slice();
-                    document.getElementById('searchNoteInput').focus();
-                });
+        uiNotesList.searchField.openBtn.onclick = event => {
+            event.target.classList.add('hidden');
+            uiNotesList.searchField.closeBtn.classList.remove('hidden');
 
-            };
-        document.getElementById('searchNoteInput').onkeyup =
-            event => {
-                let searchResult = [];
+            manager.retrieve('notes').then(list => {
+                uiNotesList.searchField.input.classList.remove('hidden');
+                notes = list.slice();
+                uiNotesList.searchField.input.focus();
+            });
 
-                manager.retrieve('notes').then(list => {
-                    const notes = list.slice();
-                    searchResult = notes.filter(note => note.title.toLowerCase().includes(event.target.value.toLowerCase()));
-                    uiNotesList.clearMainSection();
-                    uiNotesList.appendNotes(searchResult);
-                });
+        };
+        uiNotesList.searchField.input.onkeyup = event => {
+            let searchResult = [];
 
-            };
+            manager.retrieve('notes').then(list => {
+                const notes = list.slice();
+                searchResult = notes.filter(note => note.title.toLowerCase().includes(event.target.value.toLowerCase()));
+                uiNotesList.clearMainSection();
+                uiNotesList.appendNotes(searchResult);
+            });
 
-        document.getElementById('closeSearchInput').onclick =
-            event => {
-                document.getElementById('searchNoteInput').classList.add('hidden');
-                event.target.classList.add('hidden');
-                document.getElementById('searchNoteBtn').classList.remove('hidden');
+        };
 
-            };
+        uiNotesList.searchField.closeBtn.onclick = event => {
+            uiNotesList.searchField.input.classList.add('hidden');
+            event.target.classList.add('hidden');
+            uiNotesList.searchField.openBtn.classList.remove('hidden');
 
-        document.getElementById('expandWindowsButton').onclick =
-            event => {
-                const popoutUrl = chrome.runtime.getURL("popout/popout.html");
-                chrome.tabs.query({ url: popoutUrl }, tabs => {
-                    if (tabs.length > 0) {
-                        chrome.windows.update(tabs[0].windowId, { 'focused': true },
-                            () => {
-                                chrome.tabs.update(tabs[0].id, { 'active': true })
-                            })
-                    } else {
-                        chrome.windows.create({
-                            'url': popoutUrl,
-                            // 'width': 640,
-                            // 'height': 456,
-                            'type': 'popup'
-                        })
-                    };
-                });
-            };
+        };
+
+        document.getElementById('expandWindowsButton').onclick = event => {
+            const popoutUrl = chrome.runtime.getURL("popout/popout.html");
+            chrome.tabs.query({ url: popoutUrl }, tabs => {
+                if (tabs.length > 0)
+                    chrome.windows.update(
+                        tabs[0].windowId,
+                        { 'focused': true },
+                        () => chrome.tabs.update(tabs[0].id, { 'active': true })
+                    );
+                else chrome.windows.create({ 'url': popoutUrl, 'type': 'popup' });
+                //chrome.windows.create({ 'url': popoutUrl, // 'width': 640, // 'height': 456, 'type': 'popup' });
+            });
+        };
         //#endregion
 
     }
@@ -128,16 +132,15 @@
         const MDCTextfield = mdc.textfield.MDCTextfield;
         const MDCTextfieldFoundation = mdc.textfield.MDCTextfieldFoundation;
         const menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
+
         document.getElementById('goToOptions').onclick = () => menu.open = !menu.open;
 
-        manager.retrieve('popover').then(isEnabled => {
-            if (typeof isEnabled !== 'boolean') {
+        manager.retrieve('popover').then(popover => {
+            if (typeof popover.isEnabled !== 'boolean') {
                 uiNotesList.popoverChkbx.checked = true;
-                manager.create({ 'popover': true }, () => { });
-            } else uiNotesList.popoverChkbx.checked = isEnabled;
+            } else uiNotesList.popoverChkbx.checked = popover.isEnabled;
 
         });
-
         // Add event listener to some button to toggle the menu on and off.
     }
 })();

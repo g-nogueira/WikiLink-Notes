@@ -4,7 +4,7 @@
 | It creates a div element at the displayed page |
 | DOM, as well as two cals, for padding sakes.   |
 | Gets the ranges of these elements and listen to|
-| the onMouseUp event, that gets the selected     |
+| the onMouseUp event, that gets the selected    |
 | text, parses it and request data to the API.   |
 | The response will be displayed into a popover. |
 |                                                |
@@ -33,9 +33,8 @@
     insertDiv();
 
     document.onmouseup = function (event) {
-        if (event.which === 1)
-            if (!sel.isCollapsed)
-                searchSelectedAsync();
+        if (event.which === 1 && !sel.isCollapsed)
+            searchSelectedAsync();
     };
 
     document.onmousedown = function () {
@@ -55,7 +54,7 @@
     async function isEnabledAsync() {
         return new Promise(resolve => {
             chrome.storage.sync.get('popover',
-                obj => resolve(obj.popover)
+                obj => resolve(obj.popover.isEnabled)
             );
         });
     }
@@ -63,7 +62,7 @@
     async function ImageIsEnabledAsync() {
         return new Promise(resolve => {
             chrome.storage.sync.get('wikipedia-showThumbnail',
-                obj => resolve(obj.popover)
+                obj => resolve(true)
             );
         });
     }
@@ -82,7 +81,7 @@
     }
 
     function repoRequest(term) {
-        let msg = {
+        const msg = {
             module: 'wikiRepo',
             method: 'searchTerm',
             key: term

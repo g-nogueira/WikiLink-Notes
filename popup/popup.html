@@ -3,7 +3,7 @@
 
 <head>
     <title>popup</title>
-    <link rel="stylesheet" href="styles/popup.css"/>
+    <link rel="stylesheet" href="styles/popup.css" />
     <link rel="stylesheet" href="styles/layout.css" />
     <link rel="stylesheet" href="styles/utils.css" />
     <link rel="stylesheet" href="styles/noteslist-page.css" />
@@ -31,6 +31,15 @@
                 </div>
                 <label for="popoverChkbx" class="roboto-thin negative-margin">Popover</label>
             </div>
+
+            <div class="d-inline">
+                <label for="viewsButtons" class="roboto-thin">View: </label>
+                <div id="viewsButtons">
+                    <button id="notesBtn">Saved</button>
+                    <button id="tempsBtn">Temp</button>
+                </div>
+            </div>
+
             <div style="display:inline-flex;">
                 <input id="searchNoteInput" class="hidden myInput" type="text">
                 <div>
@@ -56,7 +65,19 @@
         </header>
 
         <div class="scrollable">
-            <section class="notesListArea mdc-typography--body1" id="notesArea"></section>
+            
+            <div id="noteModel" class="noteItem hidden">
+                <section id="noteLeftSection" class="noteTitle">
+                    <span id="title"></span>
+                </section>
+                <section id="noteRightSection" class="noteItemSection">
+                    <span id="date" class="noteDate"></span>
+                    <i id="deleteBtn" class="material-icons deleteIcon pointer" title="Delete">clear</i>
+                </section>
+            </div>
+            <section class="notesListArea mdc-typography--body1" id="notesArea">
+            </section>
+            <section class="notesListArea mdc-typography--body1" id="tempNotesArea"></section>
 
             <button class="mdc-fab mdc-fab--mini app-fab--absolute" id="createNoteBtn" aria-label="New">
                 <span id="test" class="mdc-fab__icon">
@@ -99,10 +120,10 @@
     </div>
 
     <script src="../shared/material-components-web.js"></script>
+    <script src="../repository/Manager.js"></script>
     <script src="UI.Utils.js"></script>
     <script src="UI.NoteEdition.js"></script>
     <script src="UI.NotesList.js"></script>
-    <script src="Manager.js"></script>
     <script src="index.js"></script>
     <script src="tooltip.js"></script>
 </body>

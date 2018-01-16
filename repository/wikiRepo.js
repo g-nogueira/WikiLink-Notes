@@ -1,96 +1,80 @@
-(function () {
+(async function () {
     'using strict';
 
-    var lang = {};
-    chrome.storage.sync.get('mainLanguage', obj => lang = obj.mainLanguage)
-    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.module === 'wikiRepo') {
-            wR[message.method](message.key) //wR.searchImage('term')
+            wikiRepo[message.method](message.key)
                 .then(resp => sendResponse(resp))
                 .catch(err => sendResponse('Ocorreu algum erro ao pesquisar o termo' + message.key + '.'));
             return true;
         };
     });
 
+    const lang = await manager.retrieve('mainLanguage');
 
-    class wikiRepo {
-        constructor() {
-            this._wikiApi = {
-                image: term => `https://www.googleapis.com/customsearch/v1?cx=016244970766248583918:9b3frzu6es8&key=AIzaSyCANbzYzOf_Bkm2KLw5di6tR30aNC6mOCU&q=${term}&searchType=image&num=1`,
-                article: (term) => `https://${lang || 'en'}.wikipedia.org/w/api.php?action=opensearch&format=json&search=${term}`
-            };
-        }
+    class WikiRepo {
+        constructor() { }
 
+        /**
+         * @summary It searches a given term on wikipedia.
+         * @param {String} term The term to be searched on wikipedia.
+         * @returns {Promise.<object>} Returns a Promise that resolves to an object with title and body properties.
+         */
         searchTerm(term) {
-            return new Promise((resolve, reject) => {
-                http
-                    .get(this._wikiApi.article(term))
-                    .then(response => resolve(formatResponse(response, 'article')));
-            });
-        }
-        searchImage(term) {
-            return new Promise((resolve, reject) => {
-                http
-                    .get(this._wikiApi.image(term))
-                    .then(response => resolve(formatResponse(response, 'image')))
-                    .catch(response => resolve(response));
-            });
-        }
-    }
-
-    class httpC {
-        constructor() {
-        }
-
-        get(url) {
-            return this.httpCall('GET', url);
-        }
-        post(url, data) {
-            return this.httpCall('POST', url, data);
-        }
-        put(url, data) {
-            return this.httpCall('PUT', url, data);
-        }
-        delete(url) {
-            return this.httpCall('DELETE', url);
-        }
-
-        httpCall(method, url) {
-            let xhr = new XMLHttpRequest();
-
-            return new Promise((resolve, reject) => {
-                xhr.open(method, url, true);
-                xhr.onload = () => resolve(xhr.responseText);
-                xhr.onerror = () => reject(xhr);
-                xhr.send();
-            });
-        }
-    }
-
-    var wR = new wikiRepo();
-    var http = new httpC();
-
-    function formatResponse(response, type) {
-
-        let json = JSON.parse(response);
-        let tp = {
-            article: article,
-            image: image
-        };
-        function image() {
-            return {
-                url: json.items[0].link,
-                width: json.items[0].image.width,
-                height: json.items[0].image.height
+            const article = {
+                title: '',
+                body: ''
             }
-        }
-        function article() {
-            return {
-                title: json[1][0],
-                body: json[2][0].length <= 80 ? json[2][1] : json[2][0]
-            };
+            return new Promise(async (resolve, reject) => {
+
+                const searchResponse = await http.get(`https://${lang || 'en'}.wikipedia.org/w/api.php?action=opensearch&search=${term}&limit=2&namespace=0&format=json`);
+                const resultsArray = JSON.parse(searchResponse);
+                
+                const titles = resultsArray[1];
+                const articles = resultsArray[2];
+
+                try {
+                    article.title = titles[0];
+                    article.body = articles[0].includes('may refer to:') ? articles[1] : articles[0];
+                } catch (error) {
+                    console.warn(`Couldn't get an article for the term "${term}".`);
+                }
+
+                resolve(article);
+            });
         }
 
-        return tp[type]();
+        /**
+         * @summary It searches an image on wikipedia by the given term.
+         * @param {String} term The term to be searched on wikipedia.
+         * @returns {Promise.<object>} Returns a promise that resolves to an object with url, width, and height properties.
+         */
+        searchImage(term) {
+            return new Promise(async (resolve, reject) => {
+                const imageInfo = {
+                    url: '',
+                    width: 500,
+                    height: 500
+                };
+                try {
+                    const imagesNameString = await http.get(`https://en.wikipedia.org/w/api.php?action=query&titles=${term}&prop=images&format=json`);
+                    const imageTitle = JSON.parse(`{${/"images":\[(.*?)\]/g.exec(imagesNameString)[0]}}`).images[0].title;
+
+                    const imageInfoString = await http.get(`https://commons.wikimedia.org/w/api.php?action=query&titles=${imageTitle}&prop=imageinfo&iiprop=url|size&format=json`);
+                    const imageInfoObj = JSON.parse(`{${/"imageinfo":\[(.*?)\]/g.exec(imageInfoString)[0]}}`).imageinfo[0];
+
+                    imageInfo.url = imageInfoObj.url;
+                    imageInfo.width = imageInfoObj.width;
+                    imageInfo.height = imageInfoObj.height;
+
+                    resolve(imageInfo);
+                } catch (error) {
+                    console.warn(`Couldn't get image for term "${term}"`);
+                    resolve(imageInfo);
+                }
+            });
+        }
     }
+
+    const wikiRepo = new WikiRepo();
 })();

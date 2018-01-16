@@ -13,6 +13,13 @@ class UINotesList {
         this.mainSection = document.getElementById('notesArea');
         this.createNoteBtn = document.getElementById('createNoteBtn');
         this.popoverChkbx = document.getElementById('popoverChkbx');
+        this.showNotesBtn = document.getElementById('notesBtn');
+        this.showTempsBtn = document.getElementById('tempsBtn');
+        this.searchField = {
+            openBtn: document.getElementById('searchNoteBtn'),
+            input: document.getElementById('searchNoteInput'),
+            closeBtn: document.getElementById('closeSearchInput')
+        };
     }
 
     /**
@@ -32,7 +39,7 @@ class UINotesList {
     }
 
     /**
-     * 
+     * @summary It gets the noteModel element and generate a note html based on the model.
      * @param {Object} params 
      * @param {String} type The element to be generated.
      * @param {number} params.id The id of the item.
@@ -40,51 +47,25 @@ class UINotesList {
      * @param {String} params.date The date of a noteLabel.
      * @param {function} params.deleteEvent The function expression to be executed on delete button click.
      * @param {function} params.onclick The function expression to be executed on click.
+     * @returns {Node}
      */
     elementGenerator(type, params) {
-        const f = {
-            noteLabel: noteLabel
-        };
-
-        return f[type]();
+        return ({noteLabel: noteLabel})[type]();
 
         function noteLabel(title = params.title, date = params.date, onclick = params.onclick, deleteEvent = params.deleteEvent) {
-            const noteLabel = document.createElement('div');
-            const noteLeftSection = document.createElement('section');
-            const noteRightSection = document.createElement('section');
+            const noteModel = document.getElementById('noteModel').cloneNode(true);
+            const noteLeftSection = noteModel.children.noteLeftSection;
+            const noteRightSection = noteModel.children.noteRightSection;
 
-
+            noteModel.setAttribute('id', params.id);
+            noteModel.classList.remove('hidden');
             noteLeftSection.onclick = onclick;
-            noteLeftSection.classList.add('noteTitle');
-            noteLeftSection.appendChild(((title) => {
-                const titleSpan = document.createElement('span');
-                titleSpan.appendChild(document.createTextNode(params.title));
-                return titleSpan;
-            })(title));
 
-            noteRightSection.classList.add('noteItemSection');
-            noteRightSection.appendChild((
-                function getDateSpan(createdOn) {
-                    const dateSpan = document.createElement('span');
-                    dateSpan.classList.add('noteDate');
-                    dateSpan.appendChild(document.createTextNode(createdOn));
-                    return dateSpan;
-                })(date));
-            noteRightSection.appendChild((function getDelIcon(onclick) {
-                const delIcon = document.createElement('i');
-                delIcon.classList.add('material-icons', 'deleteIcon', 'pointer');
-                delIcon.setAttribute('title', 'Delete');
-                delIcon.appendChild(document.createTextNode('clear'));
-                delIcon.onclick = onclick;
-                return delIcon;
-            })(deleteEvent));
+            noteRightSection.children.deleteBtn.onclick = deleteEvent;
+            noteRightSection.children.date.appendChild(document.createTextNode(date));
+            noteLeftSection.children.title.appendChild(document.createTextNode(title));
 
-            noteLabel.classList.add('noteItem');
-            noteLabel.setAttribute('id', params.id);
-            noteLabel.appendChild(noteLeftSection);
-            noteLabel.appendChild(noteRightSection);
-
-            return noteLabel;
+            return noteModel;
         }
     }
 
@@ -105,15 +86,14 @@ class UINotesList {
                 date: note.createdOn,
                 onclick: () => {
                     uiUtils.redirectToPage('noteEdition');
-                    uiNoteEdition.setProperties({ id: note.id, title: note.title, body: note.body });
+                    uiNoteEdition.setValues({ id: note.id, title: note.title, body: note.body });
                     uiNoteEdition.tempNote('set', note);
                 },
                 deleteEvent: () => {
-                    const div = document.getElementById(note.id)
-                    div.parentNode.removeChild(div);
-                    manager
-                        .delete('notes', note.id)
-                        .then(() => window.alert("Deleted"));
+                    const notesArea = document.getElementById('notesArea');
+                    notesArea.removeChild(document.getElementById(note.id));
+                    manager.delete('notes', note.id)
+                        .then(() => window.alert(`Deleted note "${note.title}".`));
                 }
             });
             this.mainSection.appendChild(html);
@@ -125,7 +105,7 @@ class UINotesList {
      * @summary Appends a html element on the main section of the page.
      * @param {*} element 
      */
-    appendChild(element){
+    appendChild(element) {
         this.mainSection.appendChild(element);
     }
 }

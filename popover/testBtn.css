@@ -1,0 +1,193 @@
+:root {
+    --header-main-color: #00897B;
+    --header-main-letter-collor: #003F38;
+    --header-secondary-color: rgba(21, 145, 245, 0.88);
+    --header-secondary-letter-collor: rgba(0, 48, 86, 0.77);
+}
+
+.mdc-fab{
+    z-index: 100;
+}
+
+.roboto-thin {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--header-main-letter-collor);
+    font-size: 11pt;
+    font-weight: 300;
+}
+
+.myInput {
+    padding: 5px;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border-bottom: 1px solid var(--header-main-letter-collor);
+    color: #fff;
+    animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.myInput:focus {
+    border-bottom: 2px solid var(--header-main-letter-collor);
+}
+
+.material-icons {
+    font-size: 17pt !important;
+}
+
+
+/*****************************************************
+/* fallback */
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/materialicons/v34/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/*****************************************************
+
+/* 
+* Material Design modifications
+* TextArea, TextField, Checkbox
+*/
+
+textarea.mdc-textfield__input,
+textarea.mdc-textfield__input:hover {
+    border: 1px solid rgba(0, 0, 0, .2);
+    resize: none;
+    border-radius: 2px;
+}
+
+.mdc-textfield>.mdc-textfield__input {
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+.mdc-checkbox__native-control:checked~.mdc-checkbox__background {
+    background-color: #80CBC4 !important;
+    border-color: #80CBC4 !important;
+}
+
+.mdc-checkbox__checkmark__path {
+    stroke: var(--header-main-color) !important;
+}
+
+
+/*
+* This will position the FAB in the bottom-right corner.
+* Modify to fit your designs requirements.
+*/
+
+.app-fab--absolute.app-fab--absolute {
+    position: fixed;
+    bottom: .5rem;
+    right: .5rem;
+}
+
+@media(min-width: 1024px) {
+    .app-fab--absolute.app-fab--absolute {
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+}
+
+.mdc-fab {
+    background-color: var(--header-main-color)!important;
+    opacity: 0.85;
+}
+
+.mdc-simple-menu.options {
+    right: 10px;
+    overflow: initial;
+}
+
+
+/*
+* Tooltip style and animation from Material Design Lite
+*
+*/
+
+.mdl-tooltip {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transform-origin: top center;
+    transform-origin: top center;
+    z-index: 999;
+    background: rgba(97, 97, 97, 0.9);
+    border-radius: 2px;
+    color: rgb(255, 255, 255);
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 14px;
+    max-width: 170px;
+    position: fixed;
+    top: -500px;
+    left: -500px;
+    padding: 8px;
+    text-align: center;
+}
+
+.mdl-tooltip.is-active {
+    -webkit-animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
+    animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.mdl-tooltip--large {
+    line-height: 14px;
+    font-size: 14px;
+    padding: 16px;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        -webkit-transform: scale(0.99);
+        transform: scale(0.99);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        -webkit-transform: scale(0.99);
+        transform: scale(0.99);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+    }
+}

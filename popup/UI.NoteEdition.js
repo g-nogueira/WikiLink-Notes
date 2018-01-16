@@ -38,7 +38,7 @@ class UINoteEdition {
      * @param {String} prop.title The note title.
      * @param {String} prop.body The note body.
      */
-    setProperties(prop) {
+    setValues(prop) {
         //⚠ It will save the current noteId in cache
         this.titleElem.value = prop.title;
         this.bodyElem.value = prop.body;
@@ -52,20 +52,31 @@ class UINoteEdition {
      * @param {String} [note.createdOn] The date that the note was created.
      * @param {String} [note.id] The id of the note to update. If none provided, it will create a new note.
      */
-    saveNote(note) {
+    saveNote(note, isTemp) {
+
         const newNote = {
             title: note.title,
             body: note.body,
             createdOn: note.createdOn || ''
         }
 
-        if (note.id) {
-            manager.update({key: 'notes', value: newNote, id: note.id});
+        if (isTemp) {
+            if (note.id)
+                manager.update({ key: 'tempNotes', value: newNote, id: note.id });
+            else {
+                newNote.createdOn = (new Date((new Date()).getTime())).toLocaleDateString();
+                manager.push('tempNotes', newNote).then(() => { });
+            }
         }
-        else{
-            newNote.createdOn = (new Date((new Date()).getTime())).toLocaleDateString();;
-            manager.push('notes', newNote).then(() => window.alert(`Note ${note.title} created! :D`));
+        else {
+            if (note.id)
+                manager.update({ key: 'notes', value: newNote, id: note.id });
+            else {
+                newNote.createdOn = (new Date((new Date()).getTime())).toLocaleDateString();
+                manager.push('notes', newNote).then(() => window.alert(`Note ${note.title} created! :D`));
+            }
         }
+
     }
 
     /**
@@ -74,15 +85,29 @@ class UINoteEdition {
      * @param {String} method "get" "set" "delete".
      * @param {object} [note] The temporary note.
      * @param {String} note.title The title of the note.
+     * @param {String} note.createdOn 
      * @param {String} note.body The body of the note.
      * @param {String} note.id The id of the note.
      * @returns {Promise}
      */
-    tempNote(method, note){
+    tempNote(method, note) {
         return ({
-            get: () => manager.retrieve('tempNote'),
-            set: () => manager.create({tempNote: note}),
-            delete: () => manager.create({tempNote: {}}),
+            get: () => {
+                const id = sessionStorage.getItem('id');
+                const createdOn = sessionStorage.getItem('createdOn');
+                return {
+                    id: id,
+                    createdOn: createdOn
+                };
+            },
+            set: () => {
+                sessionStorage.setItem('id', note.id);
+                sessionStorage.setItem('createdOn', note.createdOn);
+            },
+            delete: () => {
+                sessionStorage.removeItem('id');
+                sessionStorage.removeItem('createdOn');
+            },
         })[method](note);
 
     }

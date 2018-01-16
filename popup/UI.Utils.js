@@ -18,6 +18,14 @@ class UIUtils {
             notesList: () => {
                 document.getElementById('page-notesList').classList.remove('hidden');
                 document.getElementById('page-noteCreation').classList.add('hidden');
+            },
+            tempNotes: () => {
+                document.getElementById('notesArea').classList.add('hidden');
+                document.getElementById('tempNotesArea').classList.remove('hidden');
+            },
+            notesArea: () => {
+                document.getElementById('notesArea').classList.remove('hidden');
+                document.getElementById('tempNotesArea').classList.add('hidden');
             }
         };
 

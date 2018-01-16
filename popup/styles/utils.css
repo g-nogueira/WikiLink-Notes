@@ -34,3 +34,7 @@
 .bgcolor-green-1{
     background-color: var(--header-main-color) !important;
 }
+
+.d-inline{
+    display: inline-flex;
+}

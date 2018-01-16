@@ -31,7 +31,7 @@
         "<all_urls>"
       ],
       "js": [
-        "popover/wlPopover.js",
+        "popover/popover.js",
         "popover/testButton.js"
       ],
       "css": [

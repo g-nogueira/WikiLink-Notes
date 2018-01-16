@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "WikiLink",
   "description": "This extension alows the user to fast search wiki terms.",
-  "version": "1.0",
+  "version": "0.9",
   "omnibox": {
     "keyword": "wl:"
   },
@@ -10,7 +10,6 @@
     "128": "Images/icon7.png"
   },
   "options_page": "optionsPage/main.html",
-  // "options_ui": {"page":"optionsPage/main.html"},
   "background": {
     "scripts": [
       "repository/Http.js",

@@ -35,7 +35,7 @@
 
                 try {
                     article.title = titles[0];
-                    article.body = articles[0].includes('may refer to:') ? articles[1] : articles[0];
+                    article.body = articles[0].includes('refer to:') ? articles[1] : articles[0];
                 } catch (error) {
                     console.warn(`Couldn't get an article for the term "${term}".`);
                 }

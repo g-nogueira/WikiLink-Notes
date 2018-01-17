@@ -5,107 +5,52 @@
     initializeMDC();
     initializeEvents();
     displayNotes();
+    displayTempNotes();
 
 
     /*************************************************************************************
-     *                              IMPLEMENTATION
-     * ✔ 1. DisplayNotes function
-     * ✔ 2. WriteNote function
-     * ✖ 3. InitializeEvents function not finished: uiNoteEdition.saveBtn.onclick
-     * 
-     * 
-     * 
-     * 
-     * 
+     *                              IMPLEMENTATION                                       *
+     *                                                                                   *
+     * These functions are responsible for initializing DOM Events callbacks and         *
+     * Material Design Components.                                                       *
+     *                                                                                   *
+     *                                                                                   *
      *************************************************************************************/
 
 
     async function displayNotes() {
         uiNotesList.clearMainSection();
         const notes = await manager.retrieve('notes')
-            .catch(reason => uiNotesList.appendChild(document.createTextNode('It looks like you do not have written notes. 😕')));
-        uiNotesList.appendNotes(notes);
+        if (notes.length === 0)
+            uiNotesList.mainSection.appendChild(document.createTextNode('It looks like you do not have written notes. 😕'));
+        else
+            uiNotesList.appendNotes(notes);
     }
 
-    function writeNote() {
-        uiNoteEdition.setValues({ title: '', body: '' });
-        uiUtils.redirectToPage('noteEdition');
+    async function displayTempNotes() {
+        uiNotesList.clearTempsSection();
+        const notes = await manager.retrieve('tempNotes');
+        if (notes.length === 0)
+            uiNotesList.tempNotesSection.appendChild(document.createTextNode('It looks like you do not have drafts. 😕'));
+        else
+            uiNotesList.appendNotes(notes, true);
     }
 
-    async function initializeEvents() {
-        uiNotesList.createNoteBtn.onclick = event => {
-            uiNoteEdition.setValues({ title: '', body: '' });
-            uiUtils.redirectToPage('noteEdition');
-        }
+    function initializeEvents() {
 
-        uiNoteEdition.backBtn.onclick = async event => {
-            const tempNote = await uiNoteEdition.tempNote('get');
+        observeMainPage();
+        observeNotesArea();
+        observeTempNotesArea();
 
-            if (tempNote.id) {
-                const note = {
-                    id: tempNote.id,
-                    title: uiNoteEdition.titleElem.value,
-                    body: uiNoteEdition.bodyElem.value,
-                    createdOn: tempNote.createdOn
-                };
+        uiNotesList.showNotesBtn.onclick = ev => uiUtils.showPage('notesArea');
+        uiNotesList.showTempsBtn.onclick = ev => uiUtils.showPage('tempNotes');
+        uiNotesList.searchField.openBtn.onclick = ev => searchFieldActions('open', ev);
+        uiNotesList.searchField.input.onkeyup = ev => searchFieldActions('search', ev);
+        uiNotesList.searchField.closeBtn.onclick = ev => searchFieldActions('close', ev);
+        uiNotesList.createNoteBtn.onclick = ev => noteCreationAction(ev);
 
-                await manager.update({ key: 'notes', value: note, id: tempNote.id });
-            } else {
-                const note = {
-                    title: uiNoteEdition.titleElem.value,
-                    body: uiNoteEdition.bodyElem.value,
-                };
-                uiNoteEdition.saveNote(note, true);
-            }
-
-            uiNoteEdition.tempNote('delete');
-            displayNotes();
-            uiUtils.redirectToPage('notesList');
-        };
-
-        uiNoteEdition.saveNoteBtn.onclick = event => {
-            const note = {
-                title: uiNoteEdition.titleElem.value,
-                body: uiNoteEdition.bodyElem.value,
-            };
-            uiNoteEdition.saveNote(note);
-            uiNoteEdition.tempNote('delete');
-        };
-
-        uiNotesList.showNotesBtn.onclick = () => uiUtils.redirectToPage('notesArea');
-        uiNotesList.showTempsBtn.onclick = () => uiUtils.redirectToPage('tempNotes');
-
-
-        //#region Not refactored yet
-        uiNotesList.searchField.openBtn.onclick = event => {
-            event.target.classList.add('hidden');
-            uiNotesList.searchField.closeBtn.classList.remove('hidden');
-
-            manager.retrieve('notes').then(list => {
-                uiNotesList.searchField.input.classList.remove('hidden');
-                notes = list.slice();
-                uiNotesList.searchField.input.focus();
-            });
-
-        };
-        uiNotesList.searchField.input.onkeyup = event => {
-            let searchResult = [];
-
-            manager.retrieve('notes').then(list => {
-                const notes = list.slice();
-                searchResult = notes.filter(note => note.title.toLowerCase().includes(event.target.value.toLowerCase()));
-                uiNotesList.clearMainSection();
-                uiNotesList.appendNotes(searchResult);
-            });
-
-        };
-
-        uiNotesList.searchField.closeBtn.onclick = event => {
-            uiNotesList.searchField.input.classList.add('hidden');
-            event.target.classList.add('hidden');
-            uiNotesList.searchField.openBtn.classList.remove('hidden');
-
-        };
+        uiNoteEdition.backBtn.onclick = ev => backButtonAction(ev);
+        uiNoteEdition.saveNoteBtn.onclick = ev => saveNoteAction(ev);
 
         document.getElementById('expandWindowsButton').onclick = event => {
             const popoutUrl = chrome.runtime.getURL("popout/popout.html");
@@ -120,12 +65,104 @@
                 //chrome.windows.create({ 'url': popoutUrl, // 'width': 640, // 'height': 456, 'type': 'popup' });
             });
         };
-        //#endregion
 
     }
 
+    function observeMainPage() {
+        const observer = new MutationObserver(ev => {
+            if (ev[0].oldValue.includes('hidden')) //If notesArea is set to not hidden, load notes.
+            {
+                displayNotes();
+                displayTempNotes();
+            }
+        });
+        observer.observe(document.getElementById('page-notesList'), { attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+    }
 
-    ///Function here just for testing
+    function observeTempNotesArea() {
+        const observer = new MutationObserver(ev => {
+            if (ev[0].oldValue.includes('hidden')) //If notesArea is set to not hidden, load notes.
+                displayTempNotes();
+        });
+        observer.observe(uiNotesList.tempNotesSection, { attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+    }
+
+    function observeNotesArea() {
+        const observer = new MutationObserver(ev => {
+            if (ev[0].oldValue.includes('hidden')) //If notesArea is set to not hidden, load notes.
+                displayNotes();
+        });
+        observer.observe(uiNotesList.mainSection, { attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+    }
+
+    async function saveNoteAction(event) {
+        const tempNote = await uiNoteEdition.tempNote('get');
+        const isDraft = JSON.parse(tempNote.isDraft) || false;
+        const note = {
+            id: tempNote.id,
+            title: uiNoteEdition.titleElem.value,
+            body: uiNoteEdition.bodyElem.value,
+        };
+        uiNoteEdition.saveNote(note, {isNew: !tempNote.id, isDraft: isDraft});
+        uiNoteEdition.tempNote('delete');
+    }
+
+    function noteCreationAction(event) {
+        uiNoteEdition.setValues({ title: '', body: '' });
+        uiUtils.showPage('noteEdition');
+    }
+
+    async function backButtonAction(event) {
+        const tempNote = await uiNoteEdition.tempNote('get');
+        const isDraft = JSON.parse(tempNote.isDraft) || false;
+        //If it does not have an id, the user clicked to create a new note
+        if (tempNote.id) {
+            const note = {
+                id: tempNote.id,
+                title: uiNoteEdition.titleElem.value,
+                body: uiNoteEdition.bodyElem.value,
+                createdOn: tempNote.createdOn
+            };
+            await manager.update({ key: isDraft ? 'tempNotes' : 'notes', value: note, id: tempNote.id });
+        }
+        else {
+            const note = {
+                title: uiNoteEdition.titleElem.value,
+                body: uiNoteEdition.bodyElem.value,
+            };
+            await uiNoteEdition.saveNote(note, {isNewDraft: true});
+        }
+
+        uiNoteEdition.tempNote('delete');
+        uiUtils.showPage('notesList');
+        uiUtils.showPage(isDraft ? 'tempNotes' : 'notesList');
+    }
+
+    async function searchFieldActions(action, event) {
+
+        const notes = await manager.retrieve('notes');
+        ({
+            close: event => {
+                uiNotesList.searchField.input.classList.add('hidden');
+                event.target.classList.add('hidden');
+                uiNotesList.searchField.openBtn.classList.remove('hidden');
+                displayNotes();
+            },
+            open: event => {
+                event.target.classList.add('hidden');
+                uiNotesList.searchField.closeBtn.classList.remove('hidden');
+                uiNotesList.searchField.input.classList.remove('hidden');
+                uiNotesList.searchField.input.focus();
+            },
+            search: event => {
+                const searchResult = notes.filter(note => note.title.toLowerCase().includes(event.target.value.toLowerCase()));
+                uiNotesList.clearMainSection();
+                uiNotesList.appendNotes(searchResult);
+            }
+        })[action](event);
+    }
+
+    ///Function not refactored yet
     function initializeMDC() {
         const MDCComponent = mdc.base.MDCComponent;
         const MDCFoundation = mdc.base.MDCFoundation;

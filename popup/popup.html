@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="styles/utils.css" />
     <link rel="stylesheet" href="styles/noteslist-page.css" />
     <link rel="stylesheet" href="styles/newnote-page.css" />
+    <link rel="stylesheet" href="styles/material-components-web.min.css">
 
 
-    <link rel="stylesheet" href="../shared/material-components-web.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
@@ -65,7 +65,7 @@
         </header>
 
         <div class="scrollable">
-            
+
             <div id="noteModel" class="noteItem hidden">
                 <section id="noteLeftSection" class="noteTitle">
                     <span id="title"></span>
@@ -75,9 +75,8 @@
                     <i id="deleteBtn" class="material-icons deleteIcon pointer" title="Delete">clear</i>
                 </section>
             </div>
-            <section class="notesListArea mdc-typography--body1" id="notesArea">
-            </section>
-            <section class="notesListArea mdc-typography--body1" id="tempNotesArea"></section>
+            <section class="notesListArea mdc-typography--body1" id="notesArea"></section>
+            <section class="notesListArea mdc-typography--body1 hidden" id="tempNotesArea"></section>
 
             <button class="mdc-fab mdc-fab--mini app-fab--absolute" id="createNoteBtn" aria-label="New">
                 <span id="test" class="mdc-fab__icon">
@@ -119,7 +118,7 @@
         </section>
     </div>
 
-    <script src="../shared/material-components-web.js"></script>
+    <script src="../shared/material-components-web.min.js"></script>
     <script src="../repository/Manager.js"></script>
     <script src="UI.Utils.js"></script>
     <script src="UI.NoteEdition.js"></script>

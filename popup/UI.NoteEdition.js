@@ -52,7 +52,7 @@ class UINoteEdition {
      * @param {String} [note.createdOn] The date that the note was created.
      * @param {String} [note.id] The id of the note to update. If none provided, it will create a new note.
      */
-    saveNote(note, isTemp) {
+    async saveNote(note, params = { isNew: false, isDraft: false , isNewDraft: false}) {
 
         const newNote = {
             title: note.title,
@@ -60,22 +60,27 @@ class UINoteEdition {
             createdOn: note.createdOn || ''
         }
 
-        if (isTemp) {
-            if (note.id)
-                manager.update({ key: 'tempNotes', value: newNote, id: note.id });
-            else {
-                newNote.createdOn = (new Date((new Date()).getTime())).toLocaleDateString();
-                manager.push('tempNotes', newNote).then(() => { });
-            }
+        if (params.isNew && !note.id) {
+            newNote.createdOn = (new Date((new Date()).getTime())).toLocaleDateString();
+            manager.push('notes', newNote).then(() => { });
         }
-        else {
-            if (note.id)
-                manager.update({ key: 'notes', value: newNote, id: note.id });
-            else {
-                newNote.createdOn = (new Date((new Date()).getTime())).toLocaleDateString();
-                manager.push('notes', newNote).then(() => window.alert(`Note ${note.title} created! :D`));
-            }
+        else if (params.isDraft && !params.isNew) {
+            const notesArea = document.getElementById('tempNotesArea');
+            notesArea.removeChild(document.getElementById(note.id));
+            const notes = await manager.retrieve('tempNotes');
+            let oldNote = notes.find(el => el.id == note.id);
+            oldNote.title = note.title;
+            oldNote.body = note.body;
+            await manager.push('notes', oldNote);
+            window.alert(`Note ${note.title} created! :D`);
+            manager.delete('tempNotes', note.id);
         }
+        else if (params.isNewDraft && !note.id) {
+            newNote.createdOn = (new Date((new Date()).getTime())).toLocaleDateString();
+            manager.push('tempNotes', newNote).then(() => { });
+        }
+        else if (!params.isDraft && note.id)
+            manager.update({ key: 'notes', value: newNote, id: note.id });
 
     }
 
@@ -90,23 +95,27 @@ class UINoteEdition {
      * @param {String} note.id The id of the note.
      * @returns {Promise}
      */
-    tempNote(method, note) {
+    tempNote(method, note, isDraft = false) {
         return ({
             get: () => {
                 const id = sessionStorage.getItem('id');
                 const createdOn = sessionStorage.getItem('createdOn');
+                const isDraft = sessionStorage.getItem('isDraft');
                 return {
                     id: id,
-                    createdOn: createdOn
+                    createdOn: createdOn,
+                    isDraft: isDraft
                 };
             },
             set: () => {
                 sessionStorage.setItem('id', note.id);
                 sessionStorage.setItem('createdOn', note.createdOn);
+                sessionStorage.setItem('isDraft', isDraft);
             },
             delete: () => {
                 sessionStorage.removeItem('id');
                 sessionStorage.removeItem('createdOn');
+                sessionStorage.removeItem('isDraft');
             },
         })[method](note);
 

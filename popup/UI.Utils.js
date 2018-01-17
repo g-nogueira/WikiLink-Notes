@@ -9,7 +9,7 @@ class UIUtils {
      * @param {String} pageId 'noteEdition'.
      * @param {String} pageId 'notesList'.
      */
-    redirectToPage(pageId) {
+    showPage(pageId) {
         const page = {
             noteEdition: () => {
                 document.getElementById('page-notesList').classList.add('hidden');

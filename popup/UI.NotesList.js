@@ -11,6 +11,7 @@
 class UINotesList {
     constructor() {
         this.mainSection = document.getElementById('notesArea');
+        this.tempNotesSection = document.getElementById('tempNotesArea');
         this.createNoteBtn = document.getElementById('createNoteBtn');
         this.popoverChkbx = document.getElementById('popoverChkbx');
         this.showNotesBtn = document.getElementById('notesBtn');
@@ -23,10 +24,17 @@ class UINotesList {
     }
 
     /**
-     * @summary Reload the list of notes.
+     * @summary Removes all children nodes from notesArea.
      */
     clearMainSection() {
         uiUtils.removeChildNodes(this.mainSection);
+    }
+
+    /**
+     * @summary Removes all children nodes from tempNotesArea
+     */
+    clearTempsSection() {
+        uiUtils.removeChildNodes(this.tempNotesSection);
     }
 
 
@@ -50,7 +58,7 @@ class UINotesList {
      * @returns {Node}
      */
     elementGenerator(type, params) {
-        return ({noteLabel: noteLabel})[type]();
+        return ({ noteLabel: noteLabel })[type]();
 
         function noteLabel(title = params.title, date = params.date, onclick = params.onclick, deleteEvent = params.deleteEvent) {
             const noteModel = document.getElementById('noteModel').cloneNode(true);
@@ -76,27 +84,30 @@ class UINotesList {
      * @param {string} notes[].body
      * @param {string} notes[].createdOn
      * @param {string} notes[].id
+     * @param {bool} isTempNotes If it is list of temporary notes.
      */
-    appendNotes(notes) {
-
+    appendNotes(notes, isTempNotes = false) {
         notes.forEach(note => {
             const html = this.elementGenerator('noteLabel', {
                 id: note.id,
                 title: note.title,
                 date: note.createdOn,
                 onclick: () => {
-                    uiUtils.redirectToPage('noteEdition');
+                    uiUtils.showPage('noteEdition');
                     uiNoteEdition.setValues({ id: note.id, title: note.title, body: note.body });
-                    uiNoteEdition.tempNote('set', note);
+                    uiNoteEdition.tempNote('set', note, isTempNotes);
                 },
                 deleteEvent: () => {
-                    const notesArea = document.getElementById('notesArea');
+                    const notesArea = document.getElementById(isTempNotes ? 'tempNotesArea' : 'notesArea');
                     notesArea.removeChild(document.getElementById(note.id));
-                    manager.delete('notes', note.id)
-                        .then(() => window.alert(`Deleted note "${note.title}".`));
+                    manager.delete(isTempNotes ? 'tempNotes' : 'notes', note.id)
+                        .then(() => window.alert(`Deleted ${isTempNotes ? 'temporary note' : 'note'} "${note.title}".`));
                 }
             });
-            this.mainSection.appendChild(html);
+            if (isTempNotes)
+                this.tempNotesSection.appendChild(html);
+            else
+                this.mainSection.appendChild(html);
         });
 
     }

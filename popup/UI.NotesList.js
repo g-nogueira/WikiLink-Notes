@@ -11,7 +11,7 @@
 class UINotesList {
     constructor() {
         this.mainSection = document.getElementById('notesArea');
-        this.tempNotesSection = document.getElementById('tempNotesArea');
+        this.draftsSection = document.getElementById('draftsArea');
         this.createNoteBtn = document.getElementById('createNoteBtn');
         this.popoverChkbx = document.getElementById('popoverChkbx');
         this.showNotesBtn = document.getElementById('notesBtn');
@@ -31,10 +31,10 @@ class UINotesList {
     }
 
     /**
-     * @summary Removes all children nodes from tempNotesArea
+     * @summary Removes all children nodes from draftsArea
      */
-    clearTempsSection() {
-        uiUtils.removeChildNodes(this.tempNotesSection);
+    clearDraftsSection() {
+        uiUtils.removeChildNodes(this.draftsSection);
     }
 
 
@@ -67,12 +67,22 @@ class UINotesList {
 
             noteModel.setAttribute('id', params.id);
             noteModel.classList.remove('hidden');
+            noteModel.onmouseenter = onmouseenter;
+            noteModel.onmouseleave = onmouseleave;
+
             noteLeftSection.onclick = onclick;
 
             noteRightSection.children.deleteBtn.onclick = deleteEvent;
             noteRightSection.children.date.appendChild(document.createTextNode(date));
             noteLeftSection.children.title.appendChild(document.createTextNode(title));
 
+            function onmouseenter() {
+                noteRightSection.children.deleteBtn.classList.remove('hidden');
+            }
+            function onmouseleave() {
+                noteRightSection.children.deleteBtn.classList.add('hidden');
+            }
+            
             return noteModel;
         }
     }
@@ -84,32 +94,61 @@ class UINotesList {
      * @param {string} notes[].body
      * @param {string} notes[].createdOn
      * @param {string} notes[].id
-     * @param {bool} isTempNotes If it is list of temporary notes.
      */
-    appendNotes(notes, isTempNotes = false) {
+    appendNotes(notes) {
         notes.forEach(note => {
-            const html = this.elementGenerator('noteLabel', {
+            const html = generateHtml.apply(this, [note]);
+            this.mainSection.appendChild(html);
+        });
+
+        function generateHtml(note) {
+            return this.elementGenerator('noteLabel', {
                 id: note.id,
                 title: note.title,
                 date: note.createdOn,
                 onclick: () => {
                     uiUtils.showPage('noteEdition');
                     uiNoteEdition.setValues({ id: note.id, title: note.title, body: note.body });
-                    uiNoteEdition.tempNote('set', note, isTempNotes);
+                    notesManager.cachedNote.set({ note: note, noteStatus: 'note' });
                 },
                 deleteEvent: () => {
-                    const notesArea = document.getElementById(isTempNotes ? 'tempNotesArea' : 'notesArea');
+                    const notesArea = document.getElementById('notesArea');
                     notesArea.removeChild(document.getElementById(note.id));
-                    manager.delete(isTempNotes ? 'tempNotes' : 'notes', note.id)
-                        .then(() => window.alert(`Deleted ${isTempNotes ? 'temporary note' : 'note'} "${note.title}".`));
+                    notesManager.note.delete(note.id).then(() => {
+                        const notification = document.querySelector('.mdl-js-snackbar');
+                        notification.MaterialSnackbar.showSnackbar({ message: `Note "${note.title}" deleted!` });
+                    });
                 }
             });
-            if (isTempNotes)
-                this.tempNotesSection.appendChild(html);
-            else
-                this.mainSection.appendChild(html);
+        }
+    }
+
+    appendDrafts(drafts) {
+        drafts.forEach(draft => {
+            const html = generateHtml.apply(this, [draft]);
+            this.draftsSection.appendChild(html);
         });
 
+        function generateHtml(draft) {
+            return this.elementGenerator('noteLabel', {
+                id: draft.id,
+                title: draft.title,
+                date: draft.createdOn,
+                onclick: () => {
+                    uiUtils.showPage('noteEdition');
+                    uiNoteEdition.setValues({ id: draft.id, title: draft.title, body: draft.body });
+                    notesManager.cachedNote.set({ note: draft, noteStatus: 'draft' });
+                },
+                deleteEvent: () => {
+                    const draftsArea = document.getElementById('draftsArea');
+                    draftsArea.removeChild(document.getElementById(draft.id));
+                    notesManager.draft.delete(draft.id).then(() => {
+                        const notification = document.querySelector('.mdl-js-snackbar');
+                        notification.MaterialSnackbar.showSnackbar({ message: `Draft "${draft.title}" deleted!` });
+                    });
+                }
+            });
+        }
     }
 
     /**

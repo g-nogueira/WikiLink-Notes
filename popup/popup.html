@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles/utils.css" />
     <link rel="stylesheet" href="styles/noteslist-page.css" />
     <link rel="stylesheet" href="styles/newnote-page.css" />
+    <link rel="stylesheet" href="styles/material.min.css">
     <link rel="stylesheet" href="styles/material-components-web.min.css">
 
 
@@ -19,24 +20,23 @@
 <body class="">
     <div id="page-notesList" class="notesListPage">
         <header class="navMenu mdc-elevation--z2">
-            <div title="Enable popover" class="mdc-form-field">
-                <div class="mdc-checkbox">
-                    <input type="checkbox" id="popoverChkbx" class="mdc-checkbox__native-control" />
-                    <div class="mdc-checkbox__background">
-                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                            <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                        </svg>
-                        <div class="mdc-checkbox__mixedmark"></div>
-                    </div>
+            <div class="d-inline" style="align-items: center;">
+                <div id="viewsButtons" class="viewsBtns" style="height: fit-content;">
+                    <button id="notesBtn" class="btn">Notes</button>
+                    <button id="tempsBtn" class="btn">Drafts</button>
                 </div>
-                <label for="popoverChkbx" class="roboto-thin negative-margin">Popover</label>
-            </div>
 
-            <div class="d-inline">
-                <label for="viewsButtons" class="roboto-thin">View: </label>
-                <div id="viewsButtons">
-                    <button id="notesBtn">Saved</button>
-                    <button id="tempsBtn">Temp</button>
+                <div title="Enable popover" class="mdc-form-field">
+                    <div class="mdc-checkbox">
+                        <input type="checkbox" id="popoverChkbx" class="mdc-checkbox__native-control" />
+                        <div class="mdc-checkbox__background">
+                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                            </svg>
+                            <div class="mdc-checkbox__mixedmark"></div>
+                        </div>
+                    </div>
+                    <label for="popoverChkbx" class="roboto-thin negative-margin">Popover</label>
                 </div>
             </div>
 
@@ -45,14 +45,14 @@
                 <div>
                     <i id="closeSearchInput" title="Search" class="hidden material-icons color-green-1 pointer">close</i>
                     <i id="searchNoteBtn" title="Search" class="material-icons color-green-1 pointer">search</i>
-                    <span title="Options" class="toolbar" id="goToOptions">
-                        <i class="material-icons color-green-1 pointer">more_vert</i>
+                    <span title="Options" class="toolbar">
+                        <i id="goToOptions" class="material-icons color-green-1 pointer">more_vert</i>
                         <div class="mdc-simple-menu options" tabindex="-1">
                             <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
                                 <li class="mdc-list-item" id="goToOptPage" role="menuitem" tabindex="0">
                                     Options
                                 </li>
-                                <li class="mdc-list-item" role="menuitem" tabindex="0">
+                                <li class="mdc-list-item" role="menuitem" id="togglePopoverChkBx" tabindex="0">
                                     Another Menu Item
                                 </li>
                             </ul>
@@ -72,20 +72,25 @@
                 </section>
                 <section id="noteRightSection" class="noteItemSection">
                     <span id="date" class="noteDate"></span>
-                    <i id="deleteBtn" class="material-icons deleteIcon pointer" title="Delete">clear</i>
+                    <i id="deleteBtn" class="material-icons deleteIcon pointer hidden" title="Delete">clear</i>
                 </section>
             </div>
             <section class="notesListArea mdc-typography--body1" id="notesArea"></section>
-            <section class="notesListArea mdc-typography--body1 hidden" id="tempNotesArea"></section>
+            <section class="notesListArea mdc-typography--body1 hidden" id="draftsArea"></section>
 
             <button class="mdc-fab mdc-fab--mini app-fab--absolute" id="createNoteBtn" aria-label="New">
-                <span id="test" class="mdc-fab__icon">
+                <span id="createNote" class="mdc-fab__icon">
                     <i class="material-icons">create</i>
                 </span>
             </button>
-            <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="test">
+            <div class="mdl-tooltip mdl-tooltip--left" data-mdl-for="createNote">
                 Write
             </div>
+        </div>
+
+        <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
         </div>
     </div>
 
@@ -118,8 +123,10 @@
         </section>
     </div>
 
+    <script src="material.min.js"></script>
     <script src="../shared/material-components-web.min.js"></script>
     <script src="../repository/Manager.js"></script>
+    <script src="../repository/NotesManager.js"></script>
     <script src="UI.Utils.js"></script>
     <script src="UI.NoteEdition.js"></script>
     <script src="UI.NotesList.js"></script>

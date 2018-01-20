@@ -24,9 +24,9 @@
                 manager.update({ 'wikipedia-showThumbnail': true });
         });
 
-        manager.retrieve('tempNotes').then(obj => {
+        manager.retrieve('drafts').then(obj => {
             if (!Array.isArray(obj))
-                manager.update({ key: 'tempNotes', value: [] });
+                manager.update({ key: 'drafts', value: [] });
         });
     }
 

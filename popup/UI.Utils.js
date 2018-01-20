@@ -7,7 +7,9 @@ class UIUtils {
      * @summary Redirects to the page by id.
      * @param {any} pageId The id of the page to be given.
      * @param {String} pageId 'noteEdition'.
-     * @param {String} pageId 'notesList'.
+     * @param {String} pageId 'home'.
+     * @param {String} pageId 'drafts'.
+     * @param {String} pageId 'notes'.
      */
     showPage(pageId) {
         const page = {
@@ -15,17 +17,17 @@ class UIUtils {
                 document.getElementById('page-notesList').classList.add('hidden');
                 document.getElementById('page-noteCreation').classList.remove('hidden');
             },
-            notesList: () => {
+            home: () => {
                 document.getElementById('page-notesList').classList.remove('hidden');
                 document.getElementById('page-noteCreation').classList.add('hidden');
             },
-            tempNotes: () => {
+            drafts: () => {
                 document.getElementById('notesArea').classList.add('hidden');
-                document.getElementById('tempNotesArea').classList.remove('hidden');
+                document.getElementById('draftsArea').classList.remove('hidden');
             },
-            notesArea: () => {
+            notes: () => {
                 document.getElementById('notesArea').classList.remove('hidden');
-                document.getElementById('tempNotesArea').classList.add('hidden');
+                document.getElementById('draftsArea').classList.add('hidden');
             }
         };
 

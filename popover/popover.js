@@ -123,6 +123,7 @@
         pTag.classList.add('popoverText');
         div.classList.add('popover');
         div.setAttribute('id', 'wikilink-popover');
+        div.setAttribute('style', 'visibility: visible;')
         contentGroup.classList.add('contentGroup');
         contentGroup.appendChild(imageTag);
         contentGroup.appendChild(pTag);

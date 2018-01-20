@@ -3,7 +3,7 @@
     margin: 0 10px 5px 10px;
 }
 
-.notesListPage{
+.notesListPage {
     min-height: 355px;
 }
 
@@ -60,4 +60,24 @@
 
 .noteTitle {
     color: rgba(0, 0, 0, 0.7);
+}
+
+.viewsBtns {
+    background-color: rgba(255, 255, 255, 0.36);
+    border-radius: 10px;
+    padding: 0 5px 0 5px;
+    background: linear-gradient(to right, #ffffffc2 50%, #80cbc4 50%);
+}
+
+.viewsBtns .btn {
+    background-color: rgba(255, 255, 255, 0);
+    border: 0;
+    margin: 0;
+    padding: 3px;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.viewsBtns .btn:focus {
+    outline: none;
 }

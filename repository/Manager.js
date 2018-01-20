@@ -26,7 +26,7 @@ class Manager {
     /**
      * @summary Inserts a new element in a list.
      * @param {*} key The key of the list of items.
-     * @param {*} value The value to be pushed to the list.
+     * @param {object} value The value to be pushed to the list.
      * @returns {Promise}
      */
     async push(key, value) {
@@ -38,7 +38,7 @@ class Manager {
                 valueCopy.id = (new Date()).getTime();
                 arrayCopy.push(valueCopy);
 
-                chrome.storage.sync.set({ [key]: arrayCopy }, () => resolve());
+                chrome.storage.sync.set({ [key]: arrayCopy }, () => resolve(valueCopy));
             });
         });
     }
@@ -66,25 +66,24 @@ class Manager {
      * @returns {Promise}
      */
     async update(obj) {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
 
             //If id is provided, update the specified element of the array.
             if (obj.id) {
-                chrome.storage.sync.get(obj.key, list => {
-                    const arrayCopy = list[obj.key].slice();
-                    const index = arrayCopy.findIndex(el => el.id == obj.id);
-                    if (index === -1) {
-                        reject(`Object of id ${obj.id} not found`);
-                    }
-                    else {
-                        arrayCopy[index] = obj.value;
-                        arrayCopy[index].id = obj.id;
+                const list = await (new Promise((resolve, reject) => chrome.storage.sync.get(obj.key, obj => resolve(obj))));
+                const arrayCopy = list[obj.key].slice();
+                const index = arrayCopy.findIndex(el => el.id == obj.id);
+                if (index === -1) {
+                    reject(`Object of id ${obj.id} not found`);
+                }
+                else {
+                    arrayCopy[index] = obj.value;
+                    arrayCopy[index].id = obj.id;
 
-                        chrome.storage.sync.set({ [obj.key]: arrayCopy }, () => {
-                            resolve();
-                        });
-                    }
-                });
+                    chrome.storage.sync.set({ [obj.key]: arrayCopy }, () => {
+                        resolve(arrayCopy[index]);
+                    });
+                }
             }
             else {
                 chrome.storage.sync.set({ [obj.key]: obj.value });
@@ -112,9 +111,7 @@ class Manager {
 
                     obj[key] = arrayCopy;
 
-                    chrome.storage.sync.set(obj, () => {
-                        resolve();
-                    });
+                    chrome.storage.sync.set(obj, () => resolve(deletedItem));
                 });
             }
             else {

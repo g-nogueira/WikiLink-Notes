@@ -18,6 +18,20 @@
      *************************************************************************************/
 
 
+    observeMainPage();
+    observeNotesArea();
+    observeTempNotesArea();
+
+    uiNoteEdition.backBtn.onclick = ev => backBtn(ev);
+    uiNotesList.showNotesBtn.onclick = ev => uiUtils.showPage('notes');;
+    uiNotesList.showTempsBtn.onclick = ev => uiUtils.showPage('drafts');;
+    uiNoteEdition.saveNoteBtn.onclick = ev => saveNoteAction(ev);
+    uiNotesList.createNoteBtn.onclick = ev => noteCreationBtn(ev);
+    uiNotesList.searchField.input.onkeyup = ev => searchFieldActions('search', ev);
+    uiNotesList.searchField.openBtn.onclick = ev => searchFieldActions('open', ev);
+    uiNotesList.searchField.closeBtn.onclick = ev => searchFieldActions('close', ev);
+
+
     async function displayNotes() {
         uiNotesList.clearMainSection();
         const notes = await manager.retrieve('notes');
@@ -34,39 +48,6 @@
             uiNotesList.appendDrafts(drafts);
         else
             uiNotesList.draftsSection.appendChild(document.createTextNode('It looks like you do not have drafts. 😕'));
-    }
-
-    function initializeEvents() {
-
-        observeMainPage();
-        observeNotesArea();
-        observeTempNotesArea();
-
-
-        uiNotesList.showNotesBtn.onclick = ev => uiUtils.showPage('notes');;
-        uiNotesList.showTempsBtn.onclick = ev => uiUtils.showPage('drafts');;
-        uiNotesList.searchField.openBtn.onclick = ev => searchFieldActions('open', ev);
-        uiNotesList.searchField.input.onkeyup = ev => searchFieldActions('search', ev);
-        uiNotesList.searchField.closeBtn.onclick = ev => searchFieldActions('close', ev);
-        uiNotesList.createNoteBtn.onclick = ev => noteCreationBtn(ev);
-
-        uiNoteEdition.backBtn.onclick = ev => backBtn(ev);
-        uiNoteEdition.saveNoteBtn.onclick = ev => saveNoteAction(ev);
-
-        document.getElementById('expandWindowsButton').onclick = event => {
-            const popoutUrl = chrome.runtime.getURL("popout/popout.html");
-            chrome.tabs.query({ url: popoutUrl }, tabs => {
-                if (tabs.length > 0)
-                    chrome.windows.update(
-                        tabs[0].windowId,
-                        { 'focused': true },
-                        () => chrome.tabs.update(tabs[0].id, { 'active': true })
-                    );
-                else chrome.windows.create({ 'url': popoutUrl, 'type': 'popup' });
-                //chrome.windows.create({ 'url': popoutUrl, // 'width': 640, // 'height': 456, 'type': 'popup' });
-            });
-        };
-
     }
 
     function observeMainPage() {
@@ -210,13 +191,52 @@
         const menu = new mdc.menu.MDCSimpleMenu(document.querySelector('.mdc-simple-menu'));
 
         document.getElementById('goToOptions').onclick = ev => menu.open = !menu.open;
+        document.getElementById('popoverSwitch').onclick = async ev => {
+            const isEnabled = await manager.retrieve('popover');
+            ev.target.textContent = !isEnabled ? 'Disable Popover' : 'Enable Popover';
+            await manager.update({ key: 'popover', value: !isEnabled });
+        }
+        document.getElementById('setThemeWhite').onclick = ev => {
+            const navMenus = document.querySelectorAll('#navMenu');
+            const viewsButtons = document.getElementById('viewsButtons');
 
-        manager.retrieve('popover').then(popover => {
-            if (typeof popover.isEnabled !== 'boolean') {
-                uiNotesList.popoverChkbx.checked = true;
-            } else uiNotesList.popoverChkbx.checked = popover.isEnabled;
+            navMenus.forEach(navMenu => {
+                navMenu.classList.remove('bgcolor-green-1');
+                navMenu.classList.add('bgcolor-white-5');
+            });
+            viewsButtons.classList.add('lgrad-1');
+            viewsButtons.classList.remove('lgrad-2');
+        }
+        document.getElementById('setThemeGreen').onclick = ev => {
+            const navMenus = document.querySelectorAll('#navMenu');
+            const viewsButtons = document.getElementById('viewsButtons');
 
-        });
+            navMenus.forEach(navMenu => {
+                navMenu.classList.add('bgcolor-green-1');
+                navMenu.classList.remove('bgcolor-white-5');
+            });
+            viewsButtons.classList.remove('lgrad-1');
+            viewsButtons.classList.add('lgrad-2');
+        }
+
+        manager.retrieve('popover').then(popover => document.getElementById('popoverSwitch').textContent = popover ? 'Disable Popover' : 'Enable Popover');
         // Add event listener to some button to toggle the menu on and off.
+    }
+
+    function initializeEvents() {
+        document.getElementById('expandWindowsButton').onclick = event => {
+            const popoutUrl = chrome.runtime.getURL("popout/popout.html");
+            chrome.tabs.query({ url: popoutUrl }, tabs => {
+                if (tabs.length > 0)
+                    chrome.windows.update(
+                        tabs[0].windowId,
+                        { 'focused': true },
+                        () => chrome.tabs.update(tabs[0].id, { 'active': true })
+                    );
+                else chrome.windows.create({ 'url': popoutUrl, 'type': 'popup' });
+                //chrome.windows.create({ 'url': popoutUrl, // 'width': 640, // 'height': 456, 'type': 'popup' });
+            });
+        };
+
     }
 })();

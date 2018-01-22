@@ -19,14 +19,14 @@
 
 <body class="">
     <div id="page-notesList" class="notesListPage">
-        <header class="navMenu mdc-elevation--z2">
+        <header id="navMenu" class="navMenu mdc-elevation--z2 bgcolor-green-1">
             <div class="d-inline" style="align-items: center;">
-                <div id="viewsButtons" class="viewsBtns" style="height: fit-content;">
+                <div id="viewsButtons" class="viewsBtns lgrad-1" style="height: fit-content;">
                     <button id="notesBtn" class="btn">Notes</button>
                     <button id="tempsBtn" class="btn">Drafts</button>
                 </div>
 
-                <div title="Enable popover" class="mdc-form-field">
+                <!-- <div title="Enable popover" class="mdc-form-field">
                     <div class="mdc-checkbox">
                         <input type="checkbox" id="popoverChkbx" class="mdc-checkbox__native-control" />
                         <div class="mdc-checkbox__background">
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <label for="popoverChkbx" class="roboto-thin negative-margin">Popover</label>
-                </div>
+                </div> -->
             </div>
 
             <div style="display:inline-flex;">
@@ -52,8 +52,14 @@
                                 <li class="mdc-list-item" id="goToOptPage" role="menuitem" tabindex="0">
                                     Options
                                 </li>
-                                <li class="mdc-list-item" role="menuitem" id="togglePopoverChkBx" tabindex="0">
-                                    Another Menu Item
+                                <li class="mdc-list-item" role="menuitem" id="popoverSwitch" tabindex="0">
+                                    Enable Popover
+                                </li>
+                                <li class="mdc-list-item" role="menuitem" id="setThemeGreen" tabindex="0">
+                                    ThemeGreen
+                                </li>
+                                <li class="mdc-list-item" role="menuitem" id="setThemeWhite" tabindex="0">
+                                    ThemeWhite
                                 </li>
                             </ul>
                         </div>
@@ -96,7 +102,7 @@
 
     <div class="hidden" id="page-noteCreation">
 
-        <header class="navMenu mdc-elevation--z2">
+        <header id="navMenu" class="navMenu mdc-elevation--z2 bgcolor-green-1">
             <div title="Enable popover" class="mdc-form-field">
                 <i id="noteCreationbtn-back" class="material-icons pointer color-green-1">arrow_back</i>
             </div>
@@ -123,15 +129,15 @@
         </section>
     </div>
 
-    <script src="material.min.js"></script>
+    <script src="../shared/material.min.js"></script>
     <script src="../shared/material-components-web.min.js"></script>
     <script src="../repository/Manager.js"></script>
     <script src="../repository/NotesManager.js"></script>
+    <script src="../shared/tooltip.js"></script>
     <script src="UI.Utils.js"></script>
     <script src="UI.NoteEdition.js"></script>
     <script src="UI.NotesList.js"></script>
     <script src="index.js"></script>
-    <script src="tooltip.js"></script>
 </body>
 
 </html>

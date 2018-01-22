@@ -38,3 +38,15 @@
 .d-inline{
     display: inline-flex;
 }
+
+.bgcolor-white-5{
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.lgrad-2{
+    background: linear-gradient(to right, #80cbc4 50%, #0000000a 50%);
+}
+
+.lgrad-1{
+    background: linear-gradient(to right, #ffffffc2 50%, #80cbc4 50%);
+}

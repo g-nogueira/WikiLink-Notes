@@ -31,13 +31,16 @@
         "<all_urls>"
       ],
       "js": [
+        "shared/material.min.js",
         "popover/popover.js",
         "popover/testButton.js"
       ],
       "css": [
+        "shared/material.min.css",
+        "shared/material-components-web.min.css",
+        "popup/styles/newnote-page.css",
         "popover/testBtn.css",
-        "popover/popover.css",
-        "shared/material-components-web.min.css"
+        "popover/popover.css"
       ],
       "run_at": "document_end"
     }

@@ -10,7 +10,7 @@
         };
     });
 
-    const lang = await manager.retrieve('mainLanguage');
+    const lang = await manager.retrieve('language');
 
     class WikiRepo {
         constructor() { }
@@ -21,10 +21,8 @@
          * @returns {Promise.<object>} Returns a Promise that resolves to an object with title and body properties.
          */
         searchTerm(term) {
-            const article = {
-                title: '',
-                body: ''
-            }
+            const article = {title: '', body: ''};
+
             return new Promise(async (resolve, reject) => {
 
                 const searchResponse = await http.get(`https://${lang || 'en'}.wikipedia.org/w/api.php?action=opensearch&search=${term}&limit=2&namespace=0&format=json`);

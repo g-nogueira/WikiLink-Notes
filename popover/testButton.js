@@ -2,20 +2,14 @@
     "use strict";
 
     // initializeMDC();
-    test();
+    document.body.appendChild(fab());
+    document.body.appendChild(dialog());
     dialog();
     events();
 
 
-    function initializeMDC() {
-        const MDCComponent = mdc.base.MDCComponent;
-        const MDCFoundation = mdc.base.MDCFoundation;
-        const MDCTextfield = mdc.textfield.MDCTextfield;
-        const MDCTextfieldFoundation = mdc.textfield.MDCTextfieldFoundation;
-        // Add event listener to some button to toggle the menu on and off.
-    }
 
-    async function test(params) {
+    function fab() {
         const button = document.createElement('button');
         const span = document.createElement('span');
         const icon = document.createElement('i');
@@ -24,76 +18,137 @@
         span.appendChild(icon);
 
         button.classList.add('mdc-fab', 'mdc-fab--mini', 'app-fab--absolute');
-        button.id = 'show-modal';
+        button.id = 'show-dialog';
         span.classList.add('mdc-fab__icon');
         icon.classList.add('material-icons');
         icon.appendChild(document.createTextNode('create'));
 
-        document.body.appendChild(button);
+        return button;
     }
 
     function dialog() {
+
         const dialog = document.createElement('dialog');
-        const contentDiv = document.createElement('div');
-        const btnOk = document.createElement('button');
-        const btnCancel = document.createElement('button');
-        const buttonsDiv = document.createElement('div');
+        dialog.classList.add('mdl-dialog', 'dialog-container');
+        dialog.appendChild(content());
+        dialog.appendChild(actions());
+
+        function content() {
+            const content = document.createElement('div');
+            const toolPanel = (() => {
+                const toolPanel = document.createElement('section');
+                const iconsGroups = [
+                    ['format_bold', 'format_italic', 'format_underlined'],
+                    ['border_color', 'format_color_text'],
+                    ['format_list_bulleted', 'format_list_numbered'],
+                    ['format_align_left', 'format_align_center', 'format_align_right'],
+                    ['format_indent_increase', 'format_indent_decrease']
+                ];
+
+                toolPanel.classList.add('tool-panel');
+                toolPanel.appendChild(toolsGroupSection([fontFamilyDiv(), fontSizeDiv()], iconsGroups[0]));
+                toolPanel.appendChild(toolsGroupSection([], iconsGroups[1]));
+                toolPanel.appendChild(toolsGroupSection([], iconsGroups[2]));
+                toolPanel.appendChild(toolsGroupSection([], iconsGroups[3]));
+                toolPanel.appendChild(toolsGroupSection([], iconsGroups[4]));
 
 
-        dialog.style.width = '750px';
-        
-        dialog.classList.add('mdl-dialog');
-        contentDiv.classList.add('mdl-dialog__content');
-        btnOk.classList.add('mdl-button');
-        btnCancel.classList.add('mdl-button', 'close');
-        contentDiv.appendChild(getNotesArea());
 
+                function toolsGroupSection(extraElements = [], icons = []) {
+                    const section = document.createElement('section');
+                    section.classList.add('toolsGroup');
 
-        btnOk.appendChild(document.createTextNode('Ok'));
+                    extraElements.forEach(el => section.appendChild(el));
 
-        btnCancel.appendChild(document.createTextNode('Cancel'));
+                    icons.forEach(val => {
+                        const i = document.createElement('i');
+                        i.classList.add('material-icons');
+                        i.textContent = val;
 
-        buttonsDiv.classList.add('mdl-dialog__actions', 'mdl-dialog__actions--full-width');
-        buttonsDiv.appendChild(btnOk);
-        buttonsDiv.appendChild(btnCancel);
+                        section.appendChild(i);
+                    });
 
-        dialog.appendChild(contentDiv);
-        dialog.appendChild(buttonsDiv);
+                    return section;
+                }
 
+                function fontFamilyDiv() {
+                    const div = document.createElement('div');
+                    const input = document.createElement('input');
+                    input.classList.add('font-family--input');
+                    div.appendChild(input);
 
-        document.body.appendChild(dialog);
+                    return div;
+                }
+
+                function fontSizeDiv() {
+                    const div = document.createElement('div');
+                    const input = document.createElement('input');
+                    input.classList.add('font-size--input');
+                    div.appendChild(input);
+
+                    return div;
+                }
+
+                return toolPanel;
+            })();
+            const mainPanel = (() => {
+                const mainPanel = document.createElement('section');
+                const input = document.createElement('input');
+                const textArea = document.createElement('textarea');
+
+                input.classList.add('title-area');
+                input.placeholder = 'Title';
+                textArea.classList.add('mdc-textfield__input', 'text-area');
+                textArea.rows = 10;
+                textArea.cols = 30;
+                textArea.placeholder = 'What are you thinking about?';
+
+                mainPanel.classList.add('main-panel', 'mdc-typography--body1');
+                mainPanel.appendChild(input);
+                mainPanel.appendChild(textArea);
+
+                return mainPanel;
+            })();
+
+            content.classList.add('mdl-dialog__content', 'panels-wrapper');
+            content.appendChild(toolPanel);
+            content.appendChild(mainPanel);
+
+            return content;
+        }
+
+        function actions() {
+            const actions = document.createElement('div');
+            const saveBtn = document.createElement('button');
+            const cancelBtn = document.createElement('button');
+
+            saveBtn.classList.add('mdl-button');
+            saveBtn.textContent = 'Save';
+            cancelBtn.classList.add('mdl-button', 'close');
+            cancelBtn.textContent = 'Cancel';
+
+            actions.classList.add('mdl-dialog__actions');
+            actions.appendChild(saveBtn);
+            actions.appendChild(cancelBtn);
+
+            return actions;
+        }
+
+        return dialog;
     }
 
     function events() {
         const dialog = document.querySelector('dialog');
-        const showModalButton = document.querySelector('#show-modal');
+        const showDialogButton = document.querySelector('#show-dialog');
         if (!dialog.showModal) {
             dialogPolyfill.registerDialog(dialog);
         }
-        showModalButton.addEventListener('click', function () {
+        showDialogButton.addEventListener('click', function () {
             dialog.showModal();
         });
         dialog.querySelector('.close').addEventListener('click', function () {
             dialog.close();
         });
-    }
-
-    function getNotesArea() {
-        const section = document.createElement('section');
-        section.classList.add('mdc-typography--body1', 'noteArea');
-
-        const input = document.createElement('input');
-        input.classList.add('noteTitleInput');
-        input.placeholder = 'Title';
-
-        const textArea = document.createElement('textarea');
-        textArea.classList.add('mdc-textfield__input', 'noteBodySection');
-        textArea.placeholder = 'What are you thinking about?';
-
-        section.appendChild(input);
-        section.appendChild(textArea);
-
-        return section;
     }
 
 })();

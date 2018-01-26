@@ -36,9 +36,9 @@
         "popover/testButton.js"
       ],
       "css": [
-        "shared/material.min.css",
-        "shared/material-components-web.min.css",
-        "popup/styles/newnote-page.css",
+        "popover/mdc.css",
+        "popover/material.css",
+        "popover/dialog.css",
         "popover/testBtn.css",
         "popover/popover.css"
       ],

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+    <link rel="stylesheet" href="../public/lib/material-design-lite/material.min.css">
+    <link rel="stylesheet" href="../public/lib/material-design-icons/iconfont/material-icons.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+            <div class="self-column">
+                <h2 class="mdl-card__title-text" style="align-self: center;">Login</h2>
+
+                <div class="self-row">
+                    <a href="http://localhost:8080/auth/google/?redirect=chrome-extension://lckbiclbfdooecdkjkbebanadchafmbn/optionsPage/index.html">
+                        <button id="signInGoogle" class="self-socials--button self-google--signin mdl-button mdl-button--raised">
+                            <i class="fab fa-google-plus-g"></i>
+                        </button>
+                    </a>
+                    <button class="self-socials--button self-facebook--signin mdl-button mdl-button--raised">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="self-socials--button self-evernote--signin mdl-button mdl-button--raised">
+                        EVERNOTE
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="self-column mdl-card__supporting-text">
+            <label for="userNameInput">Name</label>
+            <input id="userNameInput" type="text">
+            <label for="userEmailInput">Email</label>
+            <input id="userEmailInput" type="text">
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Get Started
+            </a>
+        </div>
+        <div class="mdl-card__menu">
+            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i class="material-icons">share</i>
+            </button>
+        </div>
+    </div>
+
+
+    <script src="../repository/Http.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

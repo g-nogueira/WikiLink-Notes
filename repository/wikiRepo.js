@@ -3,14 +3,12 @@
 
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.module === 'wikiRepo') {
-            wikiRepo[message.method](message.key)
+            wikiRepo[message.method](message.key, message.range)
                 .then(resp => sendResponse(resp))
                 .catch(err => sendResponse('Ocorreu algum erro ao pesquisar o termo' + message.key + '.'));
             return true;
         };
     });
-
-    const lang = await manager.retrieve('language');
 
     class WikiRepo {
         constructor() { }
@@ -20,12 +18,15 @@
          * @param {String} term The term to be searched on wikipedia.
          * @returns {Promise.<object>} Returns a Promise that resolves to an object with title and body properties.
          */
-        searchTerm(term) {
+        searchTerm(term, range) {
             const article = {title: '', body: ''};
 
             return new Promise(async (resolve, reject) => {
 
-                const searchResponse = await http.get(`https://${lang || 'en'}.wikipedia.org/w/api.php?action=opensearch&search=${term}&limit=2&namespace=0&format=json`);
+                let language = await http.get(`http://localhost:8080/?m=language&v=${range}`);
+                language = JSON.parse(language).language === 'und'? 'en': JSON.parse(language).language;
+
+                const searchResponse = await http.get(`https://${language}.wikipedia.org/w/api.php?action=opensearch&search=${term}&limit=2&namespace=0&format=json`);
                 const resultsArray = JSON.parse(searchResponse);
                 
                 const titles = resultsArray[1];
@@ -33,7 +34,7 @@
 
                 try {
                     article.title = titles[0];
-                    article.body = articles[0].includes('refer to:') ? articles[1] : articles[0];
+                    article.body = articles[0].includes('refer to:')||articles[0].includes('referir-se a:') ? articles[1] : articles[0];
                 } catch (error) {
                     console.warn(`Couldn't get an article for the term "${term}".`);
                 }

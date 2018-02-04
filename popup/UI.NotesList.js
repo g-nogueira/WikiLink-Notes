@@ -37,54 +37,25 @@ class UINotesList {
         uiUtils.removeChildNodes(this.draftsSection);
     }
 
-
     /**
-     * @summary
-     * @param {Object[]} notes The notes array to load in the page
+     * @summary It creates an eventless note node.
+     * @param {string} id The id of the note.
+     * @param {string} title The title of the note.
+     * @param {string} date The date that the note was created on.
+     * @returns {DocumentFragment} The document fragment containing the note node.
      */
-    setProperties(notes) {
-        //It will save the current noteId in cache
-    }
-
-    /**
-     * @summary It gets the noteModel element and generate a note html based on the model.
-     * @param {Object} params 
-     * @param {String} type The element to be generated.
-     * @param {number} params.id The id of the item.
-     * @param {String} params.title The title of a noteLabel.
-     * @param {String} params.date The date of a noteLabel.
-     * @param {function} params.deleteEvent The function expression to be executed on delete button click.
-     * @param {function} params.onclick The function expression to be executed on click.
-     * @returns {Node}
-     */
-    elementGenerator(type, params) {
-        return ({ noteLabel: noteLabel })[type]();
-
-        function noteLabel(title = params.title, date = params.date, onclick = params.onclick, deleteEvent = params.deleteEvent) {
-            const noteModel = document.getElementById('noteModel').cloneNode(true);
-            const noteLeftSection = noteModel.children.noteLeftSection;
-            const noteRightSection = noteModel.children.noteRightSection;
-
-            noteModel.setAttribute('id', params.id);
-            noteModel.classList.remove('hidden');
-            noteModel.onmouseenter = onmouseenter;
-            noteModel.onmouseleave = onmouseleave;
-
-            noteLeftSection.onclick = onclick;
-
-            noteRightSection.children.deleteBtn.onclick = deleteEvent;
-            noteRightSection.children.date.appendChild(document.createTextNode(date));
-            noteLeftSection.children.title.appendChild(document.createTextNode(title));
-
-            function onmouseenter() {
-                noteRightSection.children.deleteBtn.classList.remove('hidden');
-            }
-            function onmouseleave() {
-                noteRightSection.children.deleteBtn.classList.add('hidden');
-            }
-            
-            return noteModel;
-        }
+    createNoteNode(id, title, date) {
+        const node =
+            `<div id="${id}" class="noteItem">
+            <section id="noteLeftSection" class="noteTitle">
+                <span id="title">${title}</span>
+            </section>
+            <section id="noteRightSection" class="noteItemSection">
+                <span id="date" class="noteDate">${date}</span>
+                <i id="deleteBtn" class="material-icons deleteIcon pointer hidden" title="Delete">clear</i>
+            </section>
+        </div>`;
+        return document.createRange().createContextualFragment(node);
     }
 
     /**
@@ -96,58 +67,93 @@ class UINotesList {
      * @param {string} notes[].id
      */
     appendNotes(notes) {
-        notes.forEach(note => {
-            const html = generateHtml.apply(this, [note]);
-            this.mainSection.appendChild(html);
-        });
+        const notesFragment = document.createDocumentFragment();
 
-        function generateHtml(note) {
-            return this.elementGenerator('noteLabel', {
-                id: note.id,
-                title: note.title,
-                date: note.createdOn,
-                onclick: () => {
-                    uiUtils.showPage('noteEdition');
-                    uiNoteEdition.setValues({ id: note.id, title: note.title, body: note.body });
-                    notesManager.cachedNote.set({ note: note, noteStatus: 'note' });
-                },
-                deleteEvent: () => {
-                    const notesArea = document.getElementById('notesArea');
-                    notesArea.removeChild(document.getElementById(note.id));
-                    notesManager.note.delete(note.id).then(() => {
-                        const notification = document.querySelector('.mdl-js-snackbar');
-                        notification.MaterialSnackbar.showSnackbar({ message: `Note "${note.title}" deleted!` });
-                    });
-                }
-            });
+        notes.forEach(note => {
+            const temp = this.createNoteNode(note.id, note.title, note.createdOn)
+            const node = createNoteEvents(temp, note);
+            notesFragment.appendChild(node);
+        });
+        this.mainSection.appendChild(notesFragment);
+
+        function createNoteEvents(noteNode, note) {
+            const clone = noteNode.cloneNode(true);
+            const noteItem = clone.getElementById(note.id);
+            const leftSection = clone.getElementById('noteLeftSection');
+            const rightSection = clone.getElementById('noteRightSection');
+            const deleteBtn = clone.getElementById('deleteBtn');
+
+            noteItem.addEventListener('mouseenter', onmouseenter);
+            noteItem.addEventListener('mouseleave', onmouseleave);
+            deleteBtn.addEventListener('click', ondelete);
+            leftSection.addEventListener('click', onclick);
+
+            function onmouseenter() {
+                deleteBtn.classList.remove('hidden');
+            }
+            function onmouseleave() {
+                deleteBtn.classList.add('hidden');
+            }
+            function onclick() {
+                uiUtils.showPage('noteEdition');
+                uiNoteEdition.setValues({ id: note.id, title: note.title, body: note.body });
+                notesManager.cachedNote.set({ note: note, noteStatus: 'note' });
+            }
+            function ondelete() {
+                const notesArea = document.getElementById('notesArea');
+                notesArea.removeChild(document.getElementById(note.id));
+                notesManager.note.delete(note.id).then(() => {
+                    const notification = document.querySelector('.mdl-js-snackbar');
+                    notification.MaterialSnackbar.showSnackbar({ message: `Note "${note.title}" deleted!` });
+                });
+            }
+
+            return clone;
         }
     }
 
     appendDrafts(drafts) {
+        const draftsFragment = document.createDocumentFragment();
         drafts.forEach(draft => {
-            const html = generateHtml.apply(this, [draft]);
-            this.draftsSection.appendChild(html);
+            const temp = this.createNoteNode(draft.id, draft.title, draft.createdOn)
+            const node = createNoteEvents(temp, draft);
+            draftsFragment.appendChild(node);
         });
+        this.draftsSection.appendChild(draftsFragment);
 
-        function generateHtml(draft) {
-            return this.elementGenerator('noteLabel', {
-                id: draft.id,
-                title: draft.title,
-                date: draft.createdOn,
-                onclick: () => {
-                    uiUtils.showPage('noteEdition');
-                    uiNoteEdition.setValues({ id: draft.id, title: draft.title, body: draft.body });
-                    notesManager.cachedNote.set({ note: draft, noteStatus: 'draft' });
-                },
-                deleteEvent: () => {
-                    const draftsArea = document.getElementById('draftsArea');
-                    draftsArea.removeChild(document.getElementById(draft.id));
-                    notesManager.draft.delete(draft.id).then(() => {
-                        const notification = document.querySelector('.mdl-js-snackbar');
-                        notification.MaterialSnackbar.showSnackbar({ message: `Draft "${draft.title}" deleted!` });
-                    });
-                }
-            });
+        function createNoteEvents(noteNode, draft) {
+            const clone = noteNode.cloneNode(true);
+            const noteItem = clone.getElementById(draft.id);
+            const leftSection = clone.getElementById('noteLeftSection');
+            const rightSection = clone.getElementById('noteRightSection');
+            const deleteBtn = clone.getElementById('deleteBtn');
+
+            noteItem.addEventListener('mouseenter', onmouseenter);
+            noteItem.addEventListener('mouseleave', onmouseleave);
+            deleteBtn.addEventListener('click', ondelete);
+            leftSection.addEventListener('click', onclick);
+
+            function onmouseenter() {
+                deleteBtn.classList.remove('hidden');
+            }
+            function onmouseleave() {
+                deleteBtn.classList.add('hidden');
+            }
+            function onclick() {
+                uiUtils.showPage('noteEdition');
+                uiNoteEdition.setValues({ id: draft.id, title: draft.title, body: draft.body });
+                notesManager.cachedNote.set({ note: draft, noteStatus: 'draft' });
+            }
+            function ondelete() {
+                const draftsArea = document.getElementById('draftsArea');
+                draftsArea.removeChild(document.getElementById(draft.id));
+                notesManager.draft.delete(draft.id).then(() => {
+                    const notification = document.querySelector('.mdl-js-snackbar');
+                    notification.MaterialSnackbar.showSnackbar({ message: `Draft "${draft.title}" deleted!` });
+                });
+            }
+
+            return clone;
         }
     }
 

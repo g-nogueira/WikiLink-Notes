@@ -6,7 +6,7 @@
     function initializeDB() {
         manager.retrieve('language').then(obj => {
             if (typeof obj !== 'string')
-                manager.update({ key: 'language', value: 'us' });
+                manager.update({ key: 'language', value: 'en' });
         });
 
         manager.retrieve('notes').then(obj => {

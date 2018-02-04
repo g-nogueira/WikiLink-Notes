@@ -1,0 +1,21 @@
+{
+  "name": "wikilink",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Gustavo Henrique dos Reis Nogueira <gustavornogueir@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/ghdrn11/WikiLink",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "material-design-lite": "^1.3.0"
+  }
+}

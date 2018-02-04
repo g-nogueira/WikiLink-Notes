@@ -7,9 +7,9 @@
     "keyword": "wl:"
   },
   "icons": {
-    "128": "Images/icon7.png"
+    "128": "public/images/icon7.png"
   },
-  "options_page": "optionsPage/main.html",
+  "options_page": "optionsPage/index.html",
   "background": {
     "scripts": [
       "repository/Http.js",
@@ -21,7 +21,7 @@
   },
   "browser_action": {
     "default_locale": "en",
-    "default_icon": "Images/icon7.png",
+    "default_icon": "public/images/icon7.png",
     "default_popup": "popup/popup.html",
     "default_title": "WikiLink Settings"
   },
@@ -31,7 +31,7 @@
         "<all_urls>"
       ],
       "js": [
-        "shared/material.min.js",
+        "public/js/material.min.js",
         "popover/popover.js",
         "popover/testButton.js"
       ],

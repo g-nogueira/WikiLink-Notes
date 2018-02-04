@@ -25,19 +25,6 @@
                     <button id="notesBtn" class="btn">Notes</button>
                     <button id="tempsBtn" class="btn">Drafts</button>
                 </div>
-
-                <!-- <div title="Enable popover" class="mdc-form-field">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" id="popoverChkbx" class="mdc-checkbox__native-control" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                    </div>
-                    <label for="popoverChkbx" class="roboto-thin negative-margin">Popover</label>
-                </div> -->
             </div>
 
             <div style="display:inline-flex;">
@@ -71,15 +58,6 @@
         </header>
 
         <div class="scrollable">
-            <div id="noteModel" class="noteItem hidden">
-                <section id="noteLeftSection" class="noteTitle">
-                    <span id="title"></span>
-                </section>
-                <section id="noteRightSection" class="noteItemSection">
-                    <span id="date" class="noteDate"></span>
-                    <i id="deleteBtn" class="material-icons deleteIcon pointer hidden" title="Delete">clear</i>
-                </section>
-            </div>
             <section class="notesListArea mdc-typography--body1" id="notesArea"></section>
             <section class="notesListArea mdc-typography--body1 hidden" id="draftsArea"></section>
 
@@ -128,11 +106,11 @@
         </section>
     </div>
 
-    <script src="../shared/material.min.js"></script>
-    <script src="../shared/material-components-web.min.js"></script>
+    <script src="../public/js/material.min.js"></script>
+    <script src="../public/js/material-components-web.min.js"></script>
     <script src="../repository/Manager.js"></script>
     <script src="../repository/NotesManager.js"></script>
-    <script src="../shared/tooltip.js"></script>
+    <script src="../public/js/tooltip.js"></script>
     <script src="UI.Utils.js"></script>
     <script src="UI.NoteEdition.js"></script>
     <script src="UI.NotesList.js"></script>

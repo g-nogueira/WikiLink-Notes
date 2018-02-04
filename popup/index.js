@@ -23,8 +23,8 @@
     observeTempNotesArea();
 
     uiNoteEdition.backBtn.onclick = ev => backBtn(ev);
-    uiNotesList.showNotesBtn.onclick = ev => uiUtils.showPage('notes');;
-    uiNotesList.showTempsBtn.onclick = ev => uiUtils.showPage('drafts');;
+    uiNotesList.showNotesBtn.onclick = ev => uiUtils.showPage('notes');
+    uiNotesList.showTempsBtn.onclick = ev => uiUtils.showPage('drafts');
     uiNoteEdition.saveNoteBtn.onclick = ev => saveNoteAction(ev);
     uiNotesList.createNoteBtn.onclick = ev => noteCreationBtn(ev);
     uiNotesList.searchField.input.onkeyup = ev => searchFieldActions('search', ev);

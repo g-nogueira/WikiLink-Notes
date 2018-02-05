@@ -1,26 +1,163 @@
-.self-socials--button{
-    font-size: 14px !important;
-    color: #fff  !important;
-    margin: 0 8px 0 8px !important;
-
+.self-navbar {
+    display: grid;
+    grid-template-rows: [one] 50px;
+    grid-template-columns: [left-start] auto [left-end] auto [right-end];
+    padding: 0px 10px 0px 10px;
+    align-items: center;
 }
-.self-google--signin{
+
+.navbar-section--left {
+    justify-content: flex-start;
+    grid-column: left-start / left-end;
+}
+
+.navbar-section--left,
+.navbar-section--right {
+    grid-row: one;
+    display: inline-flex;
+    align-items: center;
+    height: 50px;
+}
+
+.navbar-section--right {
+    justify-content: flex-end;
+    grid-column: left-end / right-end;
+}
+
+.self-navbar .navbar-item {
+    height: 100%;
+    padding: 0 15px 0 15px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.self-main {
+    grid-row: row-navbar--end / row-main--start;
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.self-note--card {
+    margin: 5px;
+}
+
+.self-socials--button {
+    font-size: 14px !important;
+    color: #fff !important;
+    margin: 0 8px 0 8px !important;
+}
+
+.self-google--signin {
     background-color: #e93f2e !important;
 }
 
-.self-facebook--signin{
+.self-facebook--signin {
     background-color: #1976D2 !important;
 }
 
-.self-evernote--signin{
+.self-evernote--signin {
     background-color: #2ac05d !important;
 }
 
-.self-row{
+.self-row {
     display: inline-flex;
     justify-content: space-between;
 }
-.self-column{
+
+.self-column {
     display: flex;
     flex-flow: column;
+}
+
+.self-navbar--user .navbar-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.navbar-label {
+    padding: 0 10px 0 5px;
+    border-right: 1px solid rgba(0, 0, 0, 0.473);
+}
+
+.self-onhover--grey:hover {
+    transition: background-color .3s;
+    background-color: #f5f5f5;
+}
+
+.self-onchildhover--grey .navbar-item:hover {
+    transition: background-color .3s;
+    background-color: #f5f5f5;
+}
+
+.self-font--26 {
+    font-size: 26px;
+}
+
+.self-dropdown--list {
+    z-index: 10;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 50px;
+    right: 25px;
+    background-color: #fff;
+    transform: translateY(-2em);
+    list-style: none;
+    padding: 0;
+    width: 0;
+    margin: 0;
+    transition: all 0.3s ease-in-out .2s, opacity .2s linear 0.3s, z-index .1s linear 0.1s;
+    display: block;
+    flex-flow: column;
+}
+
+.self-dropdown--list>* {
+    padding: 10px;
+    align-content: center;
+}
+
+.self-dropdown--btn:hover~.self-dropdown--list,
+.self-dropdown--list:hover {
+    visibility: visible;
+    opacity: 1;
+    z-index: 10;
+    transform: translateY(0%);
+    width: 170px;
+}
+
+.self-sidebar {
+    display: flex;
+    flex-flow: column;
+    width: 400px;
+    background-color: #35384c;
+    color: #c4c5c7;
+}
+
+.self-sidebar .sidebar-item {
+    padding: 10px;
+    display: inline-flex;
+    align-content: center;
+}
+
+.self-sidebar .sidebar-header {
+    display: inline-flex;
+    align-items: center;
+    padding: 20px 10px 20px 10px;
+    background-color: #2d2f40;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.self-sidebar .header-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.sidebar-main-wrapper {
+    display: inline-flex;
 }

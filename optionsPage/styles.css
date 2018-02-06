@@ -1,3 +1,7 @@
+body{
+    overflow-x: hidden;
+}
+
 .self-navbar {
     display: grid;
     grid-template-rows: [one] 50px;
@@ -36,6 +40,7 @@
     padding-top: 10px;
     display: flex;
     flex-wrap: wrap;
+    height: fit-content;
 }
 
 .self-note--card {
@@ -131,9 +136,10 @@
 .self-sidebar {
     display: flex;
     flex-flow: column;
-    width: 400px;
+    width: 390px;
     background-color: #35384c;
     color: #c4c5c7;
+    height: -webkit-fill-available;
 }
 
 .self-sidebar .sidebar-item {
@@ -160,4 +166,32 @@
 
 .sidebar-main-wrapper {
     display: inline-flex;
+    height: -webkit-fill-available;
+}
+
+.mdl-card{
+    max-height: 250px !important;
+}
+
+.self-mdl-card {
+    overflow-y: scroll !important;
+    /* max-height: 300px !important; */
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
+
+.self-mdl-card:hover::-webkit-scrollbar,
+.self-mdl-card:hover::-webkit-scrollbar-thumb{
+    visibility: visible;
+}
+
+.self-mdl-card::-webkit-scrollbar {
+    visibility: hidden;
+    width: .2em !important;
+}
+
+.self-mdl-card::-webkit-scrollbar-thumb {
+    visibility: hidden;
+    background-color: darkgrey !important;
+    outline: 1px solid slategrey !important;
 }

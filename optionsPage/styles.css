@@ -1,5 +1,10 @@
-body{
-    overflow-x: hidden;
+:root {
+    --sidemenu-width: 250px;
+    --sidemenu-width-negative: -250px;
+}
+
+body {
+    overflow: hidden;
 }
 
 .self-navbar {
@@ -8,6 +13,10 @@ body{
     grid-template-columns: [left-start] auto [left-end] auto [right-end];
     padding: 0px 10px 0px 10px;
     align-items: center;
+    position: sticky;
+    z-index: 10;
+    width: 100%;
+    background-color: #fff;
 }
 
 .navbar-section--left {
@@ -38,6 +47,30 @@ body{
 .self-main {
     grid-row: row-navbar--end / row-main--start;
     padding-top: 10px;
+    transition: all 0.5s;
+    transform: translate3d(0, 0, 0);
+    overflow-y: scroll;
+    background-color: #F9F9F9;
+    width: inherit;
+}
+
+.self-main::-webkit-scrollbar,
+.self-main::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.self-main::-webkit-scrollbar {
+    visibility: visible;
+    width: .2em !important;
+}
+
+.self-main::-webkit-scrollbar-thumb {
+    visibility: visible;
+    background-color: darkgrey !important;
+    outline: 1px solid slategrey !important;
+}
+
+.page-note {
     display: flex;
     flex-wrap: wrap;
     height: fit-content;
@@ -45,6 +78,13 @@ body{
 
 .self-note--card {
     margin: 5px;
+    transition: box-shadow .3s;
+    border-radius: 5px !important;
+}
+
+.self-note--card:hover {
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 9px 46px 8px, rgba(0, 0, 0, 0.12) 0px 11px 15px -7px, rgba(0, 0, 0, 0.2) 0px 24px 38px 3px;
+    z-index: 10;
 }
 
 .self-socials--button {
@@ -87,18 +127,14 @@ body{
     border-right: 1px solid rgba(0, 0, 0, 0.473);
 }
 
+.self-onchildhover--grey .navbar-item:hover,
 .self-onhover--grey:hover {
     transition: background-color .3s;
     background-color: #f5f5f5;
 }
 
-.self-onchildhover--grey .navbar-item:hover {
-    transition: background-color .3s;
-    background-color: #f5f5f5;
-}
-
 .self-font--26 {
-    font-size: 26px;
+    font-size: 26px !important;
 }
 
 .self-dropdown--list {
@@ -114,7 +150,7 @@ body{
     padding: 0;
     width: 0;
     margin: 0;
-    transition: all 0.3s ease-in-out .2s, opacity .2s linear 0.3s, z-index .1s linear 0.1s;
+    transition: all .3s ease-in-out .2s, opacity .2s linear 0.3s, z-index .1s linear 0.1s;
     display: block;
     flex-flow: column;
 }
@@ -124,8 +160,7 @@ body{
     align-content: center;
 }
 
-.self-dropdown--btn:hover~.self-dropdown--list,
-.self-dropdown--list:hover {
+.dropdown-open {
     visibility: visible;
     opacity: 1;
     z-index: 10;
@@ -133,31 +168,39 @@ body{
     width: 170px;
 }
 
-.self-sidebar {
-    display: flex;
-    flex-flow: column;
-    width: 390px;
-    background-color: #35384c;
-    color: #c4c5c7;
-    height: -webkit-fill-available;
-}
-
-.self-sidebar .sidebar-item {
+.self-sidemenu .sidebar-item {
     padding: 10px;
     display: inline-flex;
     align-content: center;
+    transition: background-color .3s, box-shadow 0.3s;
 }
 
-.self-sidebar .sidebar-header {
+.self-sidemenu .sidebar-item:hover {
+    color: #fff;
+    background-color: rgb(40, 42, 60);
+}
+
+.sidebar-item.active {
+    color: #fff;
+    background-color: rgb(40, 42, 60);
+    box-shadow: inset -3px 2px 2px 0px rgba(0, 0, 0, .14)
+}
+
+.self-sidemenu .sidebar-item>i {
+    margin-right: 10px;
+}
+
+.self-sidemenu .sidebar-header {
     display: inline-flex;
     align-items: center;
     padding: 20px 10px 20px 10px;
     background-color: #2d2f40;
     font-size: 1.3rem;
     font-weight: 400;
+    cursor: initial;
 }
 
-.self-sidebar .header-img {
+.self-sidemenu .header-img {
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -167,21 +210,22 @@ body{
 .sidebar-main-wrapper {
     display: inline-flex;
     height: -webkit-fill-available;
+    background-color: #F9F9F9;
+    width: inherit;
 }
 
-.mdl-card{
+.mdl-card {
     max-height: 250px !important;
 }
 
 .self-mdl-card {
     overflow-y: scroll !important;
-    /* max-height: 300px !important; */
     overflow-y: scroll !important;
     overflow-x: hidden !important;
 }
 
 .self-mdl-card:hover::-webkit-scrollbar,
-.self-mdl-card:hover::-webkit-scrollbar-thumb{
+.self-mdl-card:hover::-webkit-scrollbar-thumb {
     visibility: visible;
 }
 
@@ -194,4 +238,43 @@ body{
     visibility: hidden;
     background-color: darkgrey !important;
     outline: 1px solid slategrey !important;
+}
+
+.self-sidemenu {
+    display: flex;
+    flex-flow: column;
+    min-width: var(--sidemenu-width);
+    max-width: var(--sidemenu-width);
+    width: var(--sidemenu-width);
+    background-color: #2d2f40;
+    color: #c4c5c7;
+    height: -webkit-fill-available;
+    transition: all 0.5s;
+    transform: translate3d(0, 0, 0);
+}
+
+.sidemenu--btn i {
+    transform: rotate(0);
+    transition: transform .5s !important;
+}
+
+.sidemenu--btn.sidemenu-open i {
+    transform: rotate(-90deg);
+}
+
+.sidemenu-close {
+    visibility: visible;
+    transition: transform .5s;
+    transform: translate3d(-100%, 0, 0);
+}
+
+.sidemenu-close~.self-main {
+    transition: transform .4s;
+    min-width: fit-content;
+    transform: translate3d(var(--sidemenu-width-negative), 0, 0);
+}
+
+.pointer,
+.children-pointer>* {
+    cursor: pointer;
 }

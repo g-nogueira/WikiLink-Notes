@@ -14,24 +14,32 @@
 
 <body>
 
-    <secion class="self-navbar self-onchildhover--grey mdl-shadow--2dp">
+    <!-- 
+    https://tympanus.net/Development/PageTransitions/
+    https://tympanus.net/Development/CreativeButtons/
+    https://tympanus.net/Tutorials/CaptionHoverEffects/index7.html
+    https://tympanus.net/Development/DynamicGrid/index3.html
+    https://tympanus.net/Tutorials/ExpandingSearchBar/
+-->
+
+    <nav class="self-navbar self-onchildhover--grey mdl-shadow--2dp">
         <section class="navbar-section--left">
-            <div class="navbar-item">
+            <div id="sideMenuBtn" class="navbar-item sidemenu--btn sidemenu-open pointer">
                 <i class="material-icons">menu</i>
             </div>
         </section>
 
         <section class="navbar-section--right">
             <div class="navbar-item">
-                <i class="material-icons self-font--26">search</i>
+                <i class="material-icons self-font--26 pointer">search</i>
             </div>
             <div id="navbarUserBtn" class="self-navbar--user navbar-item">
-                <img id="navbarUserImg" class="navbar-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                <img id="navbarUserImg" class="navbar-img pointer" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                     alt="">
                 <label for="navbarUserImg" class="navbar-label headline"> John King</label>
-                <i class="material-icons self-font--26 self-dropdown--btn">keyboard_arrow_down</i>
-                <ul class="self-dropdown--list mdl-shadow--2dp">
-                    <li>
+                <i id="dropdownBtn" class="material-icons self-font--26 self-dropdown--btn pointer">keyboard_arrow_down</i>
+                <ul id="userDropdown" class="self-dropdown--list mdl-shadow--2dp children-pointer">
+                    <li id="switchTheme">
                         <i class="material-icons">person</i>Profile</li>
                     <li>
                         <i class="material-icons">book</i>Notes</li>
@@ -40,163 +48,285 @@
                 </ul>
             </div>
         </section>
-    </secion>
+    </nav>
     </section>
     <div class="sidebar-main-wrapper">
-        <section class="self-sidebar">
+        <aside id="sideMenu" class="self-sidemenu sidemenu-open children-pointer">
             <div class="sidebar-header">
                 <img id="sidebarUserImg" class="header-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                     alt="">
-                    <label for="sidebarUserImg">John King</label>
+                <label for="sidebarUserImg">John King</label>
             </div>
-            <div class="sidebar-item">
+            <div id="userPageBtn" class="sidebar-item">
                 <i class="material-icons">person</i> Profile</div>
-            <div class="sidebar-item">
+            <div id="notesPageBtn" class="sidebar-item">
                 <i class="material-icons">library_books</i> Notes</div>
-            <div class="sidebar-item">
+            <div id="draftsPageBtn" class="sidebar-item">
                 <i class="material-icons">speaker_notes</i>Drafts</div>
-            <div class="sidebar-item">
+            <div id="recyclePageBtn" class="sidebar-item">
                 <i class="material-icons">delete</i> Recycle Bin</div>
-            <div class="sidebar-item">
+            <div id="definitionsPageBtn" class="sidebar-item">
                 <i class="material-icons">settings</i> Config</div>
-            <div class="sidebar-item">
+            <div id="feedbackPageBtn" class="sidebar-item">
                 <i class="material-icons">feedback</i> Feedback</div>
-        </section>
-        <section class="self-main">
-            <div class="mdl-card mdl-shadow--2dp self-note--card">
-                <div class="mdl-card__title">
-                    <div class="self-column">
-                        <h2 class="mdl-card__title-text" style="align-self: center;">Login</h2>
-                        <div class="self-row">
-                            <a href="http://localhost:8080/auth/google/?redirect=chrome-extension://lckbiclbfdooecdkjkbebanadchafmbn/optionsPage/index.html">
-                                <button id="signInGoogle" class="self-socials--button self-google--signin mdl-button mdl-button--raised">
-                                    <i class="fab fa-google-plus-g"></i>
-                                </button>
-                            </a>
-                            <button class="self-socials--button self-facebook--signin mdl-button mdl-button--raised">
-                                <i class="fab fa-facebook-f"></i>
-                            </button>
-                            <button class="self-socials--button self-evernote--signin mdl-button mdl-button--raised">
-                                EVERNOTE
-                            </button>
-                        </div>
+        </aside>
+
+        <main id="mainSection" class="self-main">
+            <div id="notesPage" class="page page-note">
+                <!--#region Notes Example-->
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
                     </div>
                 </div>
-                <div class="self-column mdl-card__supporting-text">
-                    <label for="userNameInput">Name</label>
-                    <input id="userNameInput" type="text">
-                    <label for="userEmailInput">Email</label>
-                    <input id="userEmailInput" type="text">
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Note Title Goes Here</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Ea ipsum aliquip laborum elit et laboris. Incididunt sunt proident reprehenderit non labore ex dolor veniam est ex veniam
+                        ex elit. Laborum dolore Lorem eu minim id ullamco veniam quis cupidatat. Ex incididunt eu ullamco
+                        sit magna ullamco cupidatat cupidatat elit ex. Non irure nostrud in eiusmod ea labore ex do magna
+                        minim eu officia. Ipsum officia magna proident occaecat.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
                 </div>
-                <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        Get Started
-                    </a>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Testing Notes Design</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
                 </div>
-                <div class="mdl-card__menu">
-                    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                        <i class="material-icons">share</i>
-                    </button>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">YEAH!! 😆</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Enim esse proident deserunt velit in aute sunt voluptate ullamco ipsum. Cillum velit est labore consequat sunt ea minim commodo
+                        pariatur laborum est non commodo. Dolore magna reprehenderit sunt dolore adipisicing enim reprehenderit.
+                        Lorem officia mollit ut ex occaecat ut in anim enim. Exercitation tempor id cupidatat proident irure
+                        Lorem laboris est eu excepteur eu do dolor. Occaecat aute qui esse officia sunt incididunt adipisicing
+                        ex occaecat dolor velit. Do culpa dolor magna esse reprehenderit do.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Another boring Note</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis at rerum ducimus quam excepturi! Libero iste facere
+                        minus, quia deserunt recusandae modi magni nostrum quibusdam, iusto eum ullam asperiores ab!
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
+                        tall, making it the tallest man-made structure in the Southern Hemisphere.
+                    </div>
+                    <div class="mdl-card__actions">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+                <!--#endregion Notes Example-->
+            </div>
+
+            <div id="userPage" class="page hidden">
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <div class="self-column">
+                            <h2 class="mdl-card__title-text" style="align-self: center;">Login</h2>
+                            <div class="self-row">
+                                <a href="http://localhost:8080/auth/google/?redirect=chrome-extension://lckbiclbfdooecdkjkbebanadchafmbn/optionsPage/index.html">
+                                    <button id="signInGoogle" class="self-socials--button self-google--signin mdl-button mdl-button--raised">
+                                        <i class="fab fa-google-plus-g"></i>
+                                    </button>
+                                </a>
+                                <button class="self-socials--button self-facebook--signin mdl-button mdl-button--raised">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+                                <button class="self-socials--button self-evernote--signin mdl-button mdl-button--raised">
+                                    EVERNOTE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="self-column mdl-card__supporting-text">
+                        <label for="userNameInput">Name</label>
+                        <input id="userNameInput" type="text">
+                        <label for="userEmailInput">Email</label>
+                        <input id="userEmailInput" type="text">
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            Get Started
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <!--#region Notes Example-->
-            <div class="mdl-card mdl-shadow--2dp self-note--card">
-                <div class="mdl-card__title">
-                    <h2 class="mdl-card__title-text">Text About Something</h2>
-                </div>
-                <div class="self-mdl-card mdl-card__supporting-text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
-                    qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
-                </div>
-                <div class="mdl-card__actions">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        View Updates
-                    </a>
-                </div>
+            <div id="definitionsPage" class="page hidden">
+                <h2>Definitions page</h2>
             </div>
 
-            <div class="mdl-card mdl-shadow--2dp self-note--card">
-                <div class="mdl-card__title">
-                    <h2 class="mdl-card__title-text">Note Title Goes Here</h2>
-                </div>
-                <div class="self-mdl-card mdl-card__supporting-text">
-                    Ea ipsum aliquip laborum elit et laboris. Incididunt sunt proident reprehenderit non labore ex dolor veniam est ex veniam
-                    ex elit. Laborum dolore Lorem eu minim id ullamco veniam quis cupidatat. Ex incididunt eu ullamco sit
-                    magna ullamco cupidatat cupidatat elit ex. Non irure nostrud in eiusmod ea labore ex do magna minim eu
-                    officia. Ipsum officia magna proident occaecat.
-                </div>
-                <div class="mdl-card__actions">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        View Updates
-                    </a>
-                </div>
+            <div id="feedbackPage" class="page hidden">
+                <h2>Feedback page</h2>
             </div>
 
-            <div class="mdl-card mdl-shadow--2dp self-note--card">
-                <div class="mdl-card__title">
-                    <h2 class="mdl-card__title-text">Testing Notes Design</h2>
-                </div>
-                <div class="self-mdl-card mdl-card__supporting-text">
-                    The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                    tall, making it the tallest man-made structure in the Southern Hemisphere.
-                </div>
-                <div class="mdl-card__actions">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        View Updates
-                    </a>
-                </div>
+            <div id="draftsPage" class="page hidden">
+                <h2>Drafts page</h2>
             </div>
 
-            <div class="mdl-card mdl-shadow--2dp self-note--card">
-                <div class="mdl-card__title">
-                    <h2 class="mdl-card__title-text">YEAH!! 😆</h2>
-                </div>
-                <div class="self-mdl-card mdl-card__supporting-text">
-                    Enim esse proident deserunt velit in aute sunt voluptate ullamco ipsum. Cillum velit est labore consequat sunt ea minim commodo
-                    pariatur laborum est non commodo. Dolore magna reprehenderit sunt dolore adipisicing enim reprehenderit.
-                    Lorem officia mollit ut ex occaecat ut in anim enim. Exercitation tempor id cupidatat proident irure
-                    Lorem laboris est eu excepteur eu do dolor. Occaecat aute qui esse officia sunt incididunt adipisicing
-                    ex occaecat dolor velit. Do culpa dolor magna esse reprehenderit do.
-                </div>
-                <div class="mdl-card__actions">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        View Updates
-                    </a>
-                </div>
+            <div id="recyclePage" class="page hidden">
+                <h2>Recycle page</h2>
             </div>
 
-            <div class="mdl-card mdl-shadow--2dp self-note--card">
-                <div class="mdl-card__title">
-                    <h2 class="mdl-card__title-text">Another boring Note</h2>
-                </div>
-                <div class="self-mdl-card mdl-card__supporting-text">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis at rerum ducimus quam excepturi! Libero iste facere
-                    minus, quia deserunt recusandae modi magni nostrum quibusdam, iusto eum ullam asperiores ab!
-                </div>
-                <div class="mdl-card__actions">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        View Updates
-                    </a>
-                </div>
-            </div>
-
-            <div class="mdl-card mdl-shadow--2dp self-note--card">
-                <div class="mdl-card__title">
-                    <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                </div>
-                <div class="self-mdl-card mdl-card__supporting-text">
-                    The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                    tall, making it the tallest man-made structure in the Southern Hemisphere.
-                </div>
-                <div class="mdl-card__actions">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                        View Updates
-                    </a>
-                </div>
-            </div>
-            <!--#endregion Notes Example-->
-        </section>
+        </main>
     </div>
 
 

@@ -1,14 +1,14 @@
 'using strict';
 
 class NotesManager {
-    constructor() {}
+    constructor() { }
 
     get note() {
         return {
             create: createNote,
             retrieve: getNote,
             update: updateNote,
-            delete: deleteNote
+            trash: trashNote
         };
 
         /**
@@ -49,7 +49,7 @@ class NotesManager {
          * @param {object} note The new parameters values of the chosen note.
          */
         async function updateNote(id, note) {
-            return new Promise(async(resolve, reject) => {
+            return new Promise(async (resolve, reject) => {
                 const oldNote = await this.retrieve(id);
                 const newNote = {
                     title: note.title,
@@ -69,6 +69,19 @@ class NotesManager {
         async function deleteNote(id) {
             return new Promise((resolve, reject) => {
                 manager.delete('notes', id)
+                    .then(note => resolve(note));
+            });
+        }
+
+        /**
+         * @summary Sends a note to trash.
+         * @param {String} id The id of the note to trash.
+         */
+        async function trashNote(id) {
+            const note = await getNote(id);
+            await deleteNote(id);
+            return new Promise((resolve, reject) => {
+                manager.push('trash', note)
                     .then(note => resolve(note));
             });
         }
@@ -157,7 +170,7 @@ class NotesManager {
                 const id = sessionStorage.getItem('id');
                 const createdOn = sessionStorage.getItem('createdOn');
                 const noteStatus = sessionStorage.getItem('noteStatus');
-                const note = {id: id,createdOn: createdOn, status: noteStatus};
+                const note = { id: id, createdOn: createdOn, status: noteStatus };
 
                 return note;
             },
@@ -169,7 +182,7 @@ class NotesManager {
              * @param {string} params.note.createdOn The date of creation of the note.
              */
             set: (params) => {
-                const note = params.note || {id: '', createdOn: ''};
+                const note = params.note || { id: '', createdOn: '' };
                 const noteStatus = params.noteStatus;
 
                 sessionStorage.setItem('id', note.id);
@@ -185,6 +198,37 @@ class NotesManager {
                 sessionStorage.setItem('noteStatus', '');
             },
         };
+    }
+
+    get trash() {
+        return {
+            retrieve: getNote,
+            permDelete: permDeleteNote
+        };
+        /**
+         * @summary
+         * @param {String} id Id of the note to get from the trash. If not specified, returns all notes.
+         */
+        async function getNote(id) {
+            return new Promise(async (resolve, reject) => {
+                const notes = await manager.retrieve('trash');
+                const note = notes.find(note => note.id == id);
+
+                note ? resolve(note) : resolve(notes);
+            });
+        }
+
+        /**
+         * @summary
+         * @param {String} id The id of the note to permanently delete.
+         */
+        async function permDeleteNote(id) {
+            return new Promise((resolve, reject) => {
+                manager.delete('trash', id)
+                    .then(note => resolve(note));
+            });
+        }
+
     }
 }
 

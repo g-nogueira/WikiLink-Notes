@@ -103,7 +103,7 @@
 
     function insertDiv() {
         const fragment = `
-        <div class="popover" id="wikilink-popover" style="visibility: visible;">
+        <div class="popover" id="wikilink-popover">
             <div class="contentGroup">
                 <img id="popover-image" class="popoverImage" src="">
                 <p id="popover-text" class="popoverText"></p>
@@ -137,7 +137,8 @@
         const rb2 = DOMRect('#cal2');
         popover.style.top = `${(selRange.bottom - rb2.top) * 100 / (rb1.top - rb2.top)}px`;
         popover.style.left = `${(selRange.left - rb2.left) * 100 / (rb1.left - rb2.left)}px`;
-        popover.style.display = 'block';
+        // popover.style.display = 'block';
+        popover.classList.add('popover--enabled');
 
         function DOMRect(element) {
             const r = document.createRange()
@@ -147,7 +148,7 @@
     }
 
     function hideDiv() {
-        popover.style.display = "none";
+        popover.classList.remove('popover--enabled');
     }
 
 })();

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
     <link rel="stylesheet" href="../public/lib/material-design-lite/material.min.css">
     <link rel="stylesheet" href="../public/lib/material-design-icons/iconfont/material-icons.css">
@@ -22,22 +23,24 @@
     https://tympanus.net/Tutorials/ExpandingSearchBar/
 -->
 
-    <nav class="self-navbar self-onchildhover--grey mdl-shadow--2dp">
+    <nav class="self-navbar mdl-shadow--2dp">
         <section class="navbar-section--left">
-            <div id="sideMenuBtn" class="navbar-item sidemenu--btn sidemenu-open pointer">
+            <div id="sideMenuBtn" class=" navbar-item sidemenu--btn sidemenu-open self-button--icon">
                 <i class="material-icons">menu</i>
             </div>
         </section>
 
         <section class="navbar-section--right">
-            <div class="navbar-item">
-                <i class="material-icons self-font--26 pointer">search</i>
+            <div class="navbar-item self-button--icon">
+                <i class="material-icons self-font--26">search</i>
             </div>
             <div id="navbarUserBtn" class="self-navbar--user navbar-item">
-                <img id="navbarUserImg" class="navbar-img pointer" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                <img id="navbarUserImg" class="navbar-img pointer" src="https://lh3.googleusercontent.com/-0u1zdFPNbIY/AAAAAAAAAAI/AAAAAAAAD1A/K3QEfHNjRWc/s120-p-rw-no/photo.jpg"
                     alt="">
                 <label for="navbarUserImg" class="navbar-label headline"> John King</label>
-                <i id="dropdownBtn" class="material-icons self-font--26 self-dropdown--btn pointer">keyboard_arrow_down</i>
+                <div class="self-button--icon self-dropdown--btn">
+                    <i id="dropdownBtn" class="material-icons self-font--26">keyboard_arrow_down</i>
+                </div>
                 <ul id="userDropdown" class="self-dropdown--list mdl-shadow--2dp children-pointer">
                     <li id="switchTheme">
                         <i class="material-icons">person</i>Profile</li>
@@ -53,7 +56,7 @@
     <div class="sidebar-main-wrapper">
         <aside id="sideMenu" class="self-sidemenu sidemenu-open children-pointer">
             <div class="sidebar-header">
-                <img id="sidebarUserImg" class="header-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                <img id="sidebarUserImg" class="header-img" src="https://lh3.googleusercontent.com/-0u1zdFPNbIY/AAAAAAAAAAI/AAAAAAAAD1A/K3QEfHNjRWc/s120-p-rw-no/photo.jpg"
                     alt="">
                 <label for="sidebarUserImg">John King</label>
             </div>
@@ -64,248 +67,56 @@
             <div id="draftsPageBtn" class="sidebar-item">
                 <i class="material-icons">speaker_notes</i>Drafts</div>
             <div id="recyclePageBtn" class="sidebar-item">
-                <i class="material-icons">delete</i> Recycle Bin</div>
+                <i class="material-icons">delete</i> Trash</div>
             <div id="definitionsPageBtn" class="sidebar-item">
-                <i class="material-icons">settings</i> Config</div>
+                <i class="material-icons">settings</i> Settings</div>
             <div id="feedbackPageBtn" class="sidebar-item">
                 <i class="material-icons">feedback</i> Feedback</div>
         </aside>
 
         <main id="mainSection" class="self-main">
             <div id="notesPage" class="page page-note">
-                <!--#region Notes Example-->
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Text About Something</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
-                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Note Title Goes Here</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        Ea ipsum aliquip laborum elit et laboris. Incididunt sunt proident reprehenderit non labore ex dolor veniam est ex veniam
-                        ex elit. Laborum dolore Lorem eu minim id ullamco veniam quis cupidatat. Ex incididunt eu ullamco
-                        sit magna ullamco cupidatat cupidatat elit ex. Non irure nostrud in eiusmod ea labore ex do magna
-                        minim eu officia. Ipsum officia magna proident occaecat.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Testing Notes Design</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">YEAH!! 😆</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        Enim esse proident deserunt velit in aute sunt voluptate ullamco ipsum. Cillum velit est labore consequat sunt ea minim commodo
-                        pariatur laborum est non commodo. Dolore magna reprehenderit sunt dolore adipisicing enim reprehenderit.
-                        Lorem officia mollit ut ex occaecat ut in anim enim. Exercitation tempor id cupidatat proident irure
-                        Lorem laboris est eu excepteur eu do dolor. Occaecat aute qui esse officia sunt incididunt adipisicing
-                        ex occaecat dolor velit. Do culpa dolor magna esse reprehenderit do.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Another boring Note</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis at rerum ducimus quam excepturi! Libero iste facere
-                        minus, quia deserunt recusandae modi magni nostrum quibusdam, iusto eum ullam asperiores ab!
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
-                    <div class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">BORIIIIIIING 😕</h2>
-                    </div>
-                    <div class="self-mdl-card mdl-card__supporting-text">
-                        The Sky Tower is an observation and telecommunications tower located in Auckland, New Zealand. It is 328 metres (1,076 ft)
-                        tall, making it the tallest man-made structure in the Southern Hemisphere.
-                    </div>
-                    <div class="mdl-card__actions">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            View Updates
-                        </a>
-                    </div>
-                </div>
-                <!--#endregion Notes Example-->
             </div>
 
-            <div id="userPage" class="page hidden">
-                <div class="mdl-card mdl-shadow--2dp self-note--card">
+            <div id="userPage" class="page hidden page-user">
+                <div class="mdl-shadow--2dp user-card" style="width: 730px; height: 280px;">
+                    <section id="coverImg" class="cover-image"></section>
+                    <section id="userImg" class="user-image--wrapper" class="user-info">
+                        <img class="user-image" src="https://lh3.googleusercontent.com/-0u1zdFPNbIY/AAAAAAAAAAI/AAAAAAAAD1A/K3QEfHNjRWc/s120-p-rw-no/photo.jpg"
+                            alt="">
+                    </section>
+                    <section class="user-info">
+                        <h4 class="user-name">Gustavo Nogueira</h4>
+                    </section>
+                </div>
+
+                <div class="mdl-card mdl-shadow--2dp">
                     <div class="mdl-card__title">
-                        <div class="self-column">
-                            <h2 class="mdl-card__title-text" style="align-self: center;">Login</h2>
-                            <div class="self-row">
-                                <a href="http://localhost:8080/auth/google/?redirect=chrome-extension://lckbiclbfdooecdkjkbebanadchafmbn/optionsPage/index.html">
-                                    <button id="signInGoogle" class="self-socials--button self-google--signin mdl-button mdl-button--raised">
-                                        <i class="fab fa-google-plus-g"></i>
-                                    </button>
-                                </a>
+                        <h2 class="mdl-card__title-text">Social</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        <div class="self-row">
+                            <a href="http://localhost:8080/auth/google/?redirect=chrome-extension://lckbiclbfdooecdkjkbebanadchafmbn/optionsPage/index.html">
+                                <button id="signInGoogle" class="self-socials--button self-google--signin mdl-button mdl-button--raised">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </button>
+                            </a>
+                            <a href="">
                                 <button class="self-socials--button self-facebook--signin mdl-button mdl-button--raised">
                                     <i class="fab fa-facebook-f"></i>
                                 </button>
+                            </a>
+                            <a href="">
                                 <button class="self-socials--button self-evernote--signin mdl-button mdl-button--raised">
-                                    EVERNOTE
+                                    EN
                                 </button>
-                            </div>
+                            </a>
                         </div>
                     </div>
-                    <div class="self-column mdl-card__supporting-text">
-                        <label for="userNameInput">Name</label>
-                        <input id="userNameInput" type="text">
-                        <label for="userEmailInput">Email</label>
-                        <input id="userEmailInput" type="text">
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border">
-                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            Get Started
-                        </a>
+                    <div class="mdl-card__menu">
+                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                            <i class="material-icons">share</i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -318,20 +129,88 @@
                 <h2>Feedback page</h2>
             </div>
 
-            <div id="draftsPage" class="page hidden">
-                <h2>Drafts page</h2>
+            <div id="draftsPage" class="page hidden page-note">
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
             </div>
 
             <div id="recyclePage" class="page hidden">
-                <h2>Recycle page</h2>
             </div>
-
         </main>
+        <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
     </div>
 
 
 
+    <script src="../public/lib/material-design-lite/material.min.js"></script>
     <script src="../repository/Http.js"></script>
+    <script src="../repository/Manager.js"></script>
+    <script src="../repository/NotesManager.js"></script>
+    <script src="js/UI.Utils.js"></script>
+    <script src="js/UI.Notes.js"></script>
+    <script src="js/UI.Drafts.js"></script>
+    <script src="js/UI.Trash.js"></script>
     <script src="index.js"></script>
 </body>
 

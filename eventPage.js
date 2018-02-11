@@ -9,24 +9,30 @@
                 manager.update({ key: 'language', value: 'en' });
         });
 
+        
+        manager.retrieve('popover').then(obj => {
+            if (typeof obj !== 'object')
+            manager.update({ key: 'popover', value: {isEnabled: true, shortcuts: []}});
+        });
+        
+        manager.retrieve('wikipedia-showThumbnail').then(obj => {
+            if (typeof obj !== 'boolean')
+            manager.update({ 'wikipedia-showThumbnail': true });
+        });
+        
         manager.retrieve('notes').then(obj => {
             if (!Array.isArray(obj))
                 manager.update({ key: 'notes', value: [] });
         });
-
-        manager.retrieve('popover').then(obj => {
-            if (typeof obj !== 'object')
-                manager.update({ key: 'popover', value: {isEnabled: true, shortcuts: []}});
-        });
-
-        manager.retrieve('wikipedia-showThumbnail').then(obj => {
-            if (typeof obj !== 'boolean')
-                manager.update({ 'wikipedia-showThumbnail': true });
-        });
-
+        
         manager.retrieve('drafts').then(obj => {
             if (!Array.isArray(obj))
                 manager.update({ key: 'drafts', value: [] });
+        });
+
+        manager.retrieve('trash').then(obj => {
+            if (!Array.isArray(obj))
+                manager.update({ key: 'trash', value: [] });
         });
     }
 

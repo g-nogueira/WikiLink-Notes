@@ -6,6 +6,7 @@
     // initEvents();
     getUser();
     uiEvents();
+    displayNotes();
 
 
     function uiEvents() {
@@ -17,25 +18,38 @@
         document.body.addEventListener('click', closeUserDropown);
 
 
-        el('#notesPageBtn').addEventListener('click', showPage);
+        el('#notesPageBtn').addEventListener('click', displayNotes);
         el('#switchTheme').addEventListener('click', setThemeWhite);
-        el('#userPageBtn').addEventListener('click', showPage);
-        el('#definitionsPageBtn').addEventListener('click', showPage);
-        el('#feedbackPageBtn').addEventListener('click', showPage);
-        el('#draftsPageBtn').addEventListener('click', showPage);
-        el('#recyclePageBtn').addEventListener('click', showPage);
+        el('#userPageBtn').addEventListener('click', showUser);
+        el('#definitionsPageBtn').addEventListener('click', () => showPage('definitionsPage'));
+        el('#feedbackPageBtn').addEventListener('click', () => showPage('feedbackPage'));
+        el('#draftsPageBtn').addEventListener('click', showDrafts);
+        el('#recyclePageBtn').addEventListener('click', showTrash);
 
-        function showPage(ev) {
-            const pages = mainSection.querySelectorAll('.page');
-            const sidebarBtns = sidemenu.querySelectorAll('.sidebar-item');
-            const selectedBtn = ev.target;
-            const selectedPage = selectedBtn.id.slice(0,-3);
+        function showUser() {
+            showPage('userPage');
+        }
 
-            pages.forEach(el => el.classList.contains('hidden')?null:el.classList.add('hidden'));
-            sidebarBtns.forEach(el => el.classList.contains('active')?el.classList.remove('active'):null)
-            el(`#${selectedPage}`).classList.remove('hidden');
-            selectedBtn.classList.add('active');
-        
+        async function showDrafts(ev) {
+            uiDrafts.clearDrafts();
+            const drafts = await manager.retrieve('drafts');
+            if (drafts.length !== 0)
+                uiDrafts.appendDrafts(drafts);
+            else
+                uiDrafts.appendChild(document.createTextNode('It looks like you do not have written notes. 😕'));
+
+            showPage('draftsPage');
+        }
+
+        async function showTrash(ev) {
+            uiTrash.clearSection();
+            const notes = await manager.retrieve('trash');
+            if (notes.length !== 0)
+                uiTrash.appendNotes(notes);
+            else
+                uiTrash.appendChild(document.createTextNode('It looks like you do not have written notes. 😕'));
+
+            showPage('recyclePage');
         }
 
         function closeUserDropown(ev) {
@@ -76,4 +90,27 @@
         let user = await http.get('http://localhost:8080/user/google');
     };
 
+    async function displayNotes() {
+        uiNotes.clearMainSection();
+        const notes = await manager.retrieve('notes');
+        if (notes.length !== 0)
+            uiNotes.appendNotes(notes);
+        else
+            uiNotes.mainSection.appendChild(document.createTextNode('It looks like you do not have written notes. 😕'));
+
+        showPage('notesPage');
+    }
+
+    function showPage(targetPage) {
+        const pages = mainSection.querySelectorAll('.page');
+        const sidebarBtns = el('#sideMenu').querySelectorAll('.sidebar-item');
+        // const selectedBtn = ev.target;
+        // const selectedPage = selectedBtn.id.slice(0, -3);
+
+        pages.forEach(el => el.classList.contains('hidden') ? null : el.classList.add('hidden'));
+        sidebarBtns.forEach(el => el.classList.contains('active') ? el.classList.remove('active') : null)
+        el(`#${targetPage}`).classList.remove('hidden');
+        el(`#${targetPage}Btn`).classList.add('active');
+
+    }
 })();

@@ -1,6 +1,7 @@
 .popover {
     position:absolute;
-    display:none;
+    opacity: 0;
+    display:block;
     background:#ffffff;
     width:auto;
     max-width: 500px;
@@ -8,6 +9,14 @@
     box-shadow:0 30px 90px -20px rgba(0,0,0,0.3), 0 0 1px #a2a9b1;
     text-align: left;
     z-index: 10;
+    transform: translateY(100%);
+    transition: transform .3s cubic-bezier(0.4, 0.0, 1, 1), opacity .3s cubic-bezier(0.4, 0.0, 1, 1);
+}
+
+.popover.popover--enabled{
+    opacity: 1;
+    transform: translateY(0);
+
 }
 
 #cal1{
@@ -47,3 +56,5 @@
     line-height: 20px;
     color:#777;
 }
+
+

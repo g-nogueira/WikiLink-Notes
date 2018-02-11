@@ -1,3 +1,10 @@
+:root{
+    --primary-text-color: rgba(0, 0, 0, 0.87);
+    --secundary-text-color: rgba(0, 0, 0, 0.54);
+    --disabled-text-color: rgba(0, 0, 0, 0.38);
+
+}
+
 .scrollable .notesListArea {
     padding: 5px 0 5px 5px;
     margin: 0 10px 5px 10px;
@@ -13,7 +20,7 @@
 }
 
 .noteDate {
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--secundary-text-color);
     margin-right: 5px;
 }
 
@@ -26,7 +33,7 @@
 }
 
 .deleteIcon {
-    color: rgba(244, 67, 55, 0.8);
+    color: rgba(244, 67, 55, 0.54);
     margin-left: 5px;
 }
 
@@ -35,6 +42,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 6px 0 6px 2px;
+    transition: background-color .2s cubic-bezier(0.4, 0.0, 0.6, 1);
 }
 
 .noteItem:hover {
@@ -59,7 +67,7 @@
 }
 
 .noteTitle {
-    color: rgba(0, 0, 0, 0.7);
+    color: var(--primary-text-color);
 }
 
 .viewsBtns {

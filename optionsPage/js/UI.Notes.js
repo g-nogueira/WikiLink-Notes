@@ -83,7 +83,7 @@ class UINotes {
                 notesArea.removeChild(document.getElementById(note.id));
                 notesManager.note.trash(note.id)
                     .then(() => {
-                        const notification = document.querySelector('.mdl-js-snackbar');
+                        const notification = document.querySelector('#selfToast');
                         notification.MaterialSnackbar.showSnackbar({ message: `"${note.title}" has been moved to the Trash!` });
                     });
             }

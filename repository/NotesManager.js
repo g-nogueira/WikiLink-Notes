@@ -6,6 +6,7 @@ class NotesManager {
     get note() {
         return {
             create: createNote,
+            push: pushNote,
             retrieve: getNote,
             update: updateNote,
             trash: trashNote
@@ -27,6 +28,17 @@ class NotesManager {
 
                 newNote.createdOn = (new Date((new Date()).getTime())).toLocaleDateString();
                 manager.push('notes', newNote).then(note => resolve(note));
+            });
+        }
+
+        /**
+         * @summary
+         * @param {object} note 
+         */
+        async function pushNote(note) {
+
+            return new Promise((resolve, reject) => {
+                manager.push('notes', note).then(note => resolve(note));
             });
         }
 

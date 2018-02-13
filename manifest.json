@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "WikiLink",
+  "name": "WikiLink Notes",
   "description": "This extension alows the user to fast search wiki terms.",
   "version": "0.9",
   "omnibox": {
@@ -14,8 +14,7 @@
     "scripts": [
       "repository/Http.js",
       "repository/Manager.js",
-      "eventPage.js",
-      "repository/wikiRepo.js"
+      "eventPage.js"
     ],
     "persistence": true
   },
@@ -32,15 +31,13 @@
       ],
       "js": [
         "public/js/material.min.js",
-        "popover/popover.js",
         "popover/testButton.js"
       ],
       "css": [
         "popover/mdc.css",
         "popover/material.css",
         "popover/dialog.css",
-        "popover/testBtn.css",
-        "popover/popover.css"
+        "popover/testBtn.css"
       ],
       "run_at": "document_end"
     }

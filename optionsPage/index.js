@@ -14,23 +14,18 @@
         const mainSection = el('#mainSection');
 
         el('#sideMenuBtn').addEventListener('click', toggleSideMenu);
-        el('#dropdownBtn').addEventListener('click', toggleUserDropdown);
-        document.body.addEventListener('click', closeUserDropown);
-
-
         el('#notesPageBtn').addEventListener('click', displayNotes);
-        el('#switchTheme').addEventListener('click', setThemeWhite);
-        el('#userPageBtn').addEventListener('click', showUser);
-        el('#definitionsPageBtn').addEventListener('click', () => showPage('definitionsPage'));
-        el('#feedbackPageBtn').addEventListener('click', () => showPage('feedbackPage'));
-        el('#draftsPageBtn').addEventListener('click', showDrafts);
-        el('#recyclePageBtn').addEventListener('click', showTrash);
+        el('#userPageBtn').addEventListener('click', loadUserPage);
+        el('#definitionsPageBtn').addEventListener('click', () => uiUtils.selectPage('definitionsPage'));
+        el('#feedbackPageBtn').addEventListener('click', () => uiUtils.selectPage('feedbackPage'));
+        el('#draftsPageBtn').addEventListener('click', loadDraftsPage);
+        el('#recyclePageBtn').addEventListener('click', loadTrashPage);
 
-        function showUser() {
-            showPage('userPage');
+        async function loadUserPage() {
+            uiUtils.selectPage('userPage');
         }
 
-        async function showDrafts(ev) {
+        async function loadDraftsPage(ev) {
             uiDrafts.clearDrafts();
             const drafts = await manager.retrieve('drafts');
             if (drafts.length !== 0)
@@ -38,10 +33,10 @@
             else
                 uiDrafts.appendChild(document.createTextNode('It looks like you do not have written notes. 😕'));
 
-            showPage('draftsPage');
+            uiUtils.selectPage('draftsPage');
         }
 
-        async function showTrash(ev) {
+        async function loadTrashPage(ev) {
             uiTrash.clearSection();
             const notes = await manager.retrieve('trash');
             if (notes.length !== 0)
@@ -49,30 +44,12 @@
             else
                 uiTrash.appendChild(document.createTextNode('It looks like you do not have written notes. 😕'));
 
-            showPage('recyclePage');
-        }
-
-        function closeUserDropown(ev) {
-            if (ev.target != el('#userDropdown') && ev.target != el('#dropdownBtn')) {
-                el('#userDropdown').classList.remove('dropdown-open');
-            }
-        }
-
-        function toggleUserDropdown() {
-            el('#userDropdown').classList.toggle('dropdown-open');
+            uiUtils.selectPage('recyclePage');
         }
 
         function toggleSideMenu() {
             el('#sideMenuBtn').classList.toggle('sidemenu-open');
             el('#sideMenu').classList.toggle('sidemenu-close');
-        }
-
-        function setThemeWhite() {
-            el('#sideMenu').style.backgroundColor = '#F9F9F9';
-            el('#sideMenu').style.color = '#000000e0';
-            el('.sidebar-header').style.backgroundColor = '#F9F9F9';
-            el('.self-navbar').style.backgroundColor = '#00897bed';
-            el('.self-navbar').style.color = '#003F38';
         }
     }
 
@@ -96,21 +73,9 @@
         if (notes.length !== 0)
             uiNotes.appendNotes(notes);
         else
-            uiNotes.mainSection.appendChild(document.createTextNode('It looks like you do not have written notes. 😕'));
+            uiNotes.appendChild(document.createTextNode('It looks like you do not have written notes. 😕'));
 
-        showPage('notesPage');
+        uiUtils.selectPage('notesPage');
     }
 
-    function showPage(targetPage) {
-        const pages = mainSection.querySelectorAll('.page');
-        const sidebarBtns = el('#sideMenu').querySelectorAll('.sidebar-item');
-        // const selectedBtn = ev.target;
-        // const selectedPage = selectedBtn.id.slice(0, -3);
-
-        pages.forEach(el => el.classList.contains('hidden') ? null : el.classList.add('hidden'));
-        sidebarBtns.forEach(el => el.classList.contains('active') ? el.classList.remove('active') : null)
-        el(`#${targetPage}`).classList.remove('hidden');
-        el(`#${targetPage}Btn`).classList.add('active');
-
-    }
 })();

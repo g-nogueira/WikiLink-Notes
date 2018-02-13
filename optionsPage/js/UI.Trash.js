@@ -29,17 +29,22 @@ class UITrash {
      */
     createNoteNode(note) {
         const node =
-        `<div id="${note.id}" class="mdl-card mdl-shadow--2dp self-note--card">
+            `<div id="${note.id}" class="mdl-card mdl-shadow--2dp self-note--card">
             <div id="noteTitle" class="mdl-card__title pointer">
                 <h2 class="mdl-card__title-text">${note.title}</h2>
             </div>
             <div class="self-mdl-card mdl-card__supporting-text">${note.body}</div>
+            <div class="mdl-card__menu" style="color:var(--secndary-text-color)">
+            </div>
             <div class="self-card--actions mdl-card__actions self-row">
                 <section class="self-column card-note--dates">
                     <span>Modified: </span>
                     <span>Created: ${note.createdOn}</span>
                 </section>
-                <i id="deleteNote" class="material-icons pointer">delete</i>
+                <section>
+                    <i id="recoverNote" class="material-icons pointer" title="Recover" style="color:#4DB6AC;">redo</i>
+                    <i id="deleteNote" class="material-icons pointer" title="Delete Forever" style="color:#E57373;">delete_forever</i>
+                </section>
             </div>
         </div>`;
         return document.createRange().createContextualFragment(node);
@@ -63,14 +68,17 @@ class UITrash {
             const node = createNoteEvents(temp, note);
             notesFragment.appendChild(node);
         });
+        
         this.mainSection.appendChild(notesFragment);
 
         function createNoteEvents(noteNode, note) {
             const clone = noteNode.cloneNode(true);
             const title = clone.getElementById('noteTitle');
             const deleteBtn = clone.getElementById('deleteNote');
+            const recoverBtn = clone.getElementById('recoverNote');
 
             deleteBtn.addEventListener('click', ondelete);
+            recoverBtn.addEventListener('click', onrecover);
             // title.addEventListener('click', onclick); //Not Working Yet ⚠
 
             function onclick() {
@@ -83,8 +91,19 @@ class UITrash {
                 notesArea.removeChild(document.getElementById(note.id));
                 notesManager.trash.permDelete(note.id)
                     .then(() => {
-                        const notification = document.querySelector('.mdl-js-snackbar');
+                        const notification = document.querySelector('#selfToast');
                         notification.MaterialSnackbar.showSnackbar({ message: `"${note.title}" deleted permanently!` });
+                    });
+            }
+            async function onrecover() {
+                const notesArea = document.getElementById('recyclePage');
+                notesArea.removeChild(document.getElementById(note.id));
+                const recoverNote = await notesManager.trash.retrieve(note.id);
+                notesManager.trash.permDelete(note.id);
+                notesManager.note.push(recoverNote)
+                    .then(() => {
+                        const notification = document.querySelector('#selfToast');
+                        notification.MaterialSnackbar.showSnackbar({ message: `"${note.title}" sent to Notes!` });
                     });
             }
 

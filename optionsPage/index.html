@@ -38,16 +38,19 @@
                 <img id="navbarUserImg" class="navbar-img pointer" src="https://lh3.googleusercontent.com/-0u1zdFPNbIY/AAAAAAAAAAI/AAAAAAAAD1A/K3QEfHNjRWc/s120-p-rw-no/photo.jpg"
                     alt="">
                 <label for="navbarUserImg" class="navbar-label headline"> John King</label>
-                <div class="self-button--icon self-dropdown--btn">
+                <div id="navOptions" class="self-button--icon self-dropdown--btn">
                     <i id="dropdownBtn" class="material-icons self-font--26">keyboard_arrow_down</i>
                 </div>
-                <ul id="userDropdown" class="self-dropdown--list mdl-shadow--2dp children-pointer">
-                    <li id="switchTheme">
+                <ul class="self-menu--extended mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="navOptions">
+                    <li class="mdl-menu__item">
                         <i class="material-icons">person</i>Profile</li>
-                    <li>
+                    </li>
+                    <li class="mdl-menu__item">
                         <i class="material-icons">book</i>Notes</li>
-                    <li>
+                    </li>
+                    <li class="mdl-menu__item">
                         <i class="material-icons">settings</i>Settings</li>
+                    </li>
                 </ul>
             </div>
         </section>
@@ -79,7 +82,7 @@
             </div>
 
             <div id="userPage" class="page hidden page-user">
-                <div class="mdl-shadow--2dp user-card" style="width: 730px; height: 280px;">
+                <div class="mdl-shadow--2dp user-card">
                     <section id="coverImg" class="cover-image"></section>
                     <section id="userImg" class="user-image--wrapper" class="user-info">
                         <img class="user-image" src="https://lh3.googleusercontent.com/-0u1zdFPNbIY/AAAAAAAAAAI/AAAAAAAAD1A/K3QEfHNjRWc/s120-p-rw-no/photo.jpg"
@@ -90,7 +93,7 @@
                     </section>
                 </div>
 
-                <div class="mdl-card mdl-shadow--2dp">
+                <div class="mdl-card card-social mdl-shadow--2dp" style="overflow: visible !important;">
                     <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">Social</h2>
                     </div>
@@ -114,9 +117,70 @@
                         </div>
                     </div>
                     <div class="mdl-card__menu">
-                        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                            <i class="material-icons">share</i>
+                        <button id="socialCardOptions" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                            <i class="material-icons">more_vert</i>
                         </button>
+                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="socialCardOptions">
+                            <li disabled class="mdl-menu__item">End All Sessions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="self-row">
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">
+                                <i class="fab fa-google-plus-g color"></i> Personal Info</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userGender">Gender</label>
+                                <span class="self-text" id="userGender"> Male
+                            </div>
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userBirthday">Birthday</label>
+                                <span class="self-text" id="userBirthday">Jan 18
+                            </div>
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userEmail">Email</label>
+                                <span class="self-text" id="userEmail">gustavornogueir@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <button id="googleCardOptions" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="googleCardOptions">
+                                <li class="mdl-menu__item">End Sessions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">
+                                <i class="fab fa-facebook-f color"></i> Personal Info</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userGender">Gender</label>
+                                <span class="self-text" id="userGender"> Male
+                            </div>
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userBirthday">Birthday</label>
+                                <span class="self-text" id="userBirthday">Jan 18
+                            </div>
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userEmail">Email</label>
+                                <span class="self-text" id="userEmail">gustavornogueir@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <button id="fbCardOptions" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="fbCardOptions">
+                                <li class="mdl-menu__item">End Sessions</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -195,7 +259,7 @@
             <div id="recyclePage" class="page hidden">
             </div>
         </main>
-        <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+        <div id="selfToast" class="mdl-js-snackbar mdl-snackbar">
             <div class="mdl-snackbar__text"></div>
             <button class="mdl-snackbar__action" type="button"></button>
         </div>

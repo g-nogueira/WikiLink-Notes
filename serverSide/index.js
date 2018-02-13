@@ -26,23 +26,7 @@
 
     function initRoutes() {
 
-        app.get('/', (req, res) => {
-            // res.writeHead(200, {
-            //     'Content-type': 'application/json',
-            //     'Access-Control-Allow-Origin': '*', //The allowed origin that can make requests
-            //     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', //The allowed http methods
-            //     'Access-Control-Max-Age': 300,
-            //     'Access-Control-Allow-Headers': '*'
-            // });
-
-            const q = url.parse(req.url, true).query;
-            if (repo.methods[q.m]) {
-                const resp = repo.methods[q.m](q.v);
-                res.send(resp);
-            }
-            // res.send({resp: req.session.passport.user});
-
-        });
+        app.get('/', (req, res) => {});
         app.use('/auth', auth);
         app.use('/en', everNoteRouter);
         app.use('/user', userRoute);

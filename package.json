@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ghdrn11/WikiLink.git"
+    "url": "git+https://github.com/ghdrn11/WikiLink-Notes.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ghdrn11/WikiLink/issues"
+    "url": "https://github.com/ghdrn11/WikiLink-Notes/issues"
   },
-  "homepage": "https://github.com/ghdrn11/WikiLink#readme",
+  "homepage": "https://github.com/ghdrn11/WikiLink-Notes#readme",
   "devDependencies": {},
   "dependencies": {
   }

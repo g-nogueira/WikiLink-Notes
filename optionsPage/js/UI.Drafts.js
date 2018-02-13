@@ -83,7 +83,7 @@ class UIDrafts {
                 notesArea.removeChild(document.getElementById(draft.id));
                 notesManager.draft.delete(draft.id)
                     .then(() => {
-                        const notification = document.querySelector('.mdl-js-snackbar');
+                        const notification = document.querySelector('#selfToast');
                         notification.MaterialSnackbar.showSnackbar({ message: `"${draft.title}" deleted!` });
                     });
             }

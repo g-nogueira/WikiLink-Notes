@@ -1,13 +1,15 @@
 {
   "manifest_version": 2,
   "name": "WikiLink Notes",
-  "description": "This extension alows the user to fast search wiki terms.",
+  "description": "This extension alows the user write quick notes.",
   "version": "0.9",
   "omnibox": {
     "keyword": "wl:"
   },
   "icons": {
-    "128": "public/images/icon7.png"
+    "16": "public/images/icon01/00wikilink16.png",
+    "48": "public/images/icon01/00wikilink48.png",
+    "128": "public/images/icon01/00wikilink128.png"
   },
   "options_page": "optionsPage/index.html",
   "background": {
@@ -20,9 +22,8 @@
   },
   "browser_action": {
     "default_locale": "en",
-    "default_icon": "public/images/icon7.png",
     "default_popup": "popup/popup.html",
-    "default_title": "WikiLink Settings"
+    "default_title": "WikiLink Notes Settings"
   },
   "content_scripts": [
     {
@@ -47,6 +48,7 @@
     "storage",
     "tabs",
     "contextMenus",
+    "identity",
     "<all_urls>"
   ],
   "content_security_policy": "script-src 'self' https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js; object-src 'self'"

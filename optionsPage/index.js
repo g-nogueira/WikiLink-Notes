@@ -48,6 +48,9 @@
         }
 
         function toggleSideMenu() {
+            chrome.identity.getProfileUserInfo(accounts => {
+                console.log(accounts);
+            });
             el('#sideMenuBtn').classList.toggle('sidemenu-open');
             el('#sideMenu').classList.toggle('sidemenu-close');
         }

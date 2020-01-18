@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+    <link rel="stylesheet" href="../public/lib/material-design-lite/material.min.css">
+    <link rel="stylesheet" href="../public/lib/material-design-icons/iconfont/material-icons.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- 
+    https://tympanus.net/Development/PageTransitions/
+    https://tympanus.net/Development/CreativeButtons/
+    https://tympanus.net/Tutorials/CaptionHoverEffects/index7.html
+    https://tympanus.net/Development/DynamicGrid/index3.html
+    https://tympanus.net/Tutorials/ExpandingSearchBar/
+-->
+
+    <nav class="self-navbar mdl-shadow--2dp">
+        <section class="navbar-section--left">
+            <div id="sideMenuBtn" class=" navbar-item sidemenu--btn sidemenu-open self-button--icon">
+                <i class="material-icons">menu</i>
+            </div>
+        </section>
+
+        <section class="navbar-section--right">
+            <div class="navbar-item self-button--icon">
+                <i class="material-icons self-font--26">search</i>
+            </div>
+            <div id="navbarUserBtn" class="self-navbar--user navbar-item">
+                <img id="navbarUserImg" class="navbar-img pointer" src="https://lh3.googleusercontent.com/-0u1zdFPNbIY/AAAAAAAAAAI/AAAAAAAAD1A/K3QEfHNjRWc/s120-p-rw-no/photo.jpg"
+                    alt="">
+                <label for="navbarUserImg" class="navbar-label headline"> John King</label>
+                <div id="navOptions" class="self-button--icon self-dropdown--btn">
+                    <i id="dropdownBtn" class="material-icons self-font--26">keyboard_arrow_down</i>
+                </div>
+                <ul class="self-menu--extended mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="navOptions">
+                    <li class="mdl-menu__item">
+                        <i class="material-icons">person</i>Profile</li>
+                    </li>
+                    <li class="mdl-menu__item">
+                        <i class="material-icons">book</i>Notes</li>
+                    </li>
+                    <li class="mdl-menu__item">
+                        <i class="material-icons">settings</i>Settings</li>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </nav>
+    </section>
+    <div class="sidebar-main-wrapper">
+        <aside id="sideMenu" class="self-sidemenu sidemenu-open children-pointer">
+            <div class="sidebar-header">
+                <img id="sidebarUserImg" class="header-img" src="https://lh3.googleusercontent.com/-0u1zdFPNbIY/AAAAAAAAAAI/AAAAAAAAD1A/K3QEfHNjRWc/s120-p-rw-no/photo.jpg"
+                    alt="">
+                <label for="sidebarUserImg">John King</label>
+            </div>
+            <div id="userPageBtn" class="sidebar-item">
+                <i class="material-icons">person</i> Profile</div>
+            <div id="notesPageBtn" class="sidebar-item">
+                <i class="material-icons">library_books</i> Notes</div>
+            <div id="draftsPageBtn" class="sidebar-item">
+                <i class="material-icons">speaker_notes</i>Drafts</div>
+            <div id="recyclePageBtn" class="sidebar-item">
+                <i class="material-icons">delete</i> Trash</div>
+            <div id="definitionsPageBtn" class="sidebar-item">
+                <i class="material-icons">settings</i> Settings</div>
+            <div id="feedbackPageBtn" class="sidebar-item">
+                <i class="material-icons">feedback</i> Feedback</div>
+        </aside>
+
+        <main id="mainSection" class="self-main">
+            <div id="notesPage" class="page page-note">
+            </div>
+
+            <div id="userPage" class="page hidden page-user">
+                <div class="mdl-shadow--2dp user-card">
+                    <section id="coverImg" class="cover-image"></section>
+                    <section id="userImg" class="user-image--wrapper" class="user-info">
+                        <img class="user-image" src="https://lh3.googleusercontent.com/-0u1zdFPNbIY/AAAAAAAAAAI/AAAAAAAAD1A/K3QEfHNjRWc/s120-p-rw-no/photo.jpg"
+                            alt="">
+                    </section>
+                    <section class="user-info">
+                        <h4 class="user-name">Gustavo Nogueira</h4>
+                    </section>
+                </div>
+
+                <div class="mdl-card card-social mdl-shadow--2dp" style="overflow: visible !important;">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Social</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        <div class="self-row">
+                            <a href="http://localhost:8080/auth/google/?redirect=chrome-extension://lckbiclbfdooecdkjkbebanadchafmbn/optionsPage/index.html">
+                                <button id="signInGoogle" class="self-socials--button self-google--signin mdl-button mdl-button--raised">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </button>
+                            </a>
+                            <a href="">
+                                <button class="self-socials--button self-facebook--signin mdl-button mdl-button--raised">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+                            </a>
+                            <a href="">
+                                <button class="self-socials--button self-evernote--signin mdl-button mdl-button--raised">
+                                    EN
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mdl-card__menu">
+                        <button id="socialCardOptions" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                            <i class="material-icons">more_vert</i>
+                        </button>
+                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="socialCardOptions">
+                            <li disabled class="mdl-menu__item">End All Sessions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="self-row">
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">
+                                <i class="fab fa-google-plus-g color"></i> Personal Info</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userGender">Gender</label>
+                                <span class="self-text" id="userGender"> Male
+                            </div>
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userBirthday">Birthday</label>
+                                <span class="self-text" id="userBirthday">Jan 18
+                            </div>
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userEmail">Email</label>
+                                <span class="self-text" id="userEmail">gustavornogueir@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <button id="googleCardOptions" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="googleCardOptions">
+                                <li class="mdl-menu__item">End Sessions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">
+                                <i class="fab fa-facebook-f color"></i> Personal Info</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userGender">Gender</label>
+                                <span class="self-text" id="userGender"> Male
+                            </div>
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userBirthday">Birthday</label>
+                                <span class="self-text" id="userBirthday">Jan 18
+                            </div>
+                            <div class="self-labeled--text">
+                                <label class="self-label" for="userEmail">Email</label>
+                                <span class="self-text" id="userEmail">gustavornogueir@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="mdl-card__menu">
+                            <button id="fbCardOptions" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="fbCardOptions">
+                                <li class="mdl-menu__item">End Sessions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="definitionsPage" class="page hidden">
+                <h2>Definitions page</h2>
+            </div>
+
+            <div id="feedbackPage" class="page hidden">
+                <h2>Feedback page</h2>
+            </div>
+
+            <div id="draftsPage" class="page hidden page-note">
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp self-note--card">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Text About Something</h2>
+                    </div>
+                    <div class="self-mdl-card mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea commodi itaque veniam dolorem? Doloribus reiciendis incidunt
+                        qui perspiciatis explicabo fugit totam quae, possimus, porro quod aperiam itaque tempora quam quaerat?
+                    </div>
+                    <div class="self-card--actions mdl-card__actions">
+                        <i class="material-icons">delete</i>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recyclePage" class="page hidden">
+            </div>
+        </main>
+        <div id="selfToast" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
+    </div>
+
+
+
+    <script src="../public/lib/material-design-lite/material.min.js"></script>
+    <script src="../repository/Http.js"></script>
+    <script src="../repository/Manager.js"></script>
+    <script src="../repository/NotesManager.js"></script>
+    <script src="js/UI.Utils.js"></script>
+    <script src="js/UI.Notes.js"></script>
+    <script src="js/UI.Drafts.js"></script>
+    <script src="js/UI.Trash.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
